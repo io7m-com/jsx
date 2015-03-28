@@ -19,8 +19,10 @@ import com.io7m.jsx.lexer.LexerUnexpectedEOFException;
 import com.io7m.jsx.lexer.LexerUnknownEscapeCodeException;
 import com.io7m.jsx.tokens.TokenEOF;
 import com.io7m.jsx.tokens.TokenLeftParenthesis;
+import com.io7m.jsx.tokens.TokenLeftSquare;
 import com.io7m.jsx.tokens.TokenQuotedString;
 import com.io7m.jsx.tokens.TokenRightParenthesis;
+import com.io7m.jsx.tokens.TokenRightSquare;
 import com.io7m.jsx.tokens.TokenSymbol;
 
 @SuppressWarnings({ "null", "static-method" }) public final class LexerTest
@@ -29,6 +31,13 @@ import com.io7m.jsx.tokens.TokenSymbol;
     final String s)
   {
     return UnicodeCharacterReader.newReader(new StringReader(s));
+  }
+
+  private LexerConfiguration defaultLexerConfig()
+  {
+    final LexerConfigurationBuilderType cb = LexerConfiguration.newBuilder();
+    final LexerConfiguration c = cb.build();
+    return c;
   }
 
   @Test public void testLeftParen_0()
@@ -43,11 +52,59 @@ import com.io7m.jsx.tokens.TokenSymbol;
     Assert.assertEquals(1, t.getPosition().getColumn());
   }
 
-  private LexerConfiguration defaultLexerConfig()
+  @Test public void testLeftSquare_0()
+    throws Exception
+  {
+    final LexerConfiguration c = this.defaultLexerConfig();
+    final LexerType lex = Lexer.newLexer(c, LexerTest.stringReader("["));
+    final TokenLeftSquare t = (TokenLeftSquare) lex.token();
+    System.out.println(t);
+
+    Assert.assertEquals(0, t.getPosition().getLine());
+    Assert.assertEquals(1, t.getPosition().getColumn());
+  }
+
+  @Test public void testLeftSquare_1()
+    throws Exception
   {
     final LexerConfigurationBuilderType cb = LexerConfiguration.newBuilder();
+    cb.setSquareBrackets(false);
     final LexerConfiguration c = cb.build();
-    return c;
+    final LexerType lex = Lexer.newLexer(c, LexerTest.stringReader("["));
+    final TokenSymbol t = (TokenSymbol) lex.token();
+    System.out.println(t);
+
+    Assert.assertEquals(0, t.getPosition().getLine());
+    Assert.assertEquals(1, t.getPosition().getColumn());
+  }
+
+  @Test public void testLeftSquare_2()
+    throws Exception
+  {
+    final LexerConfigurationBuilderType cb = LexerConfiguration.newBuilder();
+    cb.setSquareBrackets(false);
+    final LexerConfiguration c = cb.build();
+    final LexerType lex = Lexer.newLexer(c, LexerTest.stringReader("a["));
+    final TokenSymbol t = (TokenSymbol) lex.token();
+    System.out.println(t);
+
+    Assert.assertEquals(0, t.getPosition().getLine());
+    Assert.assertEquals(1, t.getPosition().getColumn());
+  }
+
+  @Test public void testLeftSquare_3()
+    throws Exception
+  {
+    final LexerConfigurationBuilderType cb = LexerConfiguration.newBuilder();
+    cb.setSquareBrackets(true);
+    final LexerConfiguration c = cb.build();
+    final LexerType lex = Lexer.newLexer(c, LexerTest.stringReader("a["));
+    final TokenSymbol t0 = (TokenSymbol) lex.token();
+    final TokenLeftSquare t1 = (TokenLeftSquare) lex.token();
+    System.out.println(t0);
+
+    Assert.assertEquals(0, t0.getPosition().getLine());
+    Assert.assertEquals(1, t0.getPosition().getColumn());
   }
 
   @Test public void testNewline_0()
@@ -120,163 +177,6 @@ import com.io7m.jsx.tokens.TokenSymbol;
 
     final String text = t.getText();
     Assert.assertEquals(text, "abcd");
-  }
-
-  @Test public void testSymbol_0()
-    throws Exception
-  {
-    final LexerConfiguration c = this.defaultLexerConfig();
-    final LexerType lex =
-      Lexer.newLexer(c, LexerTest.stringReader("abcd efgh"));
-    final TokenSymbol t0 = (TokenSymbol) lex.token();
-    System.out.println(t0);
-    Assert.assertEquals(0, t0.getPosition().getLine());
-    Assert.assertEquals(1, t0.getPosition().getColumn());
-    final String text0 = t0.getText();
-    Assert.assertEquals(text0, "abcd");
-
-    final TokenSymbol t1 = (TokenSymbol) lex.token();
-    System.out.println(t1);
-    Assert.assertEquals(0, t1.getPosition().getLine());
-    Assert.assertEquals(6, t1.getPosition().getColumn());
-    final String text1 = t1.getText();
-    Assert.assertEquals(text1, "efgh");
-  }
-
-  @Test public void testSymbol_1()
-    throws Exception
-  {
-    final LexerConfiguration c = this.defaultLexerConfig();
-    final LexerType lex =
-      Lexer.newLexer(c, LexerTest.stringReader("abcd\nefgh"));
-    final TokenSymbol t0 = (TokenSymbol) lex.token();
-    System.out.println(t0);
-    Assert.assertEquals(0, t0.getPosition().getLine());
-    Assert.assertEquals(1, t0.getPosition().getColumn());
-    final String text0 = t0.getText();
-    Assert.assertEquals(text0, "abcd");
-
-    final TokenSymbol t1 = (TokenSymbol) lex.token();
-    System.out.println(t1);
-    Assert.assertEquals(1, t1.getPosition().getLine());
-    Assert.assertEquals(1, t1.getPosition().getColumn());
-    final String text1 = t1.getText();
-    Assert.assertEquals(text1, "efgh");
-  }
-
-  @Test public void testSymbol_2()
-    throws Exception
-  {
-    final LexerConfiguration c = this.defaultLexerConfig();
-    final LexerType lex =
-      Lexer.newLexer(c, LexerTest.stringReader("abcd\r\nefgh"));
-    final TokenSymbol t0 = (TokenSymbol) lex.token();
-    System.out.println(t0);
-    Assert.assertEquals(0, t0.getPosition().getLine());
-    Assert.assertEquals(1, t0.getPosition().getColumn());
-    final String text0 = t0.getText();
-    Assert.assertEquals(text0, "abcd");
-
-    final TokenSymbol t1 = (TokenSymbol) lex.token();
-    System.out.println(t1);
-    Assert.assertEquals(1, t1.getPosition().getLine());
-    Assert.assertEquals(1, t1.getPosition().getColumn());
-    final String text1 = t1.getText();
-    Assert.assertEquals(text1, "efgh");
-  }
-
-  @Test public void testSymbol_3()
-    throws Exception
-  {
-    final LexerConfiguration c = this.defaultLexerConfig();
-    final LexerType lex =
-      Lexer.newLexer(c, LexerTest.stringReader("abcd(efgh"));
-    final TokenSymbol t0 = (TokenSymbol) lex.token();
-    System.out.println(t0);
-    Assert.assertEquals(0, t0.getPosition().getLine());
-    Assert.assertEquals(1, t0.getPosition().getColumn());
-    final String text0 = t0.getText();
-    Assert.assertEquals(text0, "abcd");
-
-    final TokenLeftParenthesis tlp0 = (TokenLeftParenthesis) lex.token();
-    System.out.println(tlp0);
-    Assert.assertEquals(0, tlp0.getPosition().getLine());
-    Assert.assertEquals(6, tlp0.getPosition().getColumn());
-
-    final TokenSymbol t1 = (TokenSymbol) lex.token();
-    System.out.println(t1);
-    Assert.assertEquals(0, t1.getPosition().getLine());
-    Assert.assertEquals(7, t1.getPosition().getColumn());
-    final String text1 = t1.getText();
-    Assert.assertEquals(text1, "efgh");
-  }
-
-  @Test public void testSymbol_4()
-    throws Exception
-  {
-    final LexerConfiguration c = this.defaultLexerConfig();
-    final LexerType lex =
-      Lexer.newLexer(c, LexerTest.stringReader("abcd)efgh"));
-    final TokenSymbol t0 = (TokenSymbol) lex.token();
-    System.out.println(t0);
-    Assert.assertEquals(0, t0.getPosition().getLine());
-    Assert.assertEquals(1, t0.getPosition().getColumn());
-    final String text0 = t0.getText();
-    Assert.assertEquals(text0, "abcd");
-
-    final TokenRightParenthesis tlp0 = (TokenRightParenthesis) lex.token();
-    System.out.println(tlp0);
-    Assert.assertEquals(0, tlp0.getPosition().getLine());
-    Assert.assertEquals(6, tlp0.getPosition().getColumn());
-
-    final TokenSymbol t1 = (TokenSymbol) lex.token();
-    System.out.println(t1);
-    Assert.assertEquals(0, t1.getPosition().getLine());
-    Assert.assertEquals(7, t1.getPosition().getColumn());
-    final String text1 = t1.getText();
-    Assert.assertEquals(text1, "efgh");
-  }
-
-  @Test public void testSymbol_5()
-    throws Exception
-  {
-    final LexerConfiguration c = this.defaultLexerConfig();
-    final LexerType lex =
-      Lexer.newLexer(c, LexerTest.stringReader("abcd\"\"efgh"));
-    final TokenSymbol t0 = (TokenSymbol) lex.token();
-    System.out.println(t0);
-    Assert.assertEquals(0, t0.getPosition().getLine());
-    Assert.assertEquals(1, t0.getPosition().getColumn());
-    final String text0 = t0.getText();
-    Assert.assertEquals(text0, "abcd");
-
-    final TokenQuotedString tlp0 = (TokenQuotedString) lex.token();
-    System.out.println(tlp0);
-    Assert.assertEquals(0, tlp0.getPosition().getLine());
-    Assert.assertEquals(6, tlp0.getPosition().getColumn());
-
-    final TokenSymbol t1 = (TokenSymbol) lex.token();
-    System.out.println(t1);
-    Assert.assertEquals(0, t1.getPosition().getLine());
-    Assert.assertEquals(8, t1.getPosition().getColumn());
-    final String text1 = t1.getText();
-    Assert.assertEquals(text1, "efgh");
-  }
-
-  @Test public void testSymbol_6()
-    throws Exception
-  {
-    final LexerConfiguration c = this.defaultLexerConfig();
-    final LexerType lex =
-      Lexer.newLexer(c, LexerTest
-        .stringReader("ຂອ້ຍກິນແກ້ວໄດ້ໂດຍທີ່ມັນບໍ່ໄດ້ເຮັດໃຫ້ຂອ້ຍເຈັບ"));
-    final TokenSymbol t0 = (TokenSymbol) lex.token();
-    System.out.println(t0);
-    Assert.assertEquals(0, t0.getPosition().getLine());
-    Assert.assertEquals(1, t0.getPosition().getColumn());
-    final String text0 = t0.getText();
-    Assert
-      .assertEquals(text0, "ຂອ້ຍກິນແກ້ວໄດ້ໂດຍທີ່ມັນບໍ່ໄດ້ເຮັດໃຫ້ຂອ້ຍເຈັບ");
   }
 
   @Test public void testQuoted_1()
@@ -446,6 +346,28 @@ import com.io7m.jsx.tokens.TokenSymbol;
     Assert.assertEquals(text, "\n");
   }
 
+  @Test public void testQuotedQuote_0()
+    throws Exception
+  {
+    final StringBuilder sb = new StringBuilder();
+    sb.append('"');
+    sb.append('\\');
+    sb.append('"');
+    sb.append('"');
+    final String s = sb.toString();
+
+    final LexerConfiguration c = this.defaultLexerConfig();
+    final LexerType lex = Lexer.newLexer(c, LexerTest.stringReader(s));
+    final TokenQuotedString t = (TokenQuotedString) lex.token();
+    System.out.println(t);
+
+    Assert.assertEquals(0, t.getPosition().getLine());
+    Assert.assertEquals(1, t.getPosition().getColumn());
+
+    final String text = t.getText();
+    Assert.assertEquals(text, "" + '"');
+  }
+
   @Test(expected = LexerUnexpectedEOFException.class) public
     void
     testQuotedStringBad_0()
@@ -470,28 +392,6 @@ import com.io7m.jsx.tokens.TokenSymbol;
 
     final String text = t.getText();
     Assert.assertEquals(text, "\t");
-  }
-
-  @Test public void testQuotedQuote_0()
-    throws Exception
-  {
-    final StringBuilder sb = new StringBuilder();
-    sb.append('"');
-    sb.append('\\');
-    sb.append('"');
-    sb.append('"');
-    final String s = sb.toString();
-
-    final LexerConfiguration c = this.defaultLexerConfig();
-    final LexerType lex = Lexer.newLexer(c, LexerTest.stringReader(s));
-    final TokenQuotedString t = (TokenQuotedString) lex.token();
-    System.out.println(t);
-
-    Assert.assertEquals(0, t.getPosition().getLine());
-    Assert.assertEquals(1, t.getPosition().getColumn());
-
-    final String text = t.getText();
-    Assert.assertEquals(text, "" + '"');
   }
 
   @Test public void testQuotedUnicode4_0()
@@ -593,5 +493,217 @@ import com.io7m.jsx.tokens.TokenSymbol;
 
     Assert.assertEquals(0, t.getPosition().getLine());
     Assert.assertEquals(1, t.getPosition().getColumn());
+  }
+
+  @Test public void testRightSquare_0()
+    throws Exception
+  {
+    final LexerConfiguration c = this.defaultLexerConfig();
+    final LexerType lex = Lexer.newLexer(c, LexerTest.stringReader("]"));
+    final TokenRightSquare t = (TokenRightSquare) lex.token();
+    System.out.println(t);
+
+    Assert.assertEquals(0, t.getPosition().getLine());
+    Assert.assertEquals(1, t.getPosition().getColumn());
+  }
+
+  @Test public void testRightSquare_1()
+    throws Exception
+  {
+    final LexerConfigurationBuilderType cb = LexerConfiguration.newBuilder();
+    cb.setSquareBrackets(false);
+    final LexerConfiguration c = cb.build();
+    final LexerType lex = Lexer.newLexer(c, LexerTest.stringReader("]"));
+    final TokenSymbol t = (TokenSymbol) lex.token();
+    System.out.println(t);
+
+    Assert.assertEquals(0, t.getPosition().getLine());
+    Assert.assertEquals(1, t.getPosition().getColumn());
+  }
+
+  @Test public void testRightSquare_2()
+    throws Exception
+  {
+    final LexerConfigurationBuilderType cb = LexerConfiguration.newBuilder();
+    cb.setSquareBrackets(false);
+    final LexerConfiguration c = cb.build();
+    final LexerType lex = Lexer.newLexer(c, LexerTest.stringReader("a]"));
+    final TokenSymbol t = (TokenSymbol) lex.token();
+    System.out.println(t);
+
+    Assert.assertEquals(0, t.getPosition().getLine());
+    Assert.assertEquals(1, t.getPosition().getColumn());
+  }
+
+  @Test public void testRightSquare_3()
+    throws Exception
+  {
+    final LexerConfigurationBuilderType cb = LexerConfiguration.newBuilder();
+    cb.setSquareBrackets(true);
+    final LexerConfiguration c = cb.build();
+    final LexerType lex = Lexer.newLexer(c, LexerTest.stringReader("a]"));
+    final TokenSymbol t0 = (TokenSymbol) lex.token();
+    final TokenRightSquare t1 = (TokenRightSquare) lex.token();
+    System.out.println(t0);
+
+    Assert.assertEquals(0, t0.getPosition().getLine());
+    Assert.assertEquals(1, t0.getPosition().getColumn());
+  }
+
+  @Test public void testSymbol_0()
+    throws Exception
+  {
+    final LexerConfiguration c = this.defaultLexerConfig();
+    final LexerType lex =
+      Lexer.newLexer(c, LexerTest.stringReader("abcd efgh"));
+    final TokenSymbol t0 = (TokenSymbol) lex.token();
+    System.out.println(t0);
+    Assert.assertEquals(0, t0.getPosition().getLine());
+    Assert.assertEquals(1, t0.getPosition().getColumn());
+    final String text0 = t0.getText();
+    Assert.assertEquals(text0, "abcd");
+
+    final TokenSymbol t1 = (TokenSymbol) lex.token();
+    System.out.println(t1);
+    Assert.assertEquals(0, t1.getPosition().getLine());
+    Assert.assertEquals(6, t1.getPosition().getColumn());
+    final String text1 = t1.getText();
+    Assert.assertEquals(text1, "efgh");
+  }
+
+  @Test public void testSymbol_1()
+    throws Exception
+  {
+    final LexerConfiguration c = this.defaultLexerConfig();
+    final LexerType lex =
+      Lexer.newLexer(c, LexerTest.stringReader("abcd\nefgh"));
+    final TokenSymbol t0 = (TokenSymbol) lex.token();
+    System.out.println(t0);
+    Assert.assertEquals(0, t0.getPosition().getLine());
+    Assert.assertEquals(1, t0.getPosition().getColumn());
+    final String text0 = t0.getText();
+    Assert.assertEquals(text0, "abcd");
+
+    final TokenSymbol t1 = (TokenSymbol) lex.token();
+    System.out.println(t1);
+    Assert.assertEquals(1, t1.getPosition().getLine());
+    Assert.assertEquals(1, t1.getPosition().getColumn());
+    final String text1 = t1.getText();
+    Assert.assertEquals(text1, "efgh");
+  }
+
+  @Test public void testSymbol_2()
+    throws Exception
+  {
+    final LexerConfiguration c = this.defaultLexerConfig();
+    final LexerType lex =
+      Lexer.newLexer(c, LexerTest.stringReader("abcd\r\nefgh"));
+    final TokenSymbol t0 = (TokenSymbol) lex.token();
+    System.out.println(t0);
+    Assert.assertEquals(0, t0.getPosition().getLine());
+    Assert.assertEquals(1, t0.getPosition().getColumn());
+    final String text0 = t0.getText();
+    Assert.assertEquals(text0, "abcd");
+
+    final TokenSymbol t1 = (TokenSymbol) lex.token();
+    System.out.println(t1);
+    Assert.assertEquals(1, t1.getPosition().getLine());
+    Assert.assertEquals(1, t1.getPosition().getColumn());
+    final String text1 = t1.getText();
+    Assert.assertEquals(text1, "efgh");
+  }
+
+  @Test public void testSymbol_3()
+    throws Exception
+  {
+    final LexerConfiguration c = this.defaultLexerConfig();
+    final LexerType lex =
+      Lexer.newLexer(c, LexerTest.stringReader("abcd(efgh"));
+    final TokenSymbol t0 = (TokenSymbol) lex.token();
+    System.out.println(t0);
+    Assert.assertEquals(0, t0.getPosition().getLine());
+    Assert.assertEquals(1, t0.getPosition().getColumn());
+    final String text0 = t0.getText();
+    Assert.assertEquals(text0, "abcd");
+
+    final TokenLeftParenthesis tlp0 = (TokenLeftParenthesis) lex.token();
+    System.out.println(tlp0);
+    Assert.assertEquals(0, tlp0.getPosition().getLine());
+    Assert.assertEquals(6, tlp0.getPosition().getColumn());
+
+    final TokenSymbol t1 = (TokenSymbol) lex.token();
+    System.out.println(t1);
+    Assert.assertEquals(0, t1.getPosition().getLine());
+    Assert.assertEquals(7, t1.getPosition().getColumn());
+    final String text1 = t1.getText();
+    Assert.assertEquals(text1, "efgh");
+  }
+
+  @Test public void testSymbol_4()
+    throws Exception
+  {
+    final LexerConfiguration c = this.defaultLexerConfig();
+    final LexerType lex =
+      Lexer.newLexer(c, LexerTest.stringReader("abcd)efgh"));
+    final TokenSymbol t0 = (TokenSymbol) lex.token();
+    System.out.println(t0);
+    Assert.assertEquals(0, t0.getPosition().getLine());
+    Assert.assertEquals(1, t0.getPosition().getColumn());
+    final String text0 = t0.getText();
+    Assert.assertEquals(text0, "abcd");
+
+    final TokenRightParenthesis tlp0 = (TokenRightParenthesis) lex.token();
+    System.out.println(tlp0);
+    Assert.assertEquals(0, tlp0.getPosition().getLine());
+    Assert.assertEquals(6, tlp0.getPosition().getColumn());
+
+    final TokenSymbol t1 = (TokenSymbol) lex.token();
+    System.out.println(t1);
+    Assert.assertEquals(0, t1.getPosition().getLine());
+    Assert.assertEquals(7, t1.getPosition().getColumn());
+    final String text1 = t1.getText();
+    Assert.assertEquals(text1, "efgh");
+  }
+
+  @Test public void testSymbol_5()
+    throws Exception
+  {
+    final LexerConfiguration c = this.defaultLexerConfig();
+    final LexerType lex =
+      Lexer.newLexer(c, LexerTest.stringReader("abcd\"\"efgh"));
+    final TokenSymbol t0 = (TokenSymbol) lex.token();
+    System.out.println(t0);
+    Assert.assertEquals(0, t0.getPosition().getLine());
+    Assert.assertEquals(1, t0.getPosition().getColumn());
+    final String text0 = t0.getText();
+    Assert.assertEquals(text0, "abcd");
+
+    final TokenQuotedString tlp0 = (TokenQuotedString) lex.token();
+    System.out.println(tlp0);
+    Assert.assertEquals(0, tlp0.getPosition().getLine());
+    Assert.assertEquals(6, tlp0.getPosition().getColumn());
+
+    final TokenSymbol t1 = (TokenSymbol) lex.token();
+    System.out.println(t1);
+    Assert.assertEquals(0, t1.getPosition().getLine());
+    Assert.assertEquals(8, t1.getPosition().getColumn());
+    final String text1 = t1.getText();
+    Assert.assertEquals(text1, "efgh");
+  }
+
+  @Test public void testSymbol_6()
+    throws Exception
+  {
+    final LexerConfiguration c = this.defaultLexerConfig();
+    final LexerType lex =
+      Lexer.newLexer(c, LexerTest
+        .stringReader("ຂອ້ຍກິນແກ້ວໄດ້ໂດຍທີ່ມັນບໍ່ໄດ້ເຮັດໃຫ້ຂອ້ຍເຈັບ"));
+    final TokenSymbol t0 = (TokenSymbol) lex.token();
+    System.out.println(t0);
+    Assert.assertEquals(0, t0.getPosition().getLine());
+    Assert.assertEquals(1, t0.getPosition().getColumn());
+    final String text0 = t0.getText();
+    Assert
+      .assertEquals(text0, "ຂອ້ຍກິນແກ້ວໄດ້ໂດຍທີ່ມັນບໍ່ໄດ້ເຮັດໃຫ້ຂອ້ຍເຈັບ");
   }
 }

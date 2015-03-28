@@ -2,3 +2,9 @@ expression =
     symbol
   | quoted_string
   | "(" , { expression } , ")" ;
+
+expression_squares =
+    symbol
+  | quoted_string
+  | "[" , { expression_squares } , "]"
+  | "(" , { expression_squares } , ")" ;

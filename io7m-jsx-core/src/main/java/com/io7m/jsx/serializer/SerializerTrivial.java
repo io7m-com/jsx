@@ -44,7 +44,12 @@ public final class SerializerTrivial implements SerializerType
         final ListType xs)
         throws IOException
       {
-        w.print("(");
+        if (xs.isSquare()) {
+          w.print("[");
+        } else {
+          w.print("(");
+        }
+
         final int max = xs.size();
         for (int index = 0; index < max; ++index) {
           final SExpressionType es = xs.get(index);
@@ -53,7 +58,13 @@ public final class SerializerTrivial implements SerializerType
             w.print(" ");
           }
         }
-        w.print(")");
+
+        if (xs.isSquare()) {
+          w.print("]");
+        } else {
+          w.print(")");
+        }
+
         return Integer.valueOf(0);
       }
 

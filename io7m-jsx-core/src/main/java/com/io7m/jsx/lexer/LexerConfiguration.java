@@ -1,10 +1,10 @@
 /*
  * Copyright © 2015 <code@io7m.com> http://io7m.com
- * 
+ *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
  * copyright notice and this permission notice appear in all copies.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
  * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
@@ -27,11 +27,14 @@ public final class LexerConfiguration
     newBuilder()
   {
     return new LexerConfigurationBuilderType() {
+      private boolean square_brackets = true;
       private boolean string_newlines = true;
 
       @Override public LexerConfiguration build()
       {
-        return new LexerConfiguration(this.string_newlines);
+        return new LexerConfiguration(
+          this.string_newlines,
+          this.square_brackets);
       }
 
       @Override public void setNewlinesInQuotedStrings(
@@ -39,19 +42,33 @@ public final class LexerConfiguration
       {
         this.string_newlines = e;
       }
+
+      @Override public void setSquareBrackets(
+        final boolean e)
+      {
+        this.square_brackets = e;
+      }
     };
   }
 
+  private final boolean square_brackets;
   private final boolean string_newlines;
 
   private LexerConfiguration(
-    final boolean in_string_newlines)
+    final boolean in_string_newlines,
+    final boolean in_square_brackets)
   {
     this.string_newlines = in_string_newlines;
+    this.square_brackets = in_square_brackets;
   }
 
   public boolean allowNewlinesInQuotedStrings()
   {
     return this.string_newlines;
+  }
+
+  public boolean allowSquareBrackets()
+  {
+    return this.square_brackets;
   }
 }

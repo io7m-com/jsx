@@ -1,10 +1,10 @@
 /*
  * Copyright © 2015 <code@io7m.com> http://io7m.com
- * 
+ *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
  * copyright notice and this permission notice appear in all copies.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
  * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
@@ -22,10 +22,10 @@ import com.io7m.jnull.NullCheck;
 import com.io7m.jsx.lexer.Position;
 
 /**
- * Right parenthesis ')'.
+ * Right square bracket ']'.
  */
 
-public final class TokenRightParenthesis implements TokenType
+public final class TokenRightSquare implements TokenType
 {
   private final File     file;
   private final Position position;
@@ -37,7 +37,7 @@ public final class TokenRightParenthesis implements TokenType
    *          The token position
    */
 
-  public TokenRightParenthesis(
+  public TokenRightSquare(
     final File in_file,
     final Position in_position)
   {
@@ -59,13 +59,13 @@ public final class TokenRightParenthesis implements TokenType
     final TokenMatcherType<A, E> m)
     throws E
   {
-    return m.rightParen(this);
+    return m.rightSquare(this);
   }
 
   @Override public String toString()
   {
     final StringBuilder builder = new StringBuilder();
-    builder.append("[TokenRightParenthesis file=");
+    builder.append("[TokenRightSquare file=");
     builder.append(this.file);
     builder.append(" position=");
     builder.append(this.position);

@@ -9,8 +9,11 @@ import org.junit.Test;
 
 import com.io7m.jeucreader.UnicodeCharacterReader;
 import com.io7m.jeucreader.UnicodeCharacterReaderPushBackType;
+import com.io7m.jfunctional.None;
+import com.io7m.jfunctional.Some;
 import com.io7m.jsx.ListType;
 import com.io7m.jsx.QuotedStringType;
+import com.io7m.jsx.SExpressionType;
 import com.io7m.jsx.SymbolType;
 import com.io7m.jsx.lexer.Lexer;
 import com.io7m.jsx.lexer.LexerBareCarriageReturnException;
@@ -66,6 +69,32 @@ import com.io7m.jsx.tokens.TokenType;
     final LexerConfiguration lc = this.defaultLexerConfig();
     final LexerType lex =
       Lexer.newLexer(lc, ParserTest.stringReader("(a b "));
+    final ParserConfiguration pc = this.defaultParserConfig();
+    final ParserType p = Parser.newParser(pc, lex);
+    p.parseExpression();
+  }
+
+  @Test public void testEOF_2()
+    throws Exception
+  {
+    final LexerConfiguration lc = this.defaultLexerConfig();
+    final LexerType lex =
+      Lexer.newLexer(lc, ParserTest.stringReader("(a b c)"));
+    final ParserConfiguration pc = this.defaultParserConfig();
+    final ParserType p = Parser.newParser(pc, lex);
+    final Some<SExpressionType> r0 =
+      (Some<SExpressionType>) p.parseExpressionOrEOF();
+    final ListType r0l = (ListType) r0.get();
+    final None<SExpressionType> r1 =
+      (None<SExpressionType>) p.parseExpressionOrEOF();
+  }
+
+  @Test(expected = ParserGrammarException.class) public void testEOF_3()
+    throws Exception
+  {
+    final LexerConfiguration lc = this.defaultLexerConfig();
+    final LexerType lex =
+      Lexer.newLexer(lc, ParserTest.stringReader("[a b "));
     final ParserConfiguration pc = this.defaultParserConfig();
     final ParserType p = Parser.newParser(pc, lex);
     p.parseExpression();
@@ -159,6 +188,77 @@ import com.io7m.jsx.tokens.TokenType;
     }
   }
 
+  @Test public void testParseListSquareNoLex_1()
+    throws Exception
+  {
+    final LexerConfiguration lc = this.defaultLexerConfig();
+    final LexerType lex =
+      Lexer.newLexer(lc, ParserTest.stringReader("[a b c]"));
+    final ParserConfigurationBuilderType pcb =
+      ParserConfiguration.newBuilder();
+    pcb.preserveLexicalInformation(false);
+    final ParserConfiguration pc = pcb.build();
+    final ParserType p = Parser.newParser(pc, lex);
+
+    final ListType s = (ListType) p.parseExpression();
+    Assert.assertEquals(0, s.getPosition().getLine());
+    Assert.assertEquals(0, s.getPosition().getColumn());
+    Assert.assertEquals(3, s.size());
+    Assert.assertEquals(new File("<none>"), s.getFile());
+
+    {
+      final SymbolType ss = (SymbolType) s.get(0);
+      Assert.assertEquals("a", ss.getText());
+      Assert.assertEquals(new File("<none>"), ss.getFile());
+    }
+
+    {
+      final SymbolType ss = (SymbolType) s.get(1);
+      Assert.assertEquals("b", ss.getText());
+      Assert.assertEquals(new File("<none>"), ss.getFile());
+    }
+
+    {
+      final SymbolType ss = (SymbolType) s.get(2);
+      Assert.assertEquals("c", ss.getText());
+      Assert.assertEquals(new File("<none>"), ss.getFile());
+    }
+  }
+
+  @Test public void testParseSquareList_0()
+    throws Exception
+  {
+    final LexerConfiguration lc = this.defaultLexerConfig();
+    final LexerType lex =
+      Lexer.newLexer(lc, ParserTest.stringReader("[a b c]"));
+    final ParserConfiguration pc = this.defaultParserConfig();
+    final ParserType p = Parser.newParser(pc, lex);
+
+    final ListType s = (ListType) p.parseExpression();
+    Assert.assertEquals(0, s.getPosition().getLine());
+    Assert.assertEquals(1, s.getPosition().getColumn());
+    Assert.assertEquals(3, s.size());
+    Assert.assertEquals(new File("<stdin>"), s.getFile());
+
+    {
+      final SymbolType ss = (SymbolType) s.get(0);
+      Assert.assertEquals("a", ss.getText());
+      Assert.assertEquals(new File("<stdin>"), ss.getFile());
+    }
+
+    {
+      final SymbolType ss = (SymbolType) s.get(1);
+      Assert.assertEquals("b", ss.getText());
+      Assert.assertEquals(new File("<stdin>"), ss.getFile());
+    }
+
+    {
+      final SymbolType ss = (SymbolType) s.get(2);
+      Assert.assertEquals("c", ss.getText());
+      Assert.assertEquals(new File("<stdin>"), ss.getFile());
+    }
+  }
+
   @Test public void testParseSymbol_0()
     throws Exception
   {
@@ -240,11 +340,47 @@ import com.io7m.jsx.tokens.TokenType;
 
   @Test(expected = ParserGrammarException.class) public
     void
+    testUnbalancedRoundSquare_0()
+      throws Exception
+  {
+    final LexerConfiguration lc = this.defaultLexerConfig();
+    final LexerType lex = Lexer.newLexer(lc, ParserTest.stringReader("(]"));
+    final ParserConfiguration pc = this.defaultParserConfig();
+    final ParserType p = Parser.newParser(pc, lex);
+    p.parseExpression();
+  }
+
+  @Test(expected = ParserGrammarException.class) public
+    void
+    testUnbalancedRoundSquare_1()
+      throws Exception
+  {
+    final LexerConfiguration lc = this.defaultLexerConfig();
+    final LexerType lex = Lexer.newLexer(lc, ParserTest.stringReader("[)"));
+    final ParserConfiguration pc = this.defaultParserConfig();
+    final ParserType p = Parser.newParser(pc, lex);
+    p.parseExpression();
+  }
+
+  @Test(expected = ParserGrammarException.class) public
+    void
     testUnexpectedRight_0()
       throws Exception
   {
     final LexerConfiguration lc = this.defaultLexerConfig();
     final LexerType lex = Lexer.newLexer(lc, ParserTest.stringReader(")"));
+    final ParserConfiguration pc = this.defaultParserConfig();
+    final ParserType p = Parser.newParser(pc, lex);
+    p.parseExpression();
+  }
+
+  @Test(expected = ParserGrammarException.class) public
+    void
+    testUnexpectedRightSquare_0()
+      throws Exception
+  {
+    final LexerConfiguration lc = this.defaultLexerConfig();
+    final LexerType lex = Lexer.newLexer(lc, ParserTest.stringReader("]"));
     final ParserConfiguration pc = this.defaultParserConfig();
     final ParserType p = Parser.newParser(pc, lex);
     p.parseExpression();

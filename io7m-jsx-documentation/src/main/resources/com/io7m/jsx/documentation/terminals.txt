@@ -1,6 +1,9 @@
 symbol_character =
   ? not (")" | "(" | U+0022 | WHITESPACE) ? ;
 
+symbol_character_squares =
+  ? not (")" | "(" | "[" | "]" | U+0022 | WHITESPACE) ? ;
+
 symbol =
   symbol_character , { symbol_character } ;
 

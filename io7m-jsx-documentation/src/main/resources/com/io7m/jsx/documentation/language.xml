@@ -52,7 +52,7 @@
     </s:subsection>
   </s:section>
   
-  <s:section>
+  <s:section xml:id="com.io7m.jsx.lang.language">
     <s:section-title>Language</s:section-title>
     <s:paragraph>
       The language understood by the <s:term s:type="package">${project.parent.name}</s:term>
@@ -71,6 +71,29 @@
       characters to appear outside of 
       <s:link s:target="com.io7m.jsx.lang.quote">quoted strings</s:link>.
     </s:paragraph>
+    <s:paragraph xml:id="com.io7m.jsx.lang.language.square">
+      Many systems that parse S-expressions allow for the use of square
+      brackets to increase readability. For example:
+    </s:paragraph>
+    <s:formal-item s:kind="specification">
+      <s:formal-item-title>Square brackets</s:formal-item-title>
+      <s:verbatim><xi:include href="squares.txt" parse="text"/></s:verbatim>
+    </s:formal-item>
+    <s:paragraph>
+      Note that the second version that uses square brackets is slightly
+      easier to understand due to the square brackets more clearly indicating
+      which of the nested lists are being terminated. The 
+      <s:term s:type="package">${project.parent.name}</s:term> lexer can 
+      optionally treat <s:term s:type="constant">U+005B [</s:term> and
+      <s:term s:type="constant">U+005D ]</s:term> as tokens, and the parser
+      ensures that the use of the brackets is balanced with respect to
+      ordinary parentheses as part of the grammar above. If square brackets
+      are enabled, the language understood by the 
+      <s:term s:type="package">${project.parent.name}</s:term> package is
+      defined by <s:term s:type="constant">expression_squares</s:term>.
+      Otherwise, the language is defined by
+      <s:term s:type="constant">expression</s:term>.
+    </s:paragraph>
     <s:paragraph>
       The terminals of the language are given by:
     </s:paragraph>
@@ -86,12 +109,18 @@
       directly.
     </s:paragraph>
     <s:paragraph>
-      Informally, the <s:term s:type="function">symbol_character</s:term>
+      Informally, the <s:term s:type="symbol">symbol_character</s:term>
       rule should be understood to specify any Unicode character that is not
       <s:link-external s:target="https://en.wikipedia.org/wiki/Whitespace_character">whitespace</s:link-external>,
       is not <s:term s:type="constant">U+0028 (</s:term>,  
-      is not <s:term s:type="constant">U+0029 )</s:term>, and is
-      not <s:term s:type="constant">U+0022 "</s:term>.
+      is not <s:term s:type="constant">U+0029 )</s:term>,
+      and is not <s:term s:type="constant">U+0022 "</s:term>.
+    </s:paragraph>
+    <s:paragraph>
+      If <s:link s:target="com.io7m.jsx.lang.language.square">square brackets</s:link> are enabled, 
+      the <s:term s:type="symbol">symbol_character_squares</s:term>
+      rule should be understood to replace the <s:term s:type="symbol">symbol_character</s:term>
+      rule.
     </s:paragraph>
     <s:paragraph>
       The <s:term s:type="symbol">quoted_character</s:term> rule should

@@ -1,10 +1,10 @@
 /*
  * Copyright © 2015 <code@io7m.com> http://io7m.com
- *
+ * 
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
  * copyright notice and this permission notice appear in all copies.
- *
+ * 
  * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
  * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
@@ -18,24 +18,23 @@ package com.io7m.jsx.parser;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.io7m.jfunctional.Option;
+import com.io7m.jfunctional.OptionType;
 import com.io7m.jnull.NullCheck;
-import com.io7m.jnull.Nullable;
-import com.io7m.jsx.ListType;
 import com.io7m.jsx.QuotedStringType;
-import com.io7m.jsx.SExpressionMatcherType;
 import com.io7m.jsx.SExpressionType;
-import com.io7m.jsx.SymbolType;
 import com.io7m.jsx.lexer.LexerException;
 import com.io7m.jsx.lexer.LexerType;
 import com.io7m.jsx.lexer.Position;
 import com.io7m.jsx.tokens.TokenEOF;
 import com.io7m.jsx.tokens.TokenLeftParenthesis;
+import com.io7m.jsx.tokens.TokenLeftSquare;
 import com.io7m.jsx.tokens.TokenQuotedString;
 import com.io7m.jsx.tokens.TokenRightParenthesis;
+import com.io7m.jsx.tokens.TokenRightSquare;
 import com.io7m.jsx.tokens.TokenSymbol;
 import com.io7m.jsx.tokens.TokenType;
 import com.io7m.junreachable.UnreachableCodeException;
@@ -46,152 +45,6 @@ import com.io7m.junreachable.UnreachableCodeException;
 
 public final class Parser implements ParserType
 {
-  private static final class PList extends AbstractList<SExpressionType> implements
-    ListType
-  {
-    private final List<SExpressionType> data;
-    private final File                  file;
-    private final Position              position;
-
-    PList(
-      final List<SExpressionType> d,
-      final Position p,
-      final File f)
-    {
-      this.data = NullCheck.notNull(d);
-      this.position = NullCheck.notNull(p);
-      this.file = NullCheck.notNull(f);
-    }
-
-    @Override public void add(
-      final int index,
-      final @Nullable SExpressionType element)
-    {
-      this.data.add(index, NullCheck.notNull(element));
-    }
-
-    @Override public SExpressionType get(
-      final int index)
-    {
-      return NullCheck.notNull(this.data.get(index));
-    }
-
-    @Override public File getFile()
-    {
-      return this.file;
-    }
-
-    @Override public Position getPosition()
-    {
-      return this.position;
-    }
-
-    @Override public <A, E extends Exception> A matchExpression(
-      final SExpressionMatcherType<A, E> m)
-      throws E
-    {
-      return m.list(this);
-    }
-
-    @Override public SExpressionType remove(
-      final int index)
-    {
-      return NullCheck.notNull(this.data.remove(index));
-    }
-
-    @Override public SExpressionType set(
-      final int index,
-      final @Nullable SExpressionType element)
-    {
-      return NullCheck.notNull(this.data.set(
-        index,
-        NullCheck.notNull(element)));
-    }
-
-    @Override public int size()
-    {
-      return this.data.size();
-    }
-  }
-
-  private static final class PQuotedString implements QuotedStringType
-  {
-    private final File     file;
-    private final Position position;
-    private final String   text;
-
-    PQuotedString(
-      final String t,
-      final Position p,
-      final File f)
-    {
-      this.text = NullCheck.notNull(t);
-      this.position = NullCheck.notNull(p);
-      this.file = NullCheck.notNull(f);
-    }
-
-    @Override public File getFile()
-    {
-      return this.file;
-    }
-
-    @Override public Position getPosition()
-    {
-      return this.position;
-    }
-
-    @Override public String getText()
-    {
-      return this.text;
-    }
-
-    @Override public <A, E extends Exception> A matchExpression(
-      final SExpressionMatcherType<A, E> m)
-      throws E
-    {
-      return m.quotedString(this);
-    }
-  }
-
-  private static final class PSymbol implements SymbolType
-  {
-    private final File     file;
-    private final Position position;
-    private final String   text;
-
-    PSymbol(
-      final String t,
-      final Position p,
-      final File f)
-    {
-      this.text = NullCheck.notNull(t);
-      this.position = NullCheck.notNull(p);
-      this.file = NullCheck.notNull(f);
-    }
-
-    @Override public File getFile()
-    {
-      return this.file;
-    }
-
-    @Override public Position getPosition()
-    {
-      return this.position;
-    }
-
-    @Override public String getText()
-    {
-      return this.text;
-    }
-
-    @Override public <A, E extends Exception> A matchExpression(
-      final SExpressionMatcherType<A, E> m)
-      throws E
-    {
-      return m.symbol(this);
-    }
-  }
-
   private static final File FILE_NONE = new File("<none>");
 
   private static QuotedStringType completeQuotedString(
@@ -232,6 +85,37 @@ public final class Parser implements ParserType
       "Unbalanced parentheses (unexpected ')')");
   }
 
+  private static
+    ParserGrammarException
+    errorUnexpectedRightParenWantedSquare(
+      final TokenRightParenthesis t)
+  {
+    return new ParserGrammarException(
+      t.getPosition(),
+      t.getFile(),
+      "Attempted to end a list started with '[' with ')' - unbalanced round/square brackets");
+  }
+
+  private static ParserGrammarException errorUnexpectedRightSquare(
+    final TokenRightSquare t)
+  {
+    return new ParserGrammarException(
+      t.getPosition(),
+      t.getFile(),
+      "Unbalanced parentheses (unexpected ']')");
+  }
+
+  private static
+    ParserGrammarException
+    errorUnexpectedRightSquareWantedParens(
+      final TokenRightSquare t)
+  {
+    return new ParserGrammarException(
+      t.getPosition(),
+      t.getFile(),
+      "Attempted to end a list started with '(' with ']' - unbalanced round/square brackets");
+  }
+
   public static ParserType newParser(
     final ParserConfiguration pc,
     final LexerType lex)
@@ -248,7 +132,13 @@ public final class Parser implements ParserType
       ParserGrammarException
   {
     if (peek instanceof TokenLeftParenthesis) {
-      return Parser.parseList(c, lexer, (TokenLeftParenthesis) peek);
+      return Parser.parseListParens(c, lexer, (TokenLeftParenthesis) peek);
+    }
+    if (peek instanceof TokenLeftSquare) {
+      return Parser.parseListSquares(c, lexer, (TokenLeftSquare) peek);
+    }
+    if (peek instanceof TokenRightSquare) {
+      throw Parser.errorUnexpectedRightSquare((TokenRightSquare) peek);
     }
     if (peek instanceof TokenRightParenthesis) {
       throw Parser.errorUnexpectedRightParen((TokenRightParenthesis) peek);
@@ -266,7 +156,7 @@ public final class Parser implements ParserType
     throw new UnreachableCodeException();
   }
 
-  private static SExpressionType parseList(
+  private static SExpressionType parseListParens(
     final ParserConfiguration c,
     final LexerType lexer,
     final TokenLeftParenthesis peek)
@@ -280,13 +170,15 @@ public final class Parser implements ParserType
         new PList(
           new ArrayList<SExpressionType>(),
           peek.getPosition(),
-          peek.getFile());
+          peek.getFile(),
+          false);
     } else {
       xs =
         new PList(
           new ArrayList<SExpressionType>(),
           Position.ZERO,
-          Parser.FILE_NONE);
+          Parser.FILE_NONE,
+          false);
     }
 
     for (;;) {
@@ -295,6 +187,51 @@ public final class Parser implements ParserType
         throw Parser.errorUnexpectedEOF((TokenEOF) t);
       }
       if (t instanceof TokenRightParenthesis) {
+        return xs;
+      }
+      if (t instanceof TokenRightSquare) {
+        throw Parser
+          .errorUnexpectedRightSquareWantedParens((TokenRightSquare) t);
+      }
+      xs.add(Parser.parseExpressionPeeked(c, lexer, t));
+    }
+  }
+
+  private static SExpressionType parseListSquares(
+    final ParserConfiguration c,
+    final LexerType lexer,
+    final TokenLeftSquare peek)
+    throws LexerException,
+      IOException,
+      ParserGrammarException
+  {
+    final PList xs;
+    if (c.preserveLexicalInformation()) {
+      xs =
+        new PList(
+          new ArrayList<SExpressionType>(),
+          peek.getPosition(),
+          peek.getFile(),
+          true);
+    } else {
+      xs =
+        new PList(
+          new ArrayList<SExpressionType>(),
+          Position.ZERO,
+          Parser.FILE_NONE,
+          true);
+    }
+
+    for (;;) {
+      final TokenType t = lexer.token();
+      if (t instanceof TokenEOF) {
+        throw Parser.errorUnexpectedEOF((TokenEOF) t);
+      }
+      if (t instanceof TokenRightParenthesis) {
+        throw Parser
+          .errorUnexpectedRightParenWantedSquare((TokenRightParenthesis) t);
+      }
+      if (t instanceof TokenRightSquare) {
         return xs;
       }
       xs.add(Parser.parseExpressionPeeked(c, lexer, t));
@@ -319,6 +256,25 @@ public final class Parser implements ParserType
     try {
       final TokenType peek = this.lexer.token();
       return Parser.parseExpressionPeeked(this.config, this.lexer, peek);
+    } catch (final LexerException e) {
+      throw new ParserLexicalException(e);
+    }
+  }
+
+  @Override public OptionType<SExpressionType> parseExpressionOrEOF()
+    throws ParserException,
+      IOException
+  {
+    try {
+      final TokenType peek = this.lexer.token();
+      if (peek instanceof TokenEOF) {
+        return Option.none();
+      }
+
+      return Option.some(Parser.parseExpressionPeeked(
+        this.config,
+        this.lexer,
+        peek));
     } catch (final LexerException e) {
       throw new ParserLexicalException(e);
     }

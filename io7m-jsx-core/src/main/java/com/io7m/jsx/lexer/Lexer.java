@@ -1,10 +1,10 @@
 /*
  * Copyright © 2015 <code@io7m.com> http://io7m.com
- *
+ * 
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
  * copyright notice and this permission notice appear in all copies.
- *
+ * 
  * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
  * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
@@ -23,8 +23,10 @@ import com.io7m.jeucreader.UnicodeCharacterReaderPushBackType;
 import com.io7m.jnull.NullCheck;
 import com.io7m.jsx.tokens.TokenEOF;
 import com.io7m.jsx.tokens.TokenLeftParenthesis;
+import com.io7m.jsx.tokens.TokenLeftSquare;
 import com.io7m.jsx.tokens.TokenQuotedString;
 import com.io7m.jsx.tokens.TokenRightParenthesis;
+import com.io7m.jsx.tokens.TokenRightSquare;
 import com.io7m.jsx.tokens.TokenSymbol;
 import com.io7m.jsx.tokens.TokenType;
 import com.io7m.junreachable.UnreachableCodeException;
@@ -371,6 +373,17 @@ public final class Lexer implements LexerType
         if (c == ')') {
           return new TokenRightParenthesis(this.getFile(), this.getPosition());
         }
+        if (c == '[') {
+          if (this.config.allowSquareBrackets()) {
+            return new TokenLeftSquare(this.getFile(), this.getPosition());
+          }
+        }
+        if (c == ']') {
+          if (this.config.allowSquareBrackets()) {
+            return new TokenRightSquare(this.getFile(), this.getPosition());
+          }
+        }
+
         if (Character.isSpaceChar(c)) {
           return this.token();
         }
@@ -438,6 +451,19 @@ public final class Lexer implements LexerType
           this.reader.pushCodePoint(c);
           return this.completeSymbol();
         }
+        if (c == '[') {
+          if (this.config.allowSquareBrackets()) {
+            this.reader.pushCodePoint(c);
+            return this.completeSymbol();
+          }
+        }
+        if (c == ']') {
+          if (this.config.allowSquareBrackets()) {
+            this.reader.pushCodePoint(c);
+            return this.completeSymbol();
+          }
+        }
+
         if (Character.isSpaceChar(c)) {
           return this.completeSymbol();
         }
