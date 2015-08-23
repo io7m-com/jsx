@@ -2,18 +2,18 @@
 <c:changelog xmlns:c="http://schemas.io7m.com/changelog/2.0.0">
   <c:project>io7m-jsx</c:project>
 
-  <c:release c:ticket-system="com.io7m.fossil.jsx">
-    <c:date>2015-02-22</c:date>
-    <c:version>0.1.0</c:version>
+  <c:release c:ticket-system="com.github.io7m.jsx">
+    <c:date>2015-08-23</c:date>
+    <c:version>1.0.0</c:version>
     <c:item>
-      <c:date>2015-02-22</c:date>
+      <c:date>2015-08-23</c:date>
       <c:type-code-new/>
       <c:summary>Initial release.</c:summary>
     </c:item>
   </c:release>
 
-  <c:ticket-system xml:id="com.io7m.fossil.jsx">
-    <c:ticket-url>http://fossil.io7m.com/repo.cgi/io7m-jsx/tktview?name=</c:ticket-url>
+  <c:ticket-system xml:id="com.github.io7m.jsx">
+    <c:ticket-url>http://github.com/io7m/jsx/issues/</c:ticket-url>
   </c:ticket-system>
-</c:changelog>
 
+</c:changelog>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document
+  xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+
+  <properties>
+    <title>io7m-jsx</title>
+  </properties>
+
+  <body>
+    <subsection name="jsx">
+      <p>
+        The <var>jsx</var> package implements a configurable S-expression parser.
+      </p>
+      <p>
+        <pre>(f (g (x y)))</pre>
+      </p>
+      <p>
+        The parser can be configured to optionally accept/reject
+        various syntactic features such as multi-line strings and
+        square brackets.
+      </p>
+    </subsection>
+    <subsection name="Features">
+      <ul>
+        <li>Hand-coded lexer and parser with full support for tokens using characters outside of the Unicode BMP</li>
+        <li>Optional square brackets <pre>[f (g [x y])]</pre></li>
+        <li>Optional multi-line strings</li>
+        <li>Fully documented (Javadoc) and expression language specification.</li>
+        <li>ISC license.</li>
+      </ul>
+    </subsection>
+  </body>
+
+</document>
