@@ -1,10 +1,5 @@
 package com.io7m.jsx.tests.lexer;
 
-import java.io.StringReader;
-
-import org.junit.Assert;
-import org.junit.Test;
-
 import com.io7m.jeucreader.UnicodeCharacterReader;
 import com.io7m.jeucreader.UnicodeCharacterReaderPushBackType;
 import com.io7m.jsx.lexer.Lexer;
@@ -24,8 +19,12 @@ import com.io7m.jsx.tokens.TokenQuotedString;
 import com.io7m.jsx.tokens.TokenRightParenthesis;
 import com.io7m.jsx.tokens.TokenRightSquare;
 import com.io7m.jsx.tokens.TokenSymbol;
+import org.junit.Assert;
+import org.junit.Test;
 
-@SuppressWarnings({ "null", "static-method" }) public final class LexerTest
+import java.io.StringReader;
+
+public final class LexerTest
 {
   private static UnicodeCharacterReaderPushBackType stringReader(
     final String s)
@@ -48,8 +47,8 @@ import com.io7m.jsx.tokens.TokenSymbol;
     final TokenLeftParenthesis t = (TokenLeftParenthesis) lex.token();
     System.out.println(t);
 
-    Assert.assertEquals(0, t.getPosition().getLine());
-    Assert.assertEquals(1, t.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) t.getPosition().getLine());
+    Assert.assertEquals(1L, (long) t.getPosition().getColumn());
   }
 
   @Test public void testLeftSquare_0()
@@ -60,8 +59,8 @@ import com.io7m.jsx.tokens.TokenSymbol;
     final TokenLeftSquare t = (TokenLeftSquare) lex.token();
     System.out.println(t);
 
-    Assert.assertEquals(0, t.getPosition().getLine());
-    Assert.assertEquals(1, t.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) t.getPosition().getLine());
+    Assert.assertEquals(1L, (long) t.getPosition().getColumn());
   }
 
   @Test public void testLeftSquare_1()
@@ -74,8 +73,8 @@ import com.io7m.jsx.tokens.TokenSymbol;
     final TokenSymbol t = (TokenSymbol) lex.token();
     System.out.println(t);
 
-    Assert.assertEquals(0, t.getPosition().getLine());
-    Assert.assertEquals(1, t.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) t.getPosition().getLine());
+    Assert.assertEquals(1L, (long) t.getPosition().getColumn());
   }
 
   @Test public void testLeftSquare_2()
@@ -88,8 +87,8 @@ import com.io7m.jsx.tokens.TokenSymbol;
     final TokenSymbol t = (TokenSymbol) lex.token();
     System.out.println(t);
 
-    Assert.assertEquals(0, t.getPosition().getLine());
-    Assert.assertEquals(1, t.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) t.getPosition().getLine());
+    Assert.assertEquals(1L, (long) t.getPosition().getColumn());
   }
 
   @Test public void testLeftSquare_3()
@@ -103,8 +102,8 @@ import com.io7m.jsx.tokens.TokenSymbol;
     final TokenLeftSquare t1 = (TokenLeftSquare) lex.token();
     System.out.println(t0);
 
-    Assert.assertEquals(0, t0.getPosition().getLine());
-    Assert.assertEquals(1, t0.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) t0.getPosition().getLine());
+    Assert.assertEquals(1L, (long) t0.getPosition().getColumn());
   }
 
   @Test public void testNewline_0()
@@ -115,8 +114,8 @@ import com.io7m.jsx.tokens.TokenSymbol;
     final TokenEOF t = (TokenEOF) lex.token();
     System.out.println(t);
 
-    Assert.assertEquals(0, t.getPosition().getLine());
-    Assert.assertEquals(1, t.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) t.getPosition().getLine());
+    Assert.assertEquals(1L, (long) t.getPosition().getColumn());
   }
 
   @Test public void testNewline_1()
@@ -127,8 +126,8 @@ import com.io7m.jsx.tokens.TokenSymbol;
     final TokenEOF t = (TokenEOF) lex.token();
     System.out.println(t);
 
-    Assert.assertEquals(1, t.getPosition().getLine());
-    Assert.assertEquals(0, t.getPosition().getColumn());
+    Assert.assertEquals(1L, (long) t.getPosition().getLine());
+    Assert.assertEquals(0L, (long) t.getPosition().getColumn());
   }
 
   @Test public void testNewline_2()
@@ -139,8 +138,8 @@ import com.io7m.jsx.tokens.TokenSymbol;
     final TokenEOF t = (TokenEOF) lex.token();
     System.out.println(t);
 
-    Assert.assertEquals(1, t.getPosition().getLine());
-    Assert.assertEquals(0, t.getPosition().getColumn());
+    Assert.assertEquals(1L, (long) t.getPosition().getLine());
+    Assert.assertEquals(0L, (long) t.getPosition().getColumn());
   }
 
   @Test(expected = LexerUnexpectedEOFException.class) public
@@ -172,8 +171,8 @@ import com.io7m.jsx.tokens.TokenSymbol;
     final TokenQuotedString t = (TokenQuotedString) lex.token();
     System.out.println(t);
 
-    Assert.assertEquals(0, t.getPosition().getLine());
-    Assert.assertEquals(1, t.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) t.getPosition().getLine());
+    Assert.assertEquals(1L, (long) t.getPosition().getColumn());
 
     final String text = t.getText();
     Assert.assertEquals(text, "abcd");
@@ -193,8 +192,8 @@ import com.io7m.jsx.tokens.TokenSymbol;
     final LexerType lex = Lexer.newLexer(c, LexerTest.stringReader(s));
     final TokenQuotedString t0 = (TokenQuotedString) lex.token();
     System.out.println(t0);
-    Assert.assertEquals(0, t0.getPosition().getLine());
-    Assert.assertEquals(1, t0.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) t0.getPosition().getLine());
+    Assert.assertEquals(1L, (long) t0.getPosition().getColumn());
     final String text0 = t0.getText();
     Assert
       .assertEquals(text0, "ຂອ້ຍກິນແກ້ວໄດ້ໂດຍທີ່ມັນບໍ່ໄດ້ເຮັດໃຫ້ຂອ້ຍເຈັບ");
@@ -215,8 +214,8 @@ import com.io7m.jsx.tokens.TokenSymbol;
     final LexerType lex = Lexer.newLexer(c, LexerTest.stringReader(s));
     final TokenQuotedString t0 = (TokenQuotedString) lex.token();
     System.out.println(t0);
-    Assert.assertEquals(0, t0.getPosition().getLine());
-    Assert.assertEquals(1, t0.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) t0.getPosition().getLine());
+    Assert.assertEquals(1L, (long) t0.getPosition().getColumn());
     final String text0 = t0.getText();
     Assert.assertEquals(text0, "\\");
   }
@@ -230,8 +229,8 @@ import com.io7m.jsx.tokens.TokenSymbol;
     final TokenQuotedString t = (TokenQuotedString) lex.token();
     System.out.println(t);
 
-    Assert.assertEquals(0, t.getPosition().getLine());
-    Assert.assertEquals(1, t.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) t.getPosition().getLine());
+    Assert.assertEquals(1L, (long) t.getPosition().getColumn());
 
     final String text = t.getText();
     Assert.assertEquals(text, "\r");
@@ -257,8 +256,8 @@ import com.io7m.jsx.tokens.TokenSymbol;
     final TokenQuotedString t = (TokenQuotedString) lex.token();
     System.out.println(t);
 
-    Assert.assertEquals(0, t.getPosition().getLine());
-    Assert.assertEquals(1, t.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) t.getPosition().getLine());
+    Assert.assertEquals(1L, (long) t.getPosition().getColumn());
 
     final String text = t.getText();
     Assert.assertEquals(text, "\n");
@@ -317,8 +316,8 @@ import com.io7m.jsx.tokens.TokenSymbol;
     final TokenQuotedString t = (TokenQuotedString) lex.token();
     System.out.println(t);
 
-    Assert.assertEquals(0, t.getPosition().getLine());
-    Assert.assertEquals(1, t.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) t.getPosition().getLine());
+    Assert.assertEquals(1L, (long) t.getPosition().getColumn());
 
     final String text = t.getText();
     Assert.assertEquals(text, "\r");
@@ -339,8 +338,8 @@ import com.io7m.jsx.tokens.TokenSymbol;
     final TokenQuotedString t = (TokenQuotedString) lex.token();
     System.out.println(t);
 
-    Assert.assertEquals(0, t.getPosition().getLine());
-    Assert.assertEquals(1, t.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) t.getPosition().getLine());
+    Assert.assertEquals(1L, (long) t.getPosition().getColumn());
 
     final String text = t.getText();
     Assert.assertEquals(text, "\n");
@@ -361,8 +360,8 @@ import com.io7m.jsx.tokens.TokenSymbol;
     final TokenQuotedString t = (TokenQuotedString) lex.token();
     System.out.println(t);
 
-    Assert.assertEquals(0, t.getPosition().getLine());
-    Assert.assertEquals(1, t.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) t.getPosition().getLine());
+    Assert.assertEquals(1L, (long) t.getPosition().getColumn());
 
     final String text = t.getText();
     Assert.assertEquals(text, "" + '"');
@@ -387,8 +386,8 @@ import com.io7m.jsx.tokens.TokenSymbol;
     final TokenQuotedString t = (TokenQuotedString) lex.token();
     System.out.println(t);
 
-    Assert.assertEquals(0, t.getPosition().getLine());
-    Assert.assertEquals(1, t.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) t.getPosition().getLine());
+    Assert.assertEquals(1L, (long) t.getPosition().getColumn());
 
     final String text = t.getText();
     Assert.assertEquals(text, "\t");
@@ -403,8 +402,8 @@ import com.io7m.jsx.tokens.TokenSymbol;
     final TokenQuotedString t = (TokenQuotedString) lex.token();
     System.out.println(t);
 
-    Assert.assertEquals(0, t.getPosition().getLine());
-    Assert.assertEquals(1, t.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) t.getPosition().getLine());
+    Assert.assertEquals(1L, (long) t.getPosition().getColumn());
 
     final String text = t.getText();
     Assert.assertEquals(text, "\0");
@@ -419,8 +418,8 @@ import com.io7m.jsx.tokens.TokenSymbol;
     final TokenQuotedString t = (TokenQuotedString) lex.token();
     System.out.println(t);
 
-    Assert.assertEquals(0, t.getPosition().getLine());
-    Assert.assertEquals(1, t.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) t.getPosition().getLine());
+    Assert.assertEquals(1L, (long) t.getPosition().getColumn());
 
     final String text = t.getText();
     Assert.assertEquals(text, "\uffff");
@@ -435,8 +434,8 @@ import com.io7m.jsx.tokens.TokenSymbol;
     final TokenQuotedString t = (TokenQuotedString) lex.token();
     System.out.println(t);
 
-    Assert.assertEquals(0, t.getPosition().getLine());
-    Assert.assertEquals(1, t.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) t.getPosition().getLine());
+    Assert.assertEquals(1L, (long) t.getPosition().getColumn());
 
     final String text = t.getText();
     Assert.assertEquals(text, "\0");
@@ -451,8 +450,8 @@ import com.io7m.jsx.tokens.TokenSymbol;
     final TokenQuotedString t = (TokenQuotedString) lex.token();
     System.out.println(t);
 
-    Assert.assertEquals(0, t.getPosition().getLine());
-    Assert.assertEquals(1, t.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) t.getPosition().getLine());
+    Assert.assertEquals(1L, (long) t.getPosition().getColumn());
 
     final String text = t.getText();
 
@@ -491,8 +490,8 @@ import com.io7m.jsx.tokens.TokenSymbol;
     final TokenRightParenthesis t = (TokenRightParenthesis) lex.token();
     System.out.println(t);
 
-    Assert.assertEquals(0, t.getPosition().getLine());
-    Assert.assertEquals(1, t.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) t.getPosition().getLine());
+    Assert.assertEquals(1L, (long) t.getPosition().getColumn());
   }
 
   @Test public void testRightSquare_0()
@@ -503,8 +502,8 @@ import com.io7m.jsx.tokens.TokenSymbol;
     final TokenRightSquare t = (TokenRightSquare) lex.token();
     System.out.println(t);
 
-    Assert.assertEquals(0, t.getPosition().getLine());
-    Assert.assertEquals(1, t.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) t.getPosition().getLine());
+    Assert.assertEquals(1L, (long) t.getPosition().getColumn());
   }
 
   @Test public void testRightSquare_1()
@@ -517,8 +516,8 @@ import com.io7m.jsx.tokens.TokenSymbol;
     final TokenSymbol t = (TokenSymbol) lex.token();
     System.out.println(t);
 
-    Assert.assertEquals(0, t.getPosition().getLine());
-    Assert.assertEquals(1, t.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) t.getPosition().getLine());
+    Assert.assertEquals(1L, (long) t.getPosition().getColumn());
   }
 
   @Test public void testRightSquare_2()
@@ -531,8 +530,8 @@ import com.io7m.jsx.tokens.TokenSymbol;
     final TokenSymbol t = (TokenSymbol) lex.token();
     System.out.println(t);
 
-    Assert.assertEquals(0, t.getPosition().getLine());
-    Assert.assertEquals(1, t.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) t.getPosition().getLine());
+    Assert.assertEquals(1L, (long) t.getPosition().getColumn());
   }
 
   @Test public void testRightSquare_3()
@@ -546,8 +545,8 @@ import com.io7m.jsx.tokens.TokenSymbol;
     final TokenRightSquare t1 = (TokenRightSquare) lex.token();
     System.out.println(t0);
 
-    Assert.assertEquals(0, t0.getPosition().getLine());
-    Assert.assertEquals(1, t0.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) t0.getPosition().getLine());
+    Assert.assertEquals(1L, (long) t0.getPosition().getColumn());
   }
 
   @Test public void testSymbol_0()
@@ -558,15 +557,15 @@ import com.io7m.jsx.tokens.TokenSymbol;
       Lexer.newLexer(c, LexerTest.stringReader("abcd efgh"));
     final TokenSymbol t0 = (TokenSymbol) lex.token();
     System.out.println(t0);
-    Assert.assertEquals(0, t0.getPosition().getLine());
-    Assert.assertEquals(1, t0.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) t0.getPosition().getLine());
+    Assert.assertEquals(1L, (long) t0.getPosition().getColumn());
     final String text0 = t0.getText();
     Assert.assertEquals(text0, "abcd");
 
     final TokenSymbol t1 = (TokenSymbol) lex.token();
     System.out.println(t1);
-    Assert.assertEquals(0, t1.getPosition().getLine());
-    Assert.assertEquals(6, t1.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) t1.getPosition().getLine());
+    Assert.assertEquals(6L, (long) t1.getPosition().getColumn());
     final String text1 = t1.getText();
     Assert.assertEquals(text1, "efgh");
   }
@@ -579,15 +578,15 @@ import com.io7m.jsx.tokens.TokenSymbol;
       Lexer.newLexer(c, LexerTest.stringReader("abcd\nefgh"));
     final TokenSymbol t0 = (TokenSymbol) lex.token();
     System.out.println(t0);
-    Assert.assertEquals(0, t0.getPosition().getLine());
-    Assert.assertEquals(1, t0.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) t0.getPosition().getLine());
+    Assert.assertEquals(1L, (long) t0.getPosition().getColumn());
     final String text0 = t0.getText();
     Assert.assertEquals(text0, "abcd");
 
     final TokenSymbol t1 = (TokenSymbol) lex.token();
     System.out.println(t1);
-    Assert.assertEquals(1, t1.getPosition().getLine());
-    Assert.assertEquals(1, t1.getPosition().getColumn());
+    Assert.assertEquals(1L, (long) t1.getPosition().getLine());
+    Assert.assertEquals(1L, (long) t1.getPosition().getColumn());
     final String text1 = t1.getText();
     Assert.assertEquals(text1, "efgh");
   }
@@ -600,15 +599,15 @@ import com.io7m.jsx.tokens.TokenSymbol;
       Lexer.newLexer(c, LexerTest.stringReader("abcd\r\nefgh"));
     final TokenSymbol t0 = (TokenSymbol) lex.token();
     System.out.println(t0);
-    Assert.assertEquals(0, t0.getPosition().getLine());
-    Assert.assertEquals(1, t0.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) t0.getPosition().getLine());
+    Assert.assertEquals(1L, (long) t0.getPosition().getColumn());
     final String text0 = t0.getText();
     Assert.assertEquals(text0, "abcd");
 
     final TokenSymbol t1 = (TokenSymbol) lex.token();
     System.out.println(t1);
-    Assert.assertEquals(1, t1.getPosition().getLine());
-    Assert.assertEquals(1, t1.getPosition().getColumn());
+    Assert.assertEquals(1L, (long) t1.getPosition().getLine());
+    Assert.assertEquals(1L, (long) t1.getPosition().getColumn());
     final String text1 = t1.getText();
     Assert.assertEquals(text1, "efgh");
   }
@@ -621,20 +620,20 @@ import com.io7m.jsx.tokens.TokenSymbol;
       Lexer.newLexer(c, LexerTest.stringReader("abcd(efgh"));
     final TokenSymbol t0 = (TokenSymbol) lex.token();
     System.out.println(t0);
-    Assert.assertEquals(0, t0.getPosition().getLine());
-    Assert.assertEquals(1, t0.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) t0.getPosition().getLine());
+    Assert.assertEquals(1L, (long) t0.getPosition().getColumn());
     final String text0 = t0.getText();
     Assert.assertEquals(text0, "abcd");
 
     final TokenLeftParenthesis tlp0 = (TokenLeftParenthesis) lex.token();
     System.out.println(tlp0);
-    Assert.assertEquals(0, tlp0.getPosition().getLine());
-    Assert.assertEquals(6, tlp0.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) tlp0.getPosition().getLine());
+    Assert.assertEquals(6L, (long) tlp0.getPosition().getColumn());
 
     final TokenSymbol t1 = (TokenSymbol) lex.token();
     System.out.println(t1);
-    Assert.assertEquals(0, t1.getPosition().getLine());
-    Assert.assertEquals(7, t1.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) t1.getPosition().getLine());
+    Assert.assertEquals(7L, (long) t1.getPosition().getColumn());
     final String text1 = t1.getText();
     Assert.assertEquals(text1, "efgh");
   }
@@ -647,20 +646,20 @@ import com.io7m.jsx.tokens.TokenSymbol;
       Lexer.newLexer(c, LexerTest.stringReader("abcd)efgh"));
     final TokenSymbol t0 = (TokenSymbol) lex.token();
     System.out.println(t0);
-    Assert.assertEquals(0, t0.getPosition().getLine());
-    Assert.assertEquals(1, t0.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) t0.getPosition().getLine());
+    Assert.assertEquals(1L, (long) t0.getPosition().getColumn());
     final String text0 = t0.getText();
     Assert.assertEquals(text0, "abcd");
 
     final TokenRightParenthesis tlp0 = (TokenRightParenthesis) lex.token();
     System.out.println(tlp0);
-    Assert.assertEquals(0, tlp0.getPosition().getLine());
-    Assert.assertEquals(6, tlp0.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) tlp0.getPosition().getLine());
+    Assert.assertEquals(6L, (long) tlp0.getPosition().getColumn());
 
     final TokenSymbol t1 = (TokenSymbol) lex.token();
     System.out.println(t1);
-    Assert.assertEquals(0, t1.getPosition().getLine());
-    Assert.assertEquals(7, t1.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) t1.getPosition().getLine());
+    Assert.assertEquals(7L, (long) t1.getPosition().getColumn());
     final String text1 = t1.getText();
     Assert.assertEquals(text1, "efgh");
   }
@@ -673,20 +672,20 @@ import com.io7m.jsx.tokens.TokenSymbol;
       Lexer.newLexer(c, LexerTest.stringReader("abcd\"\"efgh"));
     final TokenSymbol t0 = (TokenSymbol) lex.token();
     System.out.println(t0);
-    Assert.assertEquals(0, t0.getPosition().getLine());
-    Assert.assertEquals(1, t0.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) t0.getPosition().getLine());
+    Assert.assertEquals(1L, (long) t0.getPosition().getColumn());
     final String text0 = t0.getText();
     Assert.assertEquals(text0, "abcd");
 
     final TokenQuotedString tlp0 = (TokenQuotedString) lex.token();
     System.out.println(tlp0);
-    Assert.assertEquals(0, tlp0.getPosition().getLine());
-    Assert.assertEquals(6, tlp0.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) tlp0.getPosition().getLine());
+    Assert.assertEquals(6L, (long) tlp0.getPosition().getColumn());
 
     final TokenSymbol t1 = (TokenSymbol) lex.token();
     System.out.println(t1);
-    Assert.assertEquals(0, t1.getPosition().getLine());
-    Assert.assertEquals(8, t1.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) t1.getPosition().getLine());
+    Assert.assertEquals(8L, (long) t1.getPosition().getColumn());
     final String text1 = t1.getText();
     Assert.assertEquals(text1, "efgh");
   }
@@ -700,8 +699,8 @@ import com.io7m.jsx.tokens.TokenSymbol;
         .stringReader("ຂອ້ຍກິນແກ້ວໄດ້ໂດຍທີ່ມັນບໍ່ໄດ້ເຮັດໃຫ້ຂອ້ຍເຈັບ"));
     final TokenSymbol t0 = (TokenSymbol) lex.token();
     System.out.println(t0);
-    Assert.assertEquals(0, t0.getPosition().getLine());
-    Assert.assertEquals(1, t0.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) t0.getPosition().getLine());
+    Assert.assertEquals(1L, (long) t0.getPosition().getColumn());
     final String text0 = t0.getText();
     Assert
       .assertEquals(text0, "ຂອ້ຍກິນແກ້ວໄດ້ໂດຍທີ່ມັນບໍ່ໄດ້ເຮັດໃຫ້ຂອ້ຍເຈັບ");

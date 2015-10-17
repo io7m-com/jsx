@@ -16,20 +16,33 @@
 
 package com.io7m.jsx.lexer;
 
-import java.io.File;
-
 import com.io7m.jnull.NullCheck;
 import com.io7m.jsx.JSXException;
+
+import java.nio.file.Path;
+import java.util.Optional;
+
+/**
+ * The type of exceptions raised by the lexer.
+ */
 
 public abstract class LexerException extends JSXException
 {
   private static final long serialVersionUID = -5821503109066196034L;
-  private final File        file;
-  private final Position    position;
+  private final Optional<Path> file;
+  private final Position       position;
+
+  /**
+   * Construct an exception.
+   *
+   * @param in_position The position
+   * @param in_file     The file, if any
+   * @param in_message  The exception message
+   */
 
   public LexerException(
     final Position in_position,
-    final File in_file,
+    final Optional<Path> in_file,
     final String in_message)
   {
     super(NullCheck.notNull(in_message));
@@ -37,12 +50,20 @@ public abstract class LexerException extends JSXException
     this.file = NullCheck.notNull(in_file);
   }
 
-  public File getFile()
+  /**
+   * @return The file, if any
+   */
+
+  public final Optional<Path> getFile()
   {
     return this.file;
   }
 
-  public Position getPosition()
+  /**
+   * @return The position of the problematic token
+   */
+
+  public final Position getPosition()
   {
     return this.position;
   }

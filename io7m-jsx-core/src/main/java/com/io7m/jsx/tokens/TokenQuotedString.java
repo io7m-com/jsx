@@ -16,10 +16,11 @@
 
 package com.io7m.jsx.tokens;
 
-import java.io.File;
-
 import com.io7m.jnull.NullCheck;
 import com.io7m.jsx.lexer.Position;
+
+import java.nio.file.Path;
+import java.util.Optional;
 
 /**
  * A quoted string.
@@ -27,21 +28,18 @@ import com.io7m.jsx.lexer.Position;
 
 public final class TokenQuotedString implements TokenType
 {
-  private final File     file;
-  private final Position position;
-  private final String   text;
+  private final Optional<Path> file;
+  private final Position       position;
+  private final String         text;
 
   /**
-   * @param in_file
-   *          The token file
-   * @param in_position
-   *          The token position
-   * @param in_text
-   *          The token text
+   * @param in_file     The token file
+   * @param in_position The token position
+   * @param in_text     The token text
    */
 
   public TokenQuotedString(
-    final File in_file,
+    final Optional<Path> in_file,
     final Position in_position,
     final String in_text)
   {
@@ -50,7 +48,7 @@ public final class TokenQuotedString implements TokenType
     this.text = NullCheck.notNull(in_text);
   }
 
-  @Override public File getFile()
+  @Override public Optional<Path> getFile()
   {
     return this.file;
   }
@@ -59,6 +57,10 @@ public final class TokenQuotedString implements TokenType
   {
     return this.position;
   }
+
+  /**
+   * @return The text content of the token
+   */
 
   public String getText()
   {
@@ -74,7 +76,7 @@ public final class TokenQuotedString implements TokenType
 
   @Override public String toString()
   {
-    final StringBuilder builder = new StringBuilder();
+    final StringBuilder builder = new StringBuilder(64);
     builder.append("[TokenQuotedString file=");
     builder.append(this.file);
     builder.append(" position=");

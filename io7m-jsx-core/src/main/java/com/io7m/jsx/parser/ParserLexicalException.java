@@ -19,14 +19,27 @@ package com.io7m.jsx.parser;
 import com.io7m.jnull.NullCheck;
 import com.io7m.jsx.lexer.LexerException;
 
+/**
+ * The type of parser errors caused by {@link LexerException} throws.
+ */
+
 public final class ParserLexicalException extends ParserException
 {
   private static final long serialVersionUID = 7904039867120509695L;
 
+  /**
+   * Construct an exception.
+   *
+   * @param in_cause The cause
+   */
+
   public ParserLexicalException(
     final LexerException in_cause)
   {
-    super(in_cause.getPosition(), in_cause.getFile(), NullCheck
-      .notNull(in_cause.getMessage()), in_cause);
+    super(
+      in_cause.getPosition(),
+      in_cause.getFile(),
+      NullCheck.notNull(in_cause.getMessage()),
+      in_cause);
   }
 }

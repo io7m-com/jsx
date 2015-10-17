@@ -19,10 +19,8 @@ package com.io7m.jsx.tokens;
 /**
  * The type of token matchers.
  *
- * @param <A>
- *          The type of returned values
- * @param <E>
- *          The type of raised exceptions
+ * @param <A> The type of returned values
+ * @param <E> The type of raised exceptions
  */
 
 public interface TokenMatcherType<A, E extends Exception>
@@ -30,11 +28,11 @@ public interface TokenMatcherType<A, E extends Exception>
   /**
    * Match a token.
    *
-   * @param t
-   *          The token
-   * @return A value of <code>A</code>
-   * @throws E
-   *           If required
+   * @param t The token
+   *
+   * @return A value of {@code A}
+   *
+   * @throws E If required
    */
 
   A eof(
@@ -44,11 +42,11 @@ public interface TokenMatcherType<A, E extends Exception>
   /**
    * Match a token.
    *
-   * @param t
-   *          The token
-   * @return A value of <code>A</code>
-   * @throws E
-   *           If required
+   * @param t The token
+   *
+   * @return A value of {@code A}
+   *
+   * @throws E If required
    */
 
   A leftParen(
@@ -58,11 +56,11 @@ public interface TokenMatcherType<A, E extends Exception>
   /**
    * Match a token.
    *
-   * @param t
-   *          The token
-   * @return A value of <code>A</code>
-   * @throws E
-   *           If required
+   * @param t The token
+   *
+   * @return A value of {@code A}
+   *
+   * @throws E If required
    */
 
   A leftSquare(
@@ -72,11 +70,11 @@ public interface TokenMatcherType<A, E extends Exception>
   /**
    * Match a token.
    *
-   * @param t
-   *          The token
-   * @return A value of <code>A</code>
-   * @throws E
-   *           If required
+   * @param t The token
+   *
+   * @return A value of {@code A}
+   *
+   * @throws E If required
    */
 
   A quotedString(
@@ -86,11 +84,11 @@ public interface TokenMatcherType<A, E extends Exception>
   /**
    * Match a token.
    *
-   * @param t
-   *          The token
-   * @return A value of <code>A</code>
-   * @throws E
-   *           If required
+   * @param t The token
+   *
+   * @return A value of {@code A}
+   *
+   * @throws E If required
    */
 
   A rightParen(
@@ -100,11 +98,11 @@ public interface TokenMatcherType<A, E extends Exception>
   /**
    * Match a token.
    *
-   * @param t
-   *          The token
-   * @return A value of <code>A</code>
-   * @throws E
-   *           If required
+   * @param t The token
+   *
+   * @return A value of {@code A}
+   *
+   * @throws E If required
    */
 
   A rightSquare(
@@ -114,11 +112,11 @@ public interface TokenMatcherType<A, E extends Exception>
   /**
    * Match a token.
    *
-   * @param t
-   *          The token
-   * @return A value of <code>A</code>
-   * @throws E
-   *           If required
+   * @param t The token
+   *
+   * @return A value of {@code A}
+   *
+   * @throws E If required
    */
 
   A symbol(

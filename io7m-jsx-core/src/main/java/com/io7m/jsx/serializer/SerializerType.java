@@ -16,10 +16,10 @@
 
 package com.io7m.jsx.serializer;
 
+import com.io7m.jsx.SExpressionType;
+
 import java.io.IOException;
 import java.io.OutputStream;
-
-import com.io7m.jsx.SExpressionType;
 
 /**
  * The type of expression serializers.
@@ -27,6 +27,15 @@ import com.io7m.jsx.SExpressionType;
 
 public interface SerializerType
 {
+  /**
+   * Serialize the expression to the given output stream.
+   *
+   * @param e The expression
+   * @param s The output stream
+   *
+   * @throws IOException On I/O errors
+   */
+
   void serialize(
     final SExpressionType e,
     final OutputStream s)

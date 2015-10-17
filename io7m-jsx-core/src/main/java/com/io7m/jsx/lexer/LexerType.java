@@ -16,9 +16,9 @@
 
 package com.io7m.jsx.lexer;
 
-import java.io.IOException;
-
 import com.io7m.jsx.tokens.TokenType;
+
+import java.io.IOException;
 
 /**
  * The type of lexers.
@@ -28,13 +28,11 @@ public interface LexerType
 {
   /**
    * @return The next token from the input.
-   * @throws IOException
-   *           On I/O errors.
-   * @throws LexerException
-   *           On lexical errors.
+   *
+   * @throws IOException    On I/O errors.
+   * @throws LexerException On lexical errors.
    */
 
   TokenType token()
-    throws IOException,
-      LexerException;
+    throws IOException, LexerException;
 }

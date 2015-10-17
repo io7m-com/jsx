@@ -14,38 +14,16 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.io7m.jsx.lexer;
+package com.io7m.jsx.checkstyle;
 
 /**
- * The type of mutable builders for lexer configurations.
+ * Marker class for finding resources by class.
  */
 
-public interface LexerConfigurationBuilderType
+public final class Checkstyle
 {
-  /**
-   * @return A new immutable configuration based on all of the values given so
-   * far.
-   */
-
-  LexerConfiguration build();
-
-  /**
-   * Allow or disallow the use of newlines in quoted strings. If disallowed,
-   * newlines must be indicated with escape codes.
-   *
-   * @param e {@code true} if newlines should be allowed.
-   */
-
-  void setNewlinesInQuotedStrings(
-    boolean e);
-
-  /**
-   * Allow or disallow the use of square brackets to denote lists. If
-   * disallowed, only '(' (U+0028) and ')' (U+0029) denote lists.
-   *
-   * @param e {@code true} if square brackets should be allowed.
-   */
-
-  void setSquareBrackets(
-    boolean e);
+  private Checkstyle()
+  {
+    throw new AssertionError("Unreachable code!");
+  }
 }

@@ -16,11 +16,11 @@
 
 package com.io7m.jsx.parser;
 
+import com.io7m.jsx.SExpressionType;
+
 import java.io.IOException;
 import java.util.List;
-
-import com.io7m.jfunctional.OptionType;
-import com.io7m.jsx.SExpressionType;
+import java.util.Optional;
 
 /**
  * The type of parsers.
@@ -30,38 +30,31 @@ public interface ParserType
 {
   /**
    * @return The next expression
-   * @throws ParserException
-   *           On parse errors
-   * @throws IOException
-   *           On I/O errors
+   *
+   * @throws ParserException On parse errors
+   * @throws IOException     On I/O errors
    */
 
   SExpressionType parseExpression()
-    throws ParserException,
-      IOException;
+    throws ParserException, IOException;
 
   /**
-   * @return The next expression, or {@link com.io7m.jfunctional.None} if EOF
-   *         is reached
-   * @throws ParserException
-   *           On parse errors
-   * @throws IOException
-   *           On I/O errors
+   * @return The next expression, or {@link Optional#empty()} if EOF is reached
+   *
+   * @throws ParserException On parse errors
+   * @throws IOException     On I/O errors
    */
 
-  OptionType<SExpressionType> parseExpressionOrEOF()
-    throws ParserException,
-      IOException;
+  Optional<SExpressionType> parseExpressionOrEOF()
+    throws ParserException, IOException;
 
   /**
    * @return All of the expressions up to EOF
-   * @throws ParserException
-   *           On parse errors
-   * @throws IOException
-   *           On I/O errors
+   *
+   * @throws ParserException On parse errors
+   * @throws IOException     On I/O errors
    */
 
   List<SExpressionType> parseExpressions()
-    throws ParserException,
-      IOException;
+    throws ParserException, IOException;
 }

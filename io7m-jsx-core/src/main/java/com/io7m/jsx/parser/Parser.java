@@ -16,13 +16,6 @@
 
 package com.io7m.jsx.parser;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.io7m.jfunctional.Option;
-import com.io7m.jfunctional.OptionType;
 import com.io7m.jnull.NullCheck;
 import com.io7m.jsx.QuotedStringType;
 import com.io7m.jsx.SExpressionType;
@@ -39,20 +32,34 @@ import com.io7m.jsx.tokens.TokenSymbol;
 import com.io7m.jsx.tokens.TokenType;
 import com.io7m.junreachable.UnreachableCodeException;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 /**
  * The default implementation of the {@link ParserType} type.
  */
 
 public final class Parser implements ParserType
 {
-  private static final File FILE_NONE = new File("<none>");
+  private final ParserConfiguration config;
+  private final LexerType           lexer;
+
+  private Parser(
+    final ParserConfiguration in_config,
+    final LexerType in_lexer)
+  {
+    this.config = NullCheck.notNull(in_config);
+    this.lexer = NullCheck.notNull(in_lexer);
+  }
 
   private static QuotedStringType completeQuotedString(
     final ParserConfiguration c,
     final TokenQuotedString t)
   {
-    if (c.preserveLexicalInformation() == false) {
-      return new PQuotedString(t.getText(), Position.ZERO, Parser.FILE_NONE);
+    if (!c.preserveLexicalInformation()) {
+      return new PQuotedString(t.getText(), Position.ZERO, Optional.empty());
     }
     return new PQuotedString(t.getText(), t.getPosition(), t.getFile());
   }
@@ -61,8 +68,8 @@ public final class Parser implements ParserType
     final ParserConfiguration c,
     final TokenSymbol t)
   {
-    if (c.preserveLexicalInformation() == false) {
-      return new PSymbol(t.getText(), Position.ZERO, Parser.FILE_NONE);
+    if (!c.preserveLexicalInformation()) {
+      return new PSymbol(t.getText(), Position.ZERO, Optional.empty());
     }
     return new PSymbol(t.getText(), t.getPosition(), t.getFile());
   }
@@ -71,50 +78,51 @@ public final class Parser implements ParserType
     final TokenEOF t)
   {
     return new ParserGrammarException(
-      t.getPosition(),
-      t.getFile(),
-      "Unexpected EOF during list parsing");
+      t.getPosition(), t.getFile(), "Unexpected EOF during list parsing");
   }
 
   private static ParserGrammarException errorUnexpectedRightParen(
     final TokenRightParenthesis t)
   {
     return new ParserGrammarException(
-      t.getPosition(),
-      t.getFile(),
-      "Unbalanced parentheses (unexpected ')')");
+      t.getPosition(), t.getFile(), "Unbalanced parentheses (unexpected ')')");
   }
 
-  private static
-    ParserGrammarException
-    errorUnexpectedRightParenWantedSquare(
-      final TokenRightParenthesis t)
+  private static ParserGrammarException errorUnexpectedRightParenWantedSquare(
+    final TokenRightParenthesis t)
   {
     return new ParserGrammarException(
       t.getPosition(),
       t.getFile(),
-      "Attempted to end a list started with '[' with ')' - unbalanced round/square brackets");
+      "Attempted to end a list started with '[' with ')' - unbalanced "
+      + "round/square brackets");
   }
 
   private static ParserGrammarException errorUnexpectedRightSquare(
     final TokenRightSquare t)
   {
     return new ParserGrammarException(
-      t.getPosition(),
-      t.getFile(),
-      "Unbalanced parentheses (unexpected ']')");
+      t.getPosition(), t.getFile(), "Unbalanced parentheses (unexpected ']')");
   }
 
-  private static
-    ParserGrammarException
-    errorUnexpectedRightSquareWantedParens(
-      final TokenRightSquare t)
+  private static ParserGrammarException errorUnexpectedRightSquareWantedParens(
+    final TokenRightSquare t)
   {
     return new ParserGrammarException(
       t.getPosition(),
       t.getFile(),
-      "Attempted to end a list started with '(' with ']' - unbalanced round/square brackets");
+      "Attempted to end a list started with '(' with ']' - unbalanced "
+      + "round/square brackets");
   }
+
+  /**
+   * Construct a new parser.
+   *
+   * @param pc  The parser configuration
+   * @param lex A lexer
+   *
+   * @return A new parser
+   */
 
   public static ParserType newParser(
     final ParserConfiguration pc,
@@ -127,9 +135,7 @@ public final class Parser implements ParserType
     final ParserConfiguration c,
     final LexerType lexer,
     final TokenType peek)
-    throws LexerException,
-      IOException,
-      ParserGrammarException
+    throws LexerException, IOException, ParserGrammarException
   {
     if (peek instanceof TokenLeftParenthesis) {
       return Parser.parseListParens(c, lexer, (TokenLeftParenthesis) peek);
@@ -160,28 +166,18 @@ public final class Parser implements ParserType
     final ParserConfiguration c,
     final LexerType lexer,
     final TokenLeftParenthesis peek)
-    throws LexerException,
-      IOException,
-      ParserGrammarException
+    throws LexerException, IOException, ParserGrammarException
   {
     final PList xs;
     if (c.preserveLexicalInformation()) {
-      xs =
-        new PList(
-          new ArrayList<SExpressionType>(),
-          peek.getPosition(),
-          peek.getFile(),
-          false);
+      xs = new PList(
+        new ArrayList<>(16), peek.getPosition(), peek.getFile(), false);
     } else {
-      xs =
-        new PList(
-          new ArrayList<SExpressionType>(),
-          Position.ZERO,
-          Parser.FILE_NONE,
-          false);
+      xs = new PList(
+        new ArrayList<>(16), Position.ZERO, Optional.empty(), false);
     }
 
-    for (;;) {
+    while (true) {
       final TokenType t = lexer.token();
       if (t instanceof TokenEOF) {
         throw Parser.errorUnexpectedEOF((TokenEOF) t);
@@ -190,8 +186,8 @@ public final class Parser implements ParserType
         return xs;
       }
       if (t instanceof TokenRightSquare) {
-        throw Parser
-          .errorUnexpectedRightSquareWantedParens((TokenRightSquare) t);
+        throw Parser.errorUnexpectedRightSquareWantedParens(
+          (TokenRightSquare) t);
       }
       xs.add(Parser.parseExpressionPeeked(c, lexer, t));
     }
@@ -201,35 +197,25 @@ public final class Parser implements ParserType
     final ParserConfiguration c,
     final LexerType lexer,
     final TokenLeftSquare peek)
-    throws LexerException,
-      IOException,
-      ParserGrammarException
+    throws LexerException, IOException, ParserGrammarException
   {
     final PList xs;
     if (c.preserveLexicalInformation()) {
-      xs =
-        new PList(
-          new ArrayList<SExpressionType>(),
-          peek.getPosition(),
-          peek.getFile(),
-          true);
+      xs = new PList(
+        new ArrayList<>(16), peek.getPosition(), peek.getFile(), true);
     } else {
-      xs =
-        new PList(
-          new ArrayList<SExpressionType>(),
-          Position.ZERO,
-          Parser.FILE_NONE,
-          true);
+      xs = new PList(
+        new ArrayList<>(16), Position.ZERO, Optional.empty(), true);
     }
 
-    for (;;) {
+    while (true) {
       final TokenType t = lexer.token();
       if (t instanceof TokenEOF) {
         throw Parser.errorUnexpectedEOF((TokenEOF) t);
       }
       if (t instanceof TokenRightParenthesis) {
-        throw Parser
-          .errorUnexpectedRightParenWantedSquare((TokenRightParenthesis) t);
+        throw Parser.errorUnexpectedRightParenWantedSquare(
+          (TokenRightParenthesis) t);
       }
       if (t instanceof TokenRightSquare) {
         return xs;
@@ -238,20 +224,8 @@ public final class Parser implements ParserType
     }
   }
 
-  private final ParserConfiguration config;
-  private final LexerType           lexer;
-
-  private Parser(
-    final ParserConfiguration in_config,
-    final LexerType in_lexer)
-  {
-    this.config = NullCheck.notNull(in_config);
-    this.lexer = NullCheck.notNull(in_lexer);
-  }
-
   @Override public SExpressionType parseExpression()
-    throws ParserException,
-      IOException
+    throws ParserException, IOException
   {
     try {
       final TokenType peek = this.lexer.token();
@@ -261,32 +235,29 @@ public final class Parser implements ParserType
     }
   }
 
-  @Override public OptionType<SExpressionType> parseExpressionOrEOF()
-    throws ParserException,
-      IOException
+  @Override public Optional<SExpressionType> parseExpressionOrEOF()
+    throws ParserException, IOException
   {
     try {
       final TokenType peek = this.lexer.token();
       if (peek instanceof TokenEOF) {
-        return Option.none();
+        return Optional.empty();
       }
 
-      return Option.some(Parser.parseExpressionPeeked(
-        this.config,
-        this.lexer,
-        peek));
+      return Optional.of(
+        Parser.parseExpressionPeeked(
+          this.config, this.lexer, peek));
     } catch (final LexerException e) {
       throw new ParserLexicalException(e);
     }
   }
 
   @Override public List<SExpressionType> parseExpressions()
-    throws ParserException,
-      IOException
+    throws ParserException, IOException
   {
     try {
-      final List<SExpressionType> xs = new ArrayList<SExpressionType>();
-      for (;;) {
+      final List<SExpressionType> xs = new ArrayList<>(64);
+      while (true) {
         final TokenType peek = this.lexer.token();
         if (peek instanceof TokenEOF) {
           return xs;

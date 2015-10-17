@@ -16,9 +16,10 @@
 
 package com.io7m.jsx;
 
-import java.io.File;
-
 import com.io7m.jsx.lexer.Position;
+
+import java.nio.file.Path;
+import java.util.Optional;
 
 /**
  * The type of S-expressions.
@@ -30,7 +31,7 @@ public interface SExpressionType
    * @return The file in which the symbol appeared
    */
 
-  File getFile();
+  Optional<Path> getFile();
 
   /**
    * @return The position of the symbol
@@ -45,7 +46,7 @@ public interface SExpressionType
    *          The matcher
    * @return The value returned by the matcher
    * @throws E
-   *           If the matcher raises <code>E</code>
+   *           If the matcher raises {@code E}
    * @param <A>
    *          The type of values returned by the matcher
    * @param <E>

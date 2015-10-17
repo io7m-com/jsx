@@ -16,10 +16,11 @@
 
 package com.io7m.jsx.tokens;
 
-import java.io.File;
-
 import com.io7m.jnull.NullCheck;
 import com.io7m.jsx.lexer.Position;
+
+import java.nio.file.Path;
+import java.util.Optional;
 
 /**
  * Right parenthesis ')'.
@@ -27,25 +28,23 @@ import com.io7m.jsx.lexer.Position;
 
 public final class TokenRightParenthesis implements TokenType
 {
-  private final File     file;
-  private final Position position;
+  private final Optional<Path> file;
+  private final Position       position;
 
   /**
-   * @param in_file
-   *          The token file
-   * @param in_position
-   *          The token position
+   * @param in_file     The token file
+   * @param in_position The token position
    */
 
   public TokenRightParenthesis(
-    final File in_file,
+    final Optional<Path> in_file,
     final Position in_position)
   {
     this.file = NullCheck.notNull(in_file);
     this.position = NullCheck.notNull(in_position);
   }
 
-  @Override public File getFile()
+  @Override public Optional<Path> getFile()
   {
     return this.file;
   }
@@ -64,7 +63,7 @@ public final class TokenRightParenthesis implements TokenType
 
   @Override public String toString()
   {
-    final StringBuilder builder = new StringBuilder();
+    final StringBuilder builder = new StringBuilder(64);
     builder.append("[TokenRightParenthesis file=");
     builder.append(this.file);
     builder.append(" position=");

@@ -16,9 +16,6 @@
 
 package com.io7m.jsx.lexer;
 
-import java.io.File;
-import java.io.IOException;
-
 import com.io7m.jeucreader.UnicodeCharacterReaderPushBackType;
 import com.io7m.jnull.NullCheck;
 import com.io7m.jsx.tokens.TokenEOF;
@@ -31,36 +28,25 @@ import com.io7m.jsx.tokens.TokenSymbol;
 import com.io7m.jsx.tokens.TokenType;
 import com.io7m.junreachable.UnreachableCodeException;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.Optional;
+
 /**
  * The default implementation of the {@link LexerType} type.
  */
 
 public final class Lexer implements LexerType
 {
-  private static enum State
-  {
-    STATE_IN_CRLF,
-    STATE_IN_STRING_QUOTED,
-    STATE_IN_SYMBOL,
-    STATE_INITIAL
-  }
-
-  public static LexerType newLexer(
-    final LexerConfiguration c,
-    final UnicodeCharacterReaderPushBackType r)
-  {
-    return new Lexer(c, r);
-  }
-
   private final StringBuilder                      buffer;
-  private int                                      buffer_start_column;
-  private int                                      buffer_start_line;
-  private int                                      column;
   private final LexerConfiguration                 config;
-  private File                                     file;
-  private int                                      line;
   private final UnicodeCharacterReaderPushBackType reader;
-  private State                                    state;
+  private       int                                buffer_start_column;
+  private       int                                buffer_start_line;
+  private       int                                column;
+  private       Optional<Path>                     file;
+  private       int                                line;
+  private       State                              state;
 
   private Lexer(
     final LexerConfiguration c,
@@ -68,11 +54,27 @@ public final class Lexer implements LexerType
   {
     this.config = NullCheck.notNull(c);
     this.reader = NullCheck.notNull(r);
-    this.file = new File("<stdin>");
+    this.file = Optional.empty();
     this.state = State.STATE_INITIAL;
     this.line = 0;
     this.column = 0;
     this.buffer = new StringBuilder(256);
+  }
+
+  /**
+   * Construct a new lexer.
+   *
+   * @param c The lexer configuration
+   * @param r The unicode character reader
+   *
+   * @return A new lexer
+   */
+
+  public static LexerType newLexer(
+    final LexerConfiguration c,
+    final UnicodeCharacterReaderPushBackType r)
+  {
+    return new Lexer(c, r);
   }
 
   private void completeNewline()
@@ -87,9 +89,9 @@ public final class Lexer implements LexerType
     this.state = State.STATE_INITIAL;
     final String text = NullCheck.notNull(this.buffer.toString());
     this.buffer.setLength(0);
-    return new TokenQuotedString(this.getFile(), new Position(
-      this.buffer_start_line,
-      this.buffer_start_column), text);
+    return new TokenQuotedString(
+      this.getFile(), new Position(
+      this.buffer_start_line, this.buffer_start_column), text);
   }
 
   private TokenType completeSymbol()
@@ -97,34 +99,30 @@ public final class Lexer implements LexerType
     this.state = State.STATE_INITIAL;
     final String text = NullCheck.notNull(this.buffer.toString());
     this.buffer.setLength(0);
-    return new TokenSymbol(this.getFile(), new Position(
-      this.buffer_start_line,
-      this.buffer_start_column), text);
+    return new TokenSymbol(
+      this.getFile(), new Position(
+      this.buffer_start_line, this.buffer_start_column), text);
   }
 
   private LexerBareCarriageReturnException errorBareCarriageReturn()
   {
-    final StringBuilder sb = new StringBuilder();
+    final StringBuilder sb = new StringBuilder(32);
     sb.append("Bare carriage return (U+000D) in source");
     final String s = NullCheck.notNull(sb.toString());
     return new LexerBareCarriageReturnException(
-      this.getPosition(),
-      this.file,
-      s);
+      this.getPosition(), this.file, s);
   }
 
   private LexerInvalidCodePointException errorInvalidCodePoint(
     final long cp)
   {
-    final StringBuilder sb = new StringBuilder();
+    final StringBuilder sb = new StringBuilder(32);
     sb.append("Invalid code point given in escape (U+");
-    sb.append(Long.toHexString(cp & 0xFFFFFFFF));
+    sb.append(Long.toUnsignedString(cp, 16));
     sb.append(")");
     final String s = NullCheck.notNull(sb.toString());
     return new LexerInvalidCodePointException(
-      this.getPosition(),
-      this.file,
-      s);
+      this.getPosition(), this.file, s);
   }
 
   private LexerNewLinesInStringsException errorNewLinesNotInQuotedStrings()
@@ -132,25 +130,24 @@ public final class Lexer implements LexerType
     return new LexerNewLinesInStringsException(
       this.getPosition(),
       this.file,
-      "Lexer configuration does not permit newlines (U+000A or U+000D) in quoted strings");
+      "Lexer configuration does not permit newlines (U+000A or U+000D) in "
+      + "quoted strings");
   }
 
   private LexerNotHexCharException errorNotHexChar(
     final int c)
   {
-    final StringBuilder sb = new StringBuilder();
+    final StringBuilder sb = new StringBuilder(16);
     sb.append("Expected a character [0123456789aAbBcCdDeEfF] (got ");
     sb.appendCodePoint(c);
     sb.append(")");
     final String s = NullCheck.notNull(sb.toString());
-    final LexerNotHexCharException e =
-      new LexerNotHexCharException(this.getPosition(), this.file, s);
-    return e;
+    return new LexerNotHexCharException(this.getPosition(), this.file, s);
   }
 
   private LexerUnexpectedEOFException errorUnexpectedEOF()
   {
-    final StringBuilder sb = new StringBuilder();
+    final StringBuilder sb = new StringBuilder(32);
     sb.append("Unexpected EOF");
     final String s = NullCheck.notNull(sb.toString());
     return new LexerUnexpectedEOFException(this.getPosition(), this.file, s);
@@ -159,19 +156,34 @@ public final class Lexer implements LexerType
   private LexerUnknownEscapeCodeException errorUnknownEscape(
     final int c)
   {
-    final StringBuilder sb = new StringBuilder();
+    final StringBuilder sb = new StringBuilder(64);
     sb.append("Unknown escape code (");
     sb.appendCodePoint(c);
     sb.append(")");
     final String s = NullCheck.notNull(sb.toString());
-    final LexerUnknownEscapeCodeException ex =
-      new LexerUnknownEscapeCodeException(this.getPosition(), this.file, s);
-    return ex;
+    return new LexerUnknownEscapeCodeException(
+      this.getPosition(), this.file, s);
   }
 
-  public File getFile()
+  /**
+   * @return The configured file, if any
+   */
+
+  public Optional<Path> getFile()
   {
     return this.file;
+  }
+
+  /**
+   * Set the file that will appear in lexical information.
+   *
+   * @param f The file, if any
+   */
+
+  public void setFile(
+    final Optional<Path> f)
+  {
+    this.file = NullCheck.notNull(f, "File");
   }
 
   private Position getPosition()
@@ -180,8 +192,7 @@ public final class Lexer implements LexerType
   }
 
   private void parseEscape()
-    throws LexerException,
-      IOException
+    throws LexerException, IOException
   {
     final int c = this.readCharNotEOF();
     if (c == '"') {
@@ -217,10 +228,9 @@ public final class Lexer implements LexerType
   }
 
   private void parseUnicode4()
-    throws LexerException,
-      IOException
+    throws LexerException, IOException
   {
-    final StringBuilder hexbuf = new StringBuilder();
+    final StringBuilder hexbuf = new StringBuilder(16);
     hexbuf.appendCodePoint(this.readHexCharNotEOF());
     hexbuf.appendCodePoint(this.readHexCharNotEOF());
     hexbuf.appendCodePoint(this.readHexCharNotEOF());
@@ -231,10 +241,9 @@ public final class Lexer implements LexerType
   }
 
   private void parseUnicode8()
-    throws LexerException,
-      IOException
+    throws LexerException, IOException
   {
-    final StringBuilder hexbuf = new StringBuilder();
+    final StringBuilder hexbuf = new StringBuilder(16);
     hexbuf.appendCodePoint(this.readHexCharNotEOF());
     hexbuf.appendCodePoint(this.readHexCharNotEOF());
     hexbuf.appendCodePoint(this.readHexCharNotEOF());
@@ -244,10 +253,10 @@ public final class Lexer implements LexerType
     hexbuf.appendCodePoint(this.readHexCharNotEOF());
     hexbuf.appendCodePoint(this.readHexCharNotEOF());
     final String hex = NullCheck.notNull(hexbuf.toString());
-    final long code = Long.parseLong(hex, 16);
-    final int cp = (int) (code & 0xFFFFFFFF);
+    final long code = Long.parseUnsignedLong(hex, 16);
+    final int cp = (int) code;
 
-    if (Character.isValidCodePoint(cp) == false) {
+    if (!Character.isValidCodePoint(cp)) {
       throw this.errorInvalidCodePoint(code);
     }
 
@@ -265,8 +274,7 @@ public final class Lexer implements LexerType
   }
 
   private int readCharNotEOF()
-    throws IOException,
-      LexerUnexpectedEOFException
+    throws IOException, LexerUnexpectedEOFException
   {
     final int c = this.readChar();
     if (c == -1) {
@@ -276,8 +284,7 @@ public final class Lexer implements LexerType
   }
 
   private int readHexCharNotEOF()
-    throws LexerException,
-      IOException
+    throws LexerException, IOException
   {
     final int c = this.readCharNotEOF();
     switch (c) {
@@ -309,12 +316,6 @@ public final class Lexer implements LexerType
     throw this.errorNotHexChar(c);
   }
 
-  public void setFile(
-    final File f)
-  {
-    this.file = NullCheck.notNull(f, "File");
-  }
-
   private void startQuotedString()
   {
     this.state = State.STATE_IN_STRING_QUOTED;
@@ -334,22 +335,21 @@ public final class Lexer implements LexerType
   }
 
   @Override public TokenType token()
-    throws IOException,
-      LexerException
+    throws IOException, LexerException
   {
     return this.tokenRead();
   }
 
   private TokenType tokenRead()
-    throws IOException,
-      LexerException,
-      LexerUnexpectedEOFException,
-      LexerBareCarriageReturnException,
-      LexerNewLinesInStringsException
+    throws
+    IOException,
+    LexerException,
+    LexerUnexpectedEOFException,
+    LexerBareCarriageReturnException,
+    LexerNewLinesInStringsException
   {
     switch (this.state) {
-      case STATE_INITIAL:
-      {
+      case STATE_INITIAL: {
         final int c = this.readChar();
         if (c == -1) {
           return new TokenEOF(this.getFile(), this.getPosition());
@@ -392,8 +392,7 @@ public final class Lexer implements LexerType
         return this.token();
       }
 
-      case STATE_IN_CRLF:
-      {
+      case STATE_IN_CRLF: {
         final int c = this.readCharNotEOF();
 
         if (c == '\n') {
@@ -404,15 +403,14 @@ public final class Lexer implements LexerType
         throw this.errorBareCarriageReturn();
       }
 
-      case STATE_IN_STRING_QUOTED:
-      {
+      case STATE_IN_STRING_QUOTED: {
         final int c = this.readCharNotEOF();
         if (c == '\\') {
           this.parseEscape();
           return this.token();
         }
         if ((c == '\r') || (c == '\n')) {
-          if (this.config.allowNewlinesInQuotedStrings() == false) {
+          if (!this.config.allowNewlinesInQuotedStrings()) {
             throw this.errorNewLinesNotInQuotedStrings();
           }
         }
@@ -424,8 +422,7 @@ public final class Lexer implements LexerType
         return this.token();
       }
 
-      case STATE_IN_SYMBOL:
-      {
+      case STATE_IN_SYMBOL: {
         final int c = this.readChar();
         if (c == -1) {
           return this.completeSymbol();
@@ -474,5 +471,13 @@ public final class Lexer implements LexerType
     }
 
     throw new UnreachableCodeException();
+  }
+
+  private enum State
+  {
+    STATE_IN_CRLF,
+    STATE_IN_STRING_QUOTED,
+    STATE_IN_SYMBOL,
+    STATE_INITIAL
   }
 }

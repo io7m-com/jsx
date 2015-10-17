@@ -22,19 +22,32 @@ package com.io7m.jsx.lexer;
 
 public final class LexerConfiguration
 {
-  @SuppressWarnings("synthetic-access") public static
-    LexerConfigurationBuilderType
-    newBuilder()
+  private final boolean square_brackets;
+  private final boolean string_newlines;
+
+  private LexerConfiguration(
+    final boolean in_string_newlines,
+    final boolean in_square_brackets)
   {
-    return new LexerConfigurationBuilderType() {
+    this.string_newlines = in_string_newlines;
+    this.square_brackets = in_square_brackets;
+  }
+
+  /**
+   * @return A new lexer configuration builder
+   */
+
+  public static LexerConfigurationBuilderType newBuilder()
+  {
+    return new LexerConfigurationBuilderType()
+    {
       private boolean square_brackets = true;
       private boolean string_newlines = true;
 
       @Override public LexerConfiguration build()
       {
         return new LexerConfiguration(
-          this.string_newlines,
-          this.square_brackets);
+          this.string_newlines, this.square_brackets);
       }
 
       @Override public void setNewlinesInQuotedStrings(
@@ -51,21 +64,18 @@ public final class LexerConfiguration
     };
   }
 
-  private final boolean square_brackets;
-  private final boolean string_newlines;
-
-  private LexerConfiguration(
-    final boolean in_string_newlines,
-    final boolean in_square_brackets)
-  {
-    this.string_newlines = in_string_newlines;
-    this.square_brackets = in_square_brackets;
-  }
+  /**
+   * @return {@code true} iff newlines are allowed in quoted strings
+   */
 
   public boolean allowNewlinesInQuotedStrings()
   {
     return this.string_newlines;
   }
+
+  /**
+   * @return {@code true} iff square brackets are allowed to denote lists
+   */
 
   public boolean allowSquareBrackets()
   {

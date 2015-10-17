@@ -16,19 +16,32 @@
 
 package com.io7m.jsx.serializer;
 
-import java.io.BufferedOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-
 import com.io7m.jsx.ListType;
 import com.io7m.jsx.QuotedStringType;
 import com.io7m.jsx.SExpressionMatcherType;
 import com.io7m.jsx.SExpressionType;
 import com.io7m.jsx.SymbolType;
 
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+
+/**
+ * A trivial serializer with no features.
+ */
+
 public final class SerializerTrivial implements SerializerType
 {
+  private SerializerTrivial()
+  {
+
+  }
+
+  /**
+   * @return A new serializer
+   */
+
   public static SerializerType newSerializer()
   {
     return new SerializerTrivial();
@@ -39,58 +52,55 @@ public final class SerializerTrivial implements SerializerType
     final PrintWriter w)
     throws IOException
   {
-    e.matchExpression(new SExpressionMatcherType<Integer, IOException>() {
-      @Override public Integer list(
-        final ListType xs)
-        throws IOException
+    e.matchExpression(
+      new SExpressionMatcherType<Integer, IOException>()
       {
-        if (xs.isSquare()) {
-          w.print("[");
-        } else {
-          w.print("(");
-        }
-
-        final int max = xs.size();
-        for (int index = 0; index < max; ++index) {
-          final SExpressionType es = xs.get(index);
-          SerializerTrivial.serializeWithWriter(es, w);
-          if ((index + 1) < max) {
-            w.print(" ");
+        @Override public Integer list(
+          final ListType xs)
+          throws IOException
+        {
+          if (xs.isSquare()) {
+            w.print("[");
+          } else {
+            w.print("(");
           }
+
+          final int max = xs.size();
+          for (int index = 0; index < max; ++index) {
+            final SExpressionType es = xs.get(index);
+            SerializerTrivial.serializeWithWriter(es, w);
+            if ((index + 1) < max) {
+              w.print(" ");
+            }
+          }
+
+          if (xs.isSquare()) {
+            w.print("]");
+          } else {
+            w.print(")");
+          }
+
+          return Integer.valueOf(0);
         }
 
-        if (xs.isSquare()) {
-          w.print("]");
-        } else {
-          w.print(")");
+        @Override public Integer quotedString(
+          final QuotedStringType qs)
+          throws IOException
+        {
+          w.print('"');
+          w.print(qs.getText());
+          w.print('"');
+          return Integer.valueOf(0);
         }
 
-        return Integer.valueOf(0);
-      }
-
-      @Override public Integer quotedString(
-        final QuotedStringType qs)
-        throws IOException
-      {
-        w.print('"');
-        w.print(qs.getText());
-        w.print('"');
-        return Integer.valueOf(0);
-      }
-
-      @Override public Integer symbol(
-        final SymbolType ss)
-        throws IOException
-      {
-        w.print(ss.getText());
-        return Integer.valueOf(0);
-      }
-    });
-  }
-
-  private SerializerTrivial()
-  {
-
+        @Override public Integer symbol(
+          final SymbolType ss)
+          throws IOException
+        {
+          w.print(ss.getText());
+          return Integer.valueOf(0);
+        }
+      });
   }
 
   @Override public void serialize(

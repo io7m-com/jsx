@@ -27,7 +27,7 @@ import com.io7m.jnull.Nullable;
 @EqualityStructural public final class Position
 {
   /**
-   * Location <code>(0, 0)</code>.
+   * Location {@code (0, 0)}.
    */
 
   public static final Position ZERO;
@@ -36,16 +36,14 @@ import com.io7m.jnull.Nullable;
     ZERO = new Position(0, 0);
   }
 
-  private final int            column;
-  private final int            line;
+  private final int column;
+  private final int line;
 
   /**
    * Construct a new position.
    *
-   * @param in_line
-   *          The line
-   * @param in_column
-   *          The column
+   * @param in_line   The line
+   * @param in_column The column
    */
 
   public Position(
@@ -69,19 +67,21 @@ import com.io7m.jnull.Nullable;
       return false;
     }
     final Position other = (Position) obj;
-    if (this.column != other.column) {
-      return false;
-    }
-    if (this.line != other.line) {
-      return false;
-    }
-    return true;
+    return this.column == other.column && this.line == other.line;
   }
+
+  /**
+   * @return The column
+   */
 
   public int getColumn()
   {
     return this.column;
   }
+
+  /**
+   * @return The line
+   */
 
   public int getLine()
   {
@@ -99,12 +99,10 @@ import com.io7m.jnull.Nullable;
 
   @Override public String toString()
   {
-    final StringBuilder builder = new StringBuilder();
+    final StringBuilder builder = new StringBuilder(32);
     builder.append(this.line);
     builder.append(":");
     builder.append(this.column);
-    final String r = builder.toString();
-    assert r != null;
-    return r;
+    return builder.toString();
   }
 }

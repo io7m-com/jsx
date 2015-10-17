@@ -1,16 +1,7 @@
 package com.io7m.jsx.tests.parser;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.StringReader;
-
-import org.junit.Assert;
-import org.junit.Test;
-
 import com.io7m.jeucreader.UnicodeCharacterReader;
 import com.io7m.jeucreader.UnicodeCharacterReaderPushBackType;
-import com.io7m.jfunctional.None;
-import com.io7m.jfunctional.Some;
 import com.io7m.jsx.ListType;
 import com.io7m.jsx.QuotedStringType;
 import com.io7m.jsx.SExpressionType;
@@ -29,8 +20,14 @@ import com.io7m.jsx.parser.ParserGrammarException;
 import com.io7m.jsx.parser.ParserLexicalException;
 import com.io7m.jsx.parser.ParserType;
 import com.io7m.jsx.tokens.TokenType;
+import org.junit.Assert;
+import org.junit.Test;
 
-@SuppressWarnings({ "null", "static-method" }) public final class ParserTest
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.Optional;
+
+public final class ParserTest
 {
   private static UnicodeCharacterReaderPushBackType stringReader(
     final String s)
@@ -47,8 +44,7 @@ import com.io7m.jsx.tokens.TokenType;
 
   private ParserConfiguration defaultParserConfig()
   {
-    final ParserConfigurationBuilderType cb =
-      ParserConfiguration.newBuilder();
+    final ParserConfigurationBuilderType cb = ParserConfiguration.newBuilder();
     final ParserConfiguration c = cb.build();
     return c;
   }
@@ -67,8 +63,7 @@ import com.io7m.jsx.tokens.TokenType;
     throws Exception
   {
     final LexerConfiguration lc = this.defaultLexerConfig();
-    final LexerType lex =
-      Lexer.newLexer(lc, ParserTest.stringReader("(a b "));
+    final LexerType lex = Lexer.newLexer(lc, ParserTest.stringReader("(a b "));
     final ParserConfiguration pc = this.defaultParserConfig();
     final ParserType p = Parser.newParser(pc, lex);
     p.parseExpression();
@@ -82,19 +77,18 @@ import com.io7m.jsx.tokens.TokenType;
       Lexer.newLexer(lc, ParserTest.stringReader("(a b c)"));
     final ParserConfiguration pc = this.defaultParserConfig();
     final ParserType p = Parser.newParser(pc, lex);
-    final Some<SExpressionType> r0 =
-      (Some<SExpressionType>) p.parseExpressionOrEOF();
+    final Optional<SExpressionType> r0 = p.parseExpressionOrEOF();
+    Assert.assertTrue(r0.isPresent());
     final ListType r0l = (ListType) r0.get();
-    final None<SExpressionType> r1 =
-      (None<SExpressionType>) p.parseExpressionOrEOF();
+    final Optional<SExpressionType> r1 = p.parseExpressionOrEOF();
+    Assert.assertFalse(r1.isPresent());
   }
 
   @Test(expected = ParserGrammarException.class) public void testEOF_3()
     throws Exception
   {
     final LexerConfiguration lc = this.defaultLexerConfig();
-    final LexerType lex =
-      Lexer.newLexer(lc, ParserTest.stringReader("[a b "));
+    final LexerType lex = Lexer.newLexer(lc, ParserTest.stringReader("[a b "));
     final ParserConfiguration pc = this.defaultParserConfig();
     final ParserType p = Parser.newParser(pc, lex);
     p.parseExpression();
@@ -103,13 +97,13 @@ import com.io7m.jsx.tokens.TokenType;
   @Test(expected = ParserLexicalException.class) public void testLexError_0()
     throws Exception
   {
-    final LexerType lex = new LexerType() {
+    final LexerType lex = new LexerType()
+    {
       @Override public TokenType token()
-        throws IOException,
-          LexerException
+        throws IOException, LexerException
       {
-        throw new LexerBareCarriageReturnException(Position.ZERO, new File(
-          "<stdin>"), "Error!");
+        throw new LexerBareCarriageReturnException(
+          Position.ZERO, Optional.empty(), "Error!");
       }
     };
     final ParserConfiguration pc = this.defaultParserConfig();
@@ -127,27 +121,27 @@ import com.io7m.jsx.tokens.TokenType;
     final ParserType p = Parser.newParser(pc, lex);
 
     final ListType s = (ListType) p.parseExpression();
-    Assert.assertEquals(0, s.getPosition().getLine());
-    Assert.assertEquals(1, s.getPosition().getColumn());
-    Assert.assertEquals(3, s.size());
-    Assert.assertEquals(new File("<stdin>"), s.getFile());
+    Assert.assertEquals(0L, (long) s.getPosition().getLine());
+    Assert.assertEquals(1L, (long) s.getPosition().getColumn());
+    Assert.assertEquals(3L, (long) s.size());
+    Assert.assertEquals(Optional.empty(), s.getFile());
 
     {
       final SymbolType ss = (SymbolType) s.get(0);
       Assert.assertEquals("a", ss.getText());
-      Assert.assertEquals(new File("<stdin>"), ss.getFile());
+      Assert.assertEquals(Optional.empty(), ss.getFile());
     }
 
     {
       final SymbolType ss = (SymbolType) s.get(1);
       Assert.assertEquals("b", ss.getText());
-      Assert.assertEquals(new File("<stdin>"), ss.getFile());
+      Assert.assertEquals(Optional.empty(), ss.getFile());
     }
 
     {
       final SymbolType ss = (SymbolType) s.get(2);
       Assert.assertEquals("c", ss.getText());
-      Assert.assertEquals(new File("<stdin>"), ss.getFile());
+      Assert.assertEquals(Optional.empty(), ss.getFile());
     }
   }
 
@@ -157,34 +151,33 @@ import com.io7m.jsx.tokens.TokenType;
     final LexerConfiguration lc = this.defaultLexerConfig();
     final LexerType lex =
       Lexer.newLexer(lc, ParserTest.stringReader("(a b c)"));
-    final ParserConfigurationBuilderType pcb =
-      ParserConfiguration.newBuilder();
+    final ParserConfigurationBuilderType pcb = ParserConfiguration.newBuilder();
     pcb.preserveLexicalInformation(false);
     final ParserConfiguration pc = pcb.build();
     final ParserType p = Parser.newParser(pc, lex);
 
     final ListType s = (ListType) p.parseExpression();
-    Assert.assertEquals(0, s.getPosition().getLine());
-    Assert.assertEquals(0, s.getPosition().getColumn());
-    Assert.assertEquals(3, s.size());
-    Assert.assertEquals(new File("<none>"), s.getFile());
+    Assert.assertEquals(0L, (long) s.getPosition().getLine());
+    Assert.assertEquals(0L, (long) s.getPosition().getColumn());
+    Assert.assertEquals(3L, (long) s.size());
+    Assert.assertEquals(Optional.empty(), s.getFile());
 
     {
       final SymbolType ss = (SymbolType) s.get(0);
       Assert.assertEquals("a", ss.getText());
-      Assert.assertEquals(new File("<none>"), ss.getFile());
+      Assert.assertEquals(Optional.empty(), ss.getFile());
     }
 
     {
       final SymbolType ss = (SymbolType) s.get(1);
       Assert.assertEquals("b", ss.getText());
-      Assert.assertEquals(new File("<none>"), ss.getFile());
+      Assert.assertEquals(Optional.empty(), ss.getFile());
     }
 
     {
       final SymbolType ss = (SymbolType) s.get(2);
       Assert.assertEquals("c", ss.getText());
-      Assert.assertEquals(new File("<none>"), ss.getFile());
+      Assert.assertEquals(Optional.empty(), ss.getFile());
     }
   }
 
@@ -194,34 +187,33 @@ import com.io7m.jsx.tokens.TokenType;
     final LexerConfiguration lc = this.defaultLexerConfig();
     final LexerType lex =
       Lexer.newLexer(lc, ParserTest.stringReader("[a b c]"));
-    final ParserConfigurationBuilderType pcb =
-      ParserConfiguration.newBuilder();
+    final ParserConfigurationBuilderType pcb = ParserConfiguration.newBuilder();
     pcb.preserveLexicalInformation(false);
     final ParserConfiguration pc = pcb.build();
     final ParserType p = Parser.newParser(pc, lex);
 
     final ListType s = (ListType) p.parseExpression();
-    Assert.assertEquals(0, s.getPosition().getLine());
-    Assert.assertEquals(0, s.getPosition().getColumn());
-    Assert.assertEquals(3, s.size());
-    Assert.assertEquals(new File("<none>"), s.getFile());
+    Assert.assertEquals(0L, (long) s.getPosition().getLine());
+    Assert.assertEquals(0L, (long) s.getPosition().getColumn());
+    Assert.assertEquals(3L, (long) s.size());
+    Assert.assertEquals(Optional.empty(), s.getFile());
 
     {
       final SymbolType ss = (SymbolType) s.get(0);
       Assert.assertEquals("a", ss.getText());
-      Assert.assertEquals(new File("<none>"), ss.getFile());
+      Assert.assertEquals(Optional.empty(), ss.getFile());
     }
 
     {
       final SymbolType ss = (SymbolType) s.get(1);
       Assert.assertEquals("b", ss.getText());
-      Assert.assertEquals(new File("<none>"), ss.getFile());
+      Assert.assertEquals(Optional.empty(), ss.getFile());
     }
 
     {
       final SymbolType ss = (SymbolType) s.get(2);
       Assert.assertEquals("c", ss.getText());
-      Assert.assertEquals(new File("<none>"), ss.getFile());
+      Assert.assertEquals(Optional.empty(), ss.getFile());
     }
   }
 
@@ -235,27 +227,27 @@ import com.io7m.jsx.tokens.TokenType;
     final ParserType p = Parser.newParser(pc, lex);
 
     final ListType s = (ListType) p.parseExpression();
-    Assert.assertEquals(0, s.getPosition().getLine());
-    Assert.assertEquals(1, s.getPosition().getColumn());
-    Assert.assertEquals(3, s.size());
-    Assert.assertEquals(new File("<stdin>"), s.getFile());
+    Assert.assertEquals(0L, (long) s.getPosition().getLine());
+    Assert.assertEquals(1L, (long) s.getPosition().getColumn());
+    Assert.assertEquals(3L, (long) s.size());
+    Assert.assertEquals(Optional.empty(), s.getFile());
 
     {
       final SymbolType ss = (SymbolType) s.get(0);
       Assert.assertEquals("a", ss.getText());
-      Assert.assertEquals(new File("<stdin>"), ss.getFile());
+      Assert.assertEquals(Optional.empty(), ss.getFile());
     }
 
     {
       final SymbolType ss = (SymbolType) s.get(1);
       Assert.assertEquals("b", ss.getText());
-      Assert.assertEquals(new File("<stdin>"), ss.getFile());
+      Assert.assertEquals(Optional.empty(), ss.getFile());
     }
 
     {
       final SymbolType ss = (SymbolType) s.get(2);
       Assert.assertEquals("c", ss.getText());
-      Assert.assertEquals(new File("<stdin>"), ss.getFile());
+      Assert.assertEquals(Optional.empty(), ss.getFile());
     }
   }
 
@@ -268,10 +260,10 @@ import com.io7m.jsx.tokens.TokenType;
     final ParserType p = Parser.newParser(pc, lex);
 
     final SymbolType s = (SymbolType) p.parseExpression();
-    Assert.assertEquals(0, s.getPosition().getLine());
-    Assert.assertEquals(1, s.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) s.getPosition().getLine());
+    Assert.assertEquals(1L, (long) s.getPosition().getColumn());
     Assert.assertEquals("a", s.getText());
-    Assert.assertEquals(new File("<stdin>"), s.getFile());
+    Assert.assertEquals(Optional.empty(), s.getFile());
   }
 
   @Test public void testParseSymbolNoLex_0()
@@ -279,17 +271,16 @@ import com.io7m.jsx.tokens.TokenType;
   {
     final LexerConfiguration lc = this.defaultLexerConfig();
     final LexerType lex = Lexer.newLexer(lc, ParserTest.stringReader("a"));
-    final ParserConfigurationBuilderType pcb =
-      ParserConfiguration.newBuilder();
+    final ParserConfigurationBuilderType pcb = ParserConfiguration.newBuilder();
     pcb.preserveLexicalInformation(false);
     final ParserConfiguration pc = pcb.build();
     final ParserType p = Parser.newParser(pc, lex);
 
     final SymbolType s = (SymbolType) p.parseExpression();
-    Assert.assertEquals(0, s.getPosition().getLine());
-    Assert.assertEquals(0, s.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) s.getPosition().getLine());
+    Assert.assertEquals(0L, (long) s.getPosition().getColumn());
     Assert.assertEquals("a", s.getText());
-    Assert.assertEquals(new File("<none>"), s.getFile());
+    Assert.assertEquals(Optional.empty(), s.getFile());
   }
 
   @Test public void testQuotedString_0()
@@ -307,10 +298,10 @@ import com.io7m.jsx.tokens.TokenType;
     final ParserType p = Parser.newParser(pc, lex);
 
     final QuotedStringType s = (QuotedStringType) p.parseExpression();
-    Assert.assertEquals(0, s.getPosition().getLine());
-    Assert.assertEquals(1, s.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) s.getPosition().getLine());
+    Assert.assertEquals(1L, (long) s.getPosition().getColumn());
     Assert.assertEquals("a", s.getText());
-    Assert.assertEquals(new File("<stdin>"), s.getFile());
+    Assert.assertEquals(Optional.empty(), s.getFile());
   }
 
   @Test public void testQuotedStringNoLex_0()
@@ -325,23 +316,21 @@ import com.io7m.jsx.tokens.TokenType;
     final LexerType lex =
       Lexer.newLexer(lc, ParserTest.stringReader(sb.toString()));
 
-    final ParserConfigurationBuilderType pcb =
-      ParserConfiguration.newBuilder();
+    final ParserConfigurationBuilderType pcb = ParserConfiguration.newBuilder();
     pcb.preserveLexicalInformation(false);
     final ParserConfiguration pc = pcb.build();
     final ParserType p = Parser.newParser(pc, lex);
 
     final QuotedStringType s = (QuotedStringType) p.parseExpression();
-    Assert.assertEquals(0, s.getPosition().getLine());
-    Assert.assertEquals(0, s.getPosition().getColumn());
+    Assert.assertEquals(0L, (long) s.getPosition().getLine());
+    Assert.assertEquals(0L, (long) s.getPosition().getColumn());
     Assert.assertEquals("a", s.getText());
-    Assert.assertEquals(new File("<none>"), s.getFile());
+    Assert.assertEquals(Optional.empty(), s.getFile());
   }
 
-  @Test(expected = ParserGrammarException.class) public
-    void
-    testUnbalancedRoundSquare_0()
-      throws Exception
+  @Test(expected = ParserGrammarException.class)
+  public void testUnbalancedRoundSquare_0()
+    throws Exception
   {
     final LexerConfiguration lc = this.defaultLexerConfig();
     final LexerType lex = Lexer.newLexer(lc, ParserTest.stringReader("(]"));
@@ -350,10 +339,9 @@ import com.io7m.jsx.tokens.TokenType;
     p.parseExpression();
   }
 
-  @Test(expected = ParserGrammarException.class) public
-    void
-    testUnbalancedRoundSquare_1()
-      throws Exception
+  @Test(expected = ParserGrammarException.class)
+  public void testUnbalancedRoundSquare_1()
+    throws Exception
   {
     final LexerConfiguration lc = this.defaultLexerConfig();
     final LexerType lex = Lexer.newLexer(lc, ParserTest.stringReader("[)"));
@@ -362,10 +350,9 @@ import com.io7m.jsx.tokens.TokenType;
     p.parseExpression();
   }
 
-  @Test(expected = ParserGrammarException.class) public
-    void
-    testUnexpectedRight_0()
-      throws Exception
+  @Test(expected = ParserGrammarException.class)
+  public void testUnexpectedRight_0()
+    throws Exception
   {
     final LexerConfiguration lc = this.defaultLexerConfig();
     final LexerType lex = Lexer.newLexer(lc, ParserTest.stringReader(")"));
@@ -374,10 +361,9 @@ import com.io7m.jsx.tokens.TokenType;
     p.parseExpression();
   }
 
-  @Test(expected = ParserGrammarException.class) public
-    void
-    testUnexpectedRightSquare_0()
-      throws Exception
+  @Test(expected = ParserGrammarException.class)
+  public void testUnexpectedRightSquare_0()
+    throws Exception
   {
     final LexerConfiguration lc = this.defaultLexerConfig();
     final LexerType lex = Lexer.newLexer(lc, ParserTest.stringReader("]"));

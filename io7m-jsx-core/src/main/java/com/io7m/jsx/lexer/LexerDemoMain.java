@@ -16,27 +16,32 @@
 
 package com.io7m.jsx.lexer;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 import com.io7m.jeucreader.UnicodeCharacterReader;
 import com.io7m.jeucreader.UnicodeCharacterReaderPushBackType;
 import com.io7m.jsx.tokens.TokenEOF;
 import com.io7m.jsx.tokens.TokenType;
+import com.io7m.junreachable.UnreachableCodeException;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * Simple lexer demo that prints all tokens.
  */
 
-public final class LexerDemo
+public final class LexerDemoMain
 {
+  private LexerDemoMain()
+  {
+    throw new UnreachableCodeException();
+  }
+
   /**
    * Main program.
    *
-   * @param args
-   *          Command line arguments
-   * @throws IOException
-   *           On I/O errors
+   * @param args Command line arguments
+   *
+   * @throws IOException On I/O errors
    */
 
   public static void main(
@@ -44,8 +49,7 @@ public final class LexerDemo
     throws IOException
   {
     try {
-      final LexerConfigurationBuilderType cb =
-        LexerConfiguration.newBuilder();
+      final LexerConfigurationBuilderType cb = LexerConfiguration.newBuilder();
       cb.setNewlinesInQuotedStrings(false);
       final LexerConfiguration c = cb.build();
 
@@ -53,7 +57,7 @@ public final class LexerDemo
         UnicodeCharacterReader.newReader(new InputStreamReader(System.in));
       final LexerType lex = Lexer.newLexer(c, r);
 
-      for (;;) {
+      while (true) {
         final TokenType t = lex.token();
         System.out.println(t);
         if (t instanceof TokenEOF) {
@@ -61,7 +65,8 @@ public final class LexerDemo
         }
       }
     } catch (final LexerException e) {
-      System.err.println("error: lexical error: "
+      System.err.println(
+        "error: lexical error: "
         + e.getFile()
         + ":"
         + e.getPosition()

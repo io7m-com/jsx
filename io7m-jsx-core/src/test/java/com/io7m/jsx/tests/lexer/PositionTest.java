@@ -16,12 +16,11 @@
 
 package com.io7m.jsx.tests.lexer;
 
+import com.io7m.jsx.lexer.Position;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.io7m.jsx.lexer.Position;
-
-@SuppressWarnings("static-method") public class PositionTest
+public final class PositionTest
 {
   @Test public void testEquals()
   {
@@ -39,13 +38,13 @@ import com.io7m.jsx.lexer.Position;
     final Position p = new Position(1, 1);
     Assert.assertEquals(p, p);
     Assert.assertEquals(
-      new Position(0, 0).hashCode(),
-      new Position(0, 0).hashCode());
+      (long) new Position(0, 0).hashCode(),
+      (long) new Position(0, 0).hashCode());
     Assert.assertNotEquals(
-      new Position(1, 0).hashCode(),
-      new Position(0, 0).hashCode());
+      (long) new Position(1, 0).hashCode(),
+      (long) new Position(0, 0).hashCode());
     Assert.assertNotEquals(
-      new Position(0, 1).hashCode(),
-      new Position(0, 0).hashCode());
+      (long) new Position(0, 1).hashCode(),
+      (long) new Position(0, 0).hashCode());
   }
 }

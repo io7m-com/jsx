@@ -16,21 +16,34 @@
 
 package com.io7m.jsx.parser;
 
-import java.io.File;
-
 import com.io7m.jnull.NullCheck;
 import com.io7m.jsx.JSXException;
 import com.io7m.jsx.lexer.Position;
 
+import java.nio.file.Path;
+import java.util.Optional;
+
+/**
+ * The type of exceptions raised by the parser.
+ */
+
 public abstract class ParserException extends JSXException
 {
   private static final long serialVersionUID = -5821503109066196034L;
-  private final File        file;
-  private final Position    position;
+  private final Optional<Path> file;
+  private final Position       position;
+
+  /**
+   * Construct an exception.
+   *
+   * @param in_position The token position
+   * @param in_file     The file, if any
+   * @param in_message  The exception message
+   */
 
   public ParserException(
     final Position in_position,
-    final File in_file,
+    final Optional<Path> in_file,
     final String in_message)
   {
     super(NullCheck.notNull(in_message));
@@ -38,9 +51,18 @@ public abstract class ParserException extends JSXException
     this.file = NullCheck.notNull(in_file);
   }
 
+  /**
+   * Construct an exception.
+   *
+   * @param in_position The token position
+   * @param in_file     The file, if any
+   * @param in_message  The exception message
+   * @param in_cause    The cause
+   */
+
   public ParserException(
     final Position in_position,
-    final File in_file,
+    final Optional<Path> in_file,
     final String in_message,
     final Throwable in_cause)
   {
@@ -49,12 +71,20 @@ public abstract class ParserException extends JSXException
     this.file = NullCheck.notNull(in_file);
   }
 
-  public File getFile()
+  /**
+   * @return The file, if any
+   */
+
+  public final Optional<Path> getFile()
   {
     return this.file;
   }
 
-  public Position getPosition()
+  /**
+   * @return The token position
+   */
+
+  public final Position getPosition()
   {
     return this.position;
   }

@@ -24,7 +24,7 @@ public interface ParserConfigurationBuilderType
 {
   /**
    * @return A new immutable configuration based on all of the values given so
-   *         far.
+   * far.
    */
 
   ParserConfiguration build();
@@ -33,9 +33,8 @@ public interface ParserConfigurationBuilderType
    * Preserve lexical information in parsed expressions. Disabling the
    * preservation of lexical information saves memory at the expense of losing
    * useful parse error messages.
-   * 
-   * @param e
-   *          <code>true</code> if lexical information should be preserved.
+   *
+   * @param e {@code true} if lexical information should be preserved.
    */
 
   void preserveLexicalInformation(

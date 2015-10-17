@@ -8,13 +8,13 @@
   <parent>
     <groupId>com.io7m.jsx</groupId>
     <artifactId>io7m-jsx</artifactId>
-    <version>1.0.0</version>
+    <version>0.3.0</version>
   </parent>
   <artifactId>io7m-jsx-documentation</artifactId>
 
   <packaging>jar</packaging>
   <description>S-expression parsing (Documentation)</description>
-  <url>http://io7m.github.io/jsx</url>
+  <url>http://io7m.github.io/jsx/</url>
   <name>${project.artifactId}</name>
 
   <scm>
@@ -33,67 +33,6 @@
 
   <build>
     <plugins>
-      <!-- Require JDK >= 1.6 -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.3</version>
-        <configuration>
-          <source>1.6</source>
-          <target>1.6</target>
-        </configuration>
-      </plugin>
-
-      <!-- Produce custom manifest in jar files -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <configuration>
-          <archive>
-            <manifestEntries>
-              <Specification-Title>${project.name}</Specification-Title>
-              <Specification-Version>${project.version}</Specification-Version>
-              <Specification-Vendor>io7m.com</Specification-Vendor>
-              <Implementation-Title>${project.name}</Implementation-Title>
-              <Implementation-Version>${project.version}</Implementation-Version>
-              <Implementation-Vendor>io7m.com</Implementation-Vendor>
-              <Implementation-Vendor-Id>${project.groupId}</Implementation-Vendor-Id>
-              <Built-By>io7m</Built-By>
-              <Sealed>true</Sealed>
-            </manifestEntries>
-          </archive>
-        </configuration>
-      </plugin>
-
-      <!-- Create source jar -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>jar-no-fork</goal>
-              <goal>test-jar-no-fork</goal>
-            </goals>
-            <configuration>
-              <archive>
-                <manifestEntries>
-                  <Specification-Title>${project.name}</Specification-Title>
-                  <Specification-Version>${project.version}</Specification-Version>
-                  <Specification-Vendor>io7m.com</Specification-Vendor>
-                  <Implementation-Title>${project.name}</Implementation-Title>
-                  <Implementation-Version>${project.version}</Implementation-Version>
-                  <Implementation-Vendor>io7m.com</Implementation-Vendor>
-                  <Implementation-Vendor-Id>${project.groupId}</Implementation-Vendor-Id>
-                  <Built-By>io7m</Built-By>
-                </manifestEntries>
-              </archive>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-
       <!-- Copy documentation resources into build directory -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -107,6 +46,9 @@
             <phase>generate-resources</phase>
             <configuration>
               <outputDirectory>${project.build.directory}/documentation/</outputDirectory>
+              <nonFilteredFileExtensions>
+                <nonFilteredFileExtension>xcf</nonFilteredFileExtension>
+              </nonFilteredFileExtensions>
               <resources>
                 <resource>
                   <directory>src/main/resources/com/io7m/jsx/documentation/</directory>

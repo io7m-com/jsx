@@ -16,15 +16,28 @@
 
 package com.io7m.jsx.lexer;
 
-import java.io.File;
+import java.nio.file.Path;
+import java.util.Optional;
+
+/**
+ * The type of exceptions indicating that EOF was reached unexpectedly.
+ */
 
 public final class LexerUnexpectedEOFException extends LexerException
 {
   private static final long serialVersionUID = -2136366848068538543L;
 
+  /**
+   * Construct an exception.
+   *
+   * @param in_position The position
+   * @param in_file     The file, if any
+   * @param in_message  The exception message
+   */
+
   public LexerUnexpectedEOFException(
     final Position in_position,
-    final File in_file,
+    final Optional<Path> in_file,
     final String in_message)
   {
     super(in_position, in_file, in_message);

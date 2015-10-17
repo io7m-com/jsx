@@ -16,17 +16,31 @@
 
 package com.io7m.jsx.parser;
 
-import java.io.File;
-
 import com.io7m.jsx.lexer.Position;
+
+import java.nio.file.Path;
+import java.util.Optional;
+
+/**
+ * An exception type indicating that the input did not conform to the
+ * s-expression grammar.
+ */
 
 public final class ParserGrammarException extends ParserException
 {
   private static final long serialVersionUID = 1892731892371892739L;
 
+  /**
+   * Construct an exception.
+   *
+   * @param in_position The token position
+   * @param in_file     The file, if any
+   * @param in_message  The exception message
+   */
+
   public ParserGrammarException(
     final Position in_position,
-    final File in_file,
+    final Optional<Path> in_file,
     final String in_message)
   {
     super(in_position, in_file, in_message);

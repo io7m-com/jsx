@@ -16,9 +16,6 @@
 
 package com.io7m.jsx.parser;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 import com.io7m.jeucreader.UnicodeCharacterReader;
 import com.io7m.jeucreader.UnicodeCharacterReaderPushBackType;
 import com.io7m.jsx.SExpressionType;
@@ -28,20 +25,28 @@ import com.io7m.jsx.lexer.LexerConfigurationBuilderType;
 import com.io7m.jsx.lexer.LexerType;
 import com.io7m.jsx.serializer.SerializerTrivial;
 import com.io7m.jsx.serializer.SerializerType;
+import com.io7m.junreachable.UnreachableCodeException;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * Simple parser demo that parses and then serializes.
  */
 
-public final class ParserDemo
+public final class ParserDemoMain
 {
+  private ParserDemoMain()
+  {
+    throw new UnreachableCodeException();
+  }
+
   /**
    * Main program.
    *
-   * @param args
-   *          Command line arguments
-   * @throws IOException
-   *           On I/O errors
+   * @param args Command line arguments
+   *
+   * @throws IOException On I/O errors
    */
 
   public static void main(
@@ -49,8 +54,7 @@ public final class ParserDemo
     throws IOException
   {
     try {
-      final LexerConfigurationBuilderType lcb =
-        LexerConfiguration.newBuilder();
+      final LexerConfigurationBuilderType lcb = LexerConfiguration.newBuilder();
       lcb.setNewlinesInQuotedStrings(false);
       final LexerConfiguration lc = lcb.build();
 
@@ -66,12 +70,13 @@ public final class ParserDemo
 
       final SerializerType s = SerializerTrivial.newSerializer();
 
-      for (;;) {
+      while (true) {
         final SExpressionType e = p.parseExpression();
         s.serialize(e, System.out);
       }
     } catch (final ParserException e) {
-      System.err.println("error: parse error: "
+      System.err.println(
+        "error: parse error: "
         + e.getFile()
         + ":"
         + e.getPosition()

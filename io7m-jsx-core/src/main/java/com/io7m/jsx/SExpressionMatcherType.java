@@ -16,16 +16,23 @@
 
 package com.io7m.jsx;
 
+/**
+ * The type of expression matchers.
+ *
+ * @param <A> The type of returned values
+ * @param <E> The type of raised exceptions
+ */
+
 public interface SExpressionMatcherType<A, E extends Exception>
 {
   /**
    * Match an expression.
    *
-   * @param e
-   *          The expression
-   * @return A value of <code>A</code>
-   * @throws E
-   *           If required
+   * @param e The expression
+   *
+   * @return A value of {@code A}
+   *
+   * @throws E If required
    */
 
   A list(
@@ -35,11 +42,11 @@ public interface SExpressionMatcherType<A, E extends Exception>
   /**
    * Match an expression.
    *
-   * @param e
-   *          The expression
-   * @return A value of <code>A</code>
-   * @throws E
-   *           If required
+   * @param e The expression
+   *
+   * @return A value of {@code A}
+   *
+   * @throws E If required
    */
 
   A quotedString(
@@ -49,11 +56,11 @@ public interface SExpressionMatcherType<A, E extends Exception>
   /**
    * Match an expression.
    *
-   * @param e
-   *          The expression
-   * @return A value of <code>A</code>
-   * @throws E
-   *           If required
+   * @param e The expression
+   *
+   * @return A value of {@code A}
+   *
+   * @throws E If required
    */
 
   A symbol(

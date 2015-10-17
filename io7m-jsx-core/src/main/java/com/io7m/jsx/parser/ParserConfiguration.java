@@ -22,9 +22,22 @@ package com.io7m.jsx.parser;
 
 public final class ParserConfiguration
 {
+  private final boolean preserve_lex;
+
+  private ParserConfiguration(
+    final boolean in_preserve_lex)
+  {
+    this.preserve_lex = in_preserve_lex;
+  }
+
+  /**
+   * @return A new parser configuration builder
+   */
+
   public static ParserConfigurationBuilderType newBuilder()
   {
-    return new ParserConfigurationBuilderType() {
+    return new ParserConfigurationBuilderType()
+    {
       private boolean preserve_lex = true;
 
       @Override public ParserConfiguration build()
@@ -40,13 +53,9 @@ public final class ParserConfiguration
     };
   }
 
-  private final boolean preserve_lex;
-
-  private ParserConfiguration(
-    final boolean in_preserve_lex)
-  {
-    this.preserve_lex = in_preserve_lex;
-  }
+  /**
+   * @return {@code true} iff lexical information is being preserved
+   */
 
   public boolean preserveLexicalInformation()
   {

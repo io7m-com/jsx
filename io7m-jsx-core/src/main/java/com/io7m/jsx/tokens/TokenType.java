@@ -16,9 +16,10 @@
 
 package com.io7m.jsx.tokens;
 
-import java.io.File;
-
 import com.io7m.jsx.lexer.Position;
+
+import java.nio.file.Path;
+import java.util.Optional;
 
 /**
  * The type of tokens.
@@ -30,7 +31,7 @@ public interface TokenType
    * @return The file in which the token appeared
    */
 
-  File getFile();
+  Optional<Path> getFile();
 
   /**
    * @return The position of the token
@@ -41,15 +42,13 @@ public interface TokenType
   /**
    * Match a token.
    *
-   * @param m
-   *          The matcher
+   * @param m   The matcher
+   * @param <A> The type of values returned by the matcher
+   * @param <E> The type of exceptions raised by the matcher
+   *
    * @return The value returned by the matcher
-   * @throws E
-   *           If the matcher raises <code>E</code>
-   * @param <A>
-   *          The type of values returned by the matcher
-   * @param <E>
-   *          The type of exceptions raised by the matcher
+   *
+   * @throws E If the matcher raises {@code E}
    */
 
   <A, E extends Exception> A matchToken(

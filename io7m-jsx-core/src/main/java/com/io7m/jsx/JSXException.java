@@ -24,11 +24,24 @@ public abstract class JSXException extends Exception
 {
   private static final long serialVersionUID = 3630881233039597210L;
 
+  /**
+   * Construct an exception.
+   *
+   * @param message The message
+   */
+
   public JSXException(
     final String message)
   {
     super(message);
   }
+
+  /**
+   * Construct an exception.
+   *
+   * @param message The message
+   * @param cause   The cause
+   */
 
   public JSXException(
     final String message,
