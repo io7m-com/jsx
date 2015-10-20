@@ -14,56 +14,29 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.io7m.jsx;
+package com.io7m.jsx.parser;
 
 /**
- * The type of expression matchers.
- *
- * @param <A> The type of returned values
- * @param <E> The type of raised exceptions
+ * The type of mutable builders for parser configurations.
  */
 
-public interface SExpressionMatcherType<A, E extends Exception>
+public interface JSXParserConfigurationBuilderType
 {
   /**
-   * Match an expression.
-   *
-   * @param e The expression
-   *
-   * @return A value of {@code A}
-   *
-   * @throws E If required
+   * @return A new immutable configuration based on all of the values given so
+   * far.
    */
 
-  A list(
-    final SExpressionListType e)
-    throws E;
+  JSXParserConfiguration build();
 
   /**
-   * Match an expression.
+   * Preserve lexical information in parsed expressions. Disabling the
+   * preservation of lexical information saves memory at the expense of losing
+   * useful parse error messages.
    *
-   * @param e The expression
-   *
-   * @return A value of {@code A}
-   *
-   * @throws E If required
+   * @param e {@code true} if lexical information should be preserved.
    */
 
-  A quotedString(
-    final SExpressionQuotedStringType e)
-    throws E;
-
-  /**
-   * Match an expression.
-   *
-   * @param e The expression
-   *
-   * @return A value of {@code A}
-   *
-   * @throws E If required
-   */
-
-  A symbol(
-    final SExpressionSymbolType e)
-    throws E;
+  void preserveLexicalInformation(
+    boolean e);
 }

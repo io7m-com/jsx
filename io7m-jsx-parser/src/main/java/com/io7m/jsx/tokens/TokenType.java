@@ -14,56 +14,37 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.io7m.jsx;
+package com.io7m.jsx.tokens;
+
+import com.io7m.jlexing.core.ImmutableLexicalPositionType;
+
+import java.nio.file.Path;
 
 /**
- * The type of expression matchers.
- *
- * @param <A> The type of returned values
- * @param <E> The type of raised exceptions
+ * The type of tokens.
  */
 
-public interface SExpressionMatcherType<A, E extends Exception>
+public interface TokenType
 {
   /**
-   * Match an expression.
-   *
-   * @param e The expression
-   *
-   * @return A value of {@code A}
-   *
-   * @throws E If required
+   * @return The lexical information for the token
    */
 
-  A list(
-    final SExpressionListType e)
-    throws E;
+  ImmutableLexicalPositionType<Path> getLexicalInformation();
 
   /**
-   * Match an expression.
+   * Match a token.
    *
-   * @param e The expression
+   * @param m   The matcher
+   * @param <A> The type of values returned by the matcher
+   * @param <E> The type of exceptions raised by the matcher
    *
-   * @return A value of {@code A}
+   * @return The value returned by the matcher
    *
-   * @throws E If required
+   * @throws E If the matcher raises {@code E}
    */
 
-  A quotedString(
-    final SExpressionQuotedStringType e)
-    throws E;
-
-  /**
-   * Match an expression.
-   *
-   * @param e The expression
-   *
-   * @return A value of {@code A}
-   *
-   * @throws E If required
-   */
-
-  A symbol(
-    final SExpressionSymbolType e)
+  <A, E extends Exception> A matchToken(
+    final TokenMatcherType<A, E> m)
     throws E;
 }

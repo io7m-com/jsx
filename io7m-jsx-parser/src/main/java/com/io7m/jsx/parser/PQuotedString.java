@@ -1,10 +1,10 @@
 /*
  * Copyright © 2015 <code@io7m.com> http://io7m.com
- * 
+ *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
  * copyright notice and this permission notice appear in all copies.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
  * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
@@ -14,38 +14,43 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.io7m.jsx;
+package com.io7m.jsx.parser;
 
 import com.io7m.jlexing.core.LexicalPositionType;
+import com.io7m.jnull.NullCheck;
+import com.io7m.jsx.SExpressionMatcherType;
+import com.io7m.jsx.SExpressionQuotedStringType;
 
 import java.nio.file.Path;
 import java.util.Optional;
 
-/**
- * The type of S-expressions.
- */
-
-public interface SExpressionType
+final class PQuotedString implements SExpressionQuotedStringType
 {
-  /**
-   * @return The lexical information for the expression, if any
-   */
+  private final String                              text;
+  private final Optional<LexicalPositionType<Path>> lex;
 
-  Optional<LexicalPositionType<Path>> getLexicalInformation();
+  PQuotedString(
+    final String t,
+    final Optional<LexicalPositionType<Path>> in_lex)
+  {
+    this.text = NullCheck.notNull(t);
+    this.lex = NullCheck.notNull(in_lex);
+  }
 
-  /**
-   * Match an expression.
-   *
-   * @param m   The matcher
-   * @param <A> The type of values returned by the matcher
-   * @param <E> The type of exceptions raised by the matcher
-   *
-   * @return The value returned by the matcher
-   *
-   * @throws E If the matcher raises {@code E}
-   */
+  @Override public Optional<LexicalPositionType<Path>> getLexicalInformation()
+  {
+    return this.lex;
+  }
 
-  <A, E extends Exception> A matchExpression(
+  @Override public String getText()
+  {
+    return this.text;
+  }
+
+  @Override public <A, E extends Exception> A matchExpression(
     final SExpressionMatcherType<A, E> m)
-    throws E;
+    throws E
+  {
+    return m.quotedString(this);
+  }
 }

@@ -17,53 +17,10 @@
 package com.io7m.jsx;
 
 /**
- * The type of expression matchers.
- *
- * @param <A> The type of returned values
- * @param <E> The type of raised exceptions
+ * The type of symbols.
  */
 
-public interface SExpressionMatcherType<A, E extends Exception>
+public interface SExpressionSymbolType extends SExpressionAtomType
 {
-  /**
-   * Match an expression.
-   *
-   * @param e The expression
-   *
-   * @return A value of {@code A}
-   *
-   * @throws E If required
-   */
-
-  A list(
-    final SExpressionListType e)
-    throws E;
-
-  /**
-   * Match an expression.
-   *
-   * @param e The expression
-   *
-   * @return A value of {@code A}
-   *
-   * @throws E If required
-   */
-
-  A quotedString(
-    final SExpressionQuotedStringType e)
-    throws E;
-
-  /**
-   * Match an expression.
-   *
-   * @param e The expression
-   *
-   * @return A value of {@code A}
-   *
-   * @throws E If required
-   */
-
-  A symbol(
-    final SExpressionSymbolType e)
-    throws E;
+  // No extra functions.
 }
