@@ -14,56 +14,38 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.io7m.jsx;
+package com.io7m.jsx.lexer;
 
 /**
- * The type of expression matchers.
- *
- * @param <A> The type of returned values
- * @param <E> The type of raised exceptions
+ * The type of mutable builders for lexer configurations.
  */
 
-public interface SExpressionMatcherType<A, E extends Exception>
+public interface JSXLexerConfigurationBuilderType
 {
   /**
-   * Match an expression.
-   *
-   * @param e The expression
-   *
-   * @return A value of {@code A}
-   *
-   * @throws E If required
+   * @return A new immutable configuration based on all of the values given so
+   * far.
    */
 
-  A list(
-    final SExpressionListType e)
-    throws E;
+  JSXLexerConfiguration build();
 
   /**
-   * Match an expression.
+   * Allow or disallow the use of newlines in quoted strings. If disallowed,
+   * newlines must be indicated with escape codes.
    *
-   * @param e The expression
-   *
-   * @return A value of {@code A}
-   *
-   * @throws E If required
+   * @param e {@code true} if newlines should be allowed.
    */
 
-  A quotedString(
-    final SExpressionQuotedStringType e)
-    throws E;
+  void setNewlinesInQuotedStrings(
+    boolean e);
 
   /**
-   * Match an expression.
+   * Allow or disallow the use of square brackets to denote lists. If
+   * disallowed, only '(' (U+0028) and ')' (U+0029) denote lists.
    *
-   * @param e The expression
-   *
-   * @return A value of {@code A}
-   *
-   * @throws E If required
+   * @param e {@code true} if square brackets should be allowed.
    */
 
-  A symbol(
-    final SExpressionSymbolType e)
-    throws E;
+  void setSquareBrackets(
+    boolean e);
 }

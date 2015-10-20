@@ -14,56 +14,30 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.io7m.jsx;
+package com.io7m.jsx.lexer;
+
+import com.io7m.jlexing.core.ImmutableLexicalPositionType;
+
+import java.nio.file.Path;
 
 /**
- * The type of expression matchers.
- *
- * @param <A> The type of returned values
- * @param <E> The type of raised exceptions
+ * The type of exceptions indicating that EOF was reached unexpectedly.
  */
 
-public interface SExpressionMatcherType<A, E extends Exception>
+public final class JSXLexerUnexpectedEOFException extends JSXLexerException
 {
-  /**
-   * Match an expression.
-   *
-   * @param e The expression
-   *
-   * @return A value of {@code A}
-   *
-   * @throws E If required
-   */
-
-  A list(
-    final SExpressionListType e)
-    throws E;
+  private static final long serialVersionUID = -2136366848068538543L;
 
   /**
-   * Match an expression.
+   * Construct an exception.
    *
-   * @param e The expression
-   *
-   * @return A value of {@code A}
-   *
-   * @throws E If required
+   * @param in_lex     The lexical information
+   * @param in_message The exception message
    */
-
-  A quotedString(
-    final SExpressionQuotedStringType e)
-    throws E;
-
-  /**
-   * Match an expression.
-   *
-   * @param e The expression
-   *
-   * @return A value of {@code A}
-   *
-   * @throws E If required
-   */
-
-  A symbol(
-    final SExpressionSymbolType e)
-    throws E;
+  public JSXLexerUnexpectedEOFException(
+    final ImmutableLexicalPositionType<Path> in_lex,
+    final String in_message)
+  {
+    super(in_lex, in_message);
+  }
 }

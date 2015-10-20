@@ -14,56 +14,31 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.io7m.jsx;
+package com.io7m.jsx.parser;
+
+import com.io7m.jnull.NullCheck;
+import com.io7m.jsx.lexer.JSXLexerException;
 
 /**
- * The type of expression matchers.
- *
- * @param <A> The type of returned values
- * @param <E> The type of raised exceptions
+ * The type of parser errors caused by {@link JSXLexerException} throws.
  */
 
-public interface SExpressionMatcherType<A, E extends Exception>
+public final class JSXParserLexicalException extends JSXParserException
 {
-  /**
-   * Match an expression.
-   *
-   * @param e The expression
-   *
-   * @return A value of {@code A}
-   *
-   * @throws E If required
-   */
-
-  A list(
-    final SExpressionListType e)
-    throws E;
+  private static final long serialVersionUID = 7904039867120509695L;
 
   /**
-   * Match an expression.
+   * Construct an exception.
    *
-   * @param e The expression
-   *
-   * @return A value of {@code A}
-   *
-   * @throws E If required
+   * @param in_cause The cause
    */
 
-  A quotedString(
-    final SExpressionQuotedStringType e)
-    throws E;
-
-  /**
-   * Match an expression.
-   *
-   * @param e The expression
-   *
-   * @return A value of {@code A}
-   *
-   * @throws E If required
-   */
-
-  A symbol(
-    final SExpressionSymbolType e)
-    throws E;
+  public JSXParserLexicalException(
+    final JSXLexerException in_cause)
+  {
+    super(
+      in_cause.getLexicalInformation(),
+      NullCheck.notNull(in_cause.getMessage()),
+      in_cause);
+  }
 }

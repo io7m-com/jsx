@@ -10,10 +10,10 @@
     <artifactId>io7m-jsx</artifactId>
     <version>0.4.0</version>
   </parent>
-  <artifactId>io7m-jsx-core</artifactId>
+  <artifactId>io7m-jsx-parser</artifactId>
 
   <packaging>jar</packaging>
-  <description>S-expression parsing (Core)</description>
+  <description>S-expression parsing (Parser)</description>
   <url>http://io7m.github.io/jsx</url>
   <name>${project.artifactId}</name>
 
@@ -24,6 +24,12 @@
   </scm>
 
   <dependencies>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>io7m-jsx-core</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
     <dependency>
       <groupId>com.io7m.jnull</groupId>
       <artifactId>io7m-jnull-core</artifactId>
@@ -37,8 +43,8 @@
       <artifactId>io7m-jequality-core</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.io7m.jlexing</groupId>
-      <artifactId>io7m-jlexing-core</artifactId>
+      <groupId>com.io7m.jeucreader</groupId>
+      <artifactId>io7m-jeucreader-core</artifactId>
     </dependency>
 
     <dependency>
