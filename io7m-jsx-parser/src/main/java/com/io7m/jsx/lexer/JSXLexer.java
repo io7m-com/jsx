@@ -34,7 +34,6 @@ import com.io7m.junreachable.UnreachableCodeException;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Optional;
 
 /**
  * The default implementation of the {@link JSXLexerType} type.
@@ -59,6 +58,9 @@ public final class JSXLexer implements JSXLexerType
     this.buffer = new StringBuilder(256);
     this.position = MutableLexicalPosition.newPosition(0, 0);
     this.buffer_position = MutableLexicalPosition.newPosition(0, 0);
+
+    this.position.setFile(c.getFile());
+    this.buffer_position.setFile(c.getFile());
   }
 
   /**
@@ -159,29 +161,6 @@ public final class JSXLexer implements JSXLexerType
     final String s = NullCheck.notNull(sb.toString());
     return new JSXLexerUnknownEscapeCodeException(
       this.snapshotPosition(), s);
-  }
-
-  /**
-   * @return The configured file, if any
-   */
-
-  public Optional<Path> getFile()
-  {
-    return this.position.getFile();
-  }
-
-  /**
-   * Set the file that will appear in lexical information.
-   *
-   * @param f The file, if any
-   */
-
-  public void setFile(
-    final Optional<Path> f)
-  {
-    NullCheck.notNull(f, "File");
-    this.position.setFile(f);
-    this.buffer_position.setFile(f);
   }
 
   private void parseEscape()
