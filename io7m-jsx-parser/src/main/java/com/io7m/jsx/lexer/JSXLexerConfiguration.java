@@ -16,21 +16,29 @@
 
 package com.io7m.jsx.lexer;
 
+import com.io7m.jnull.NullCheck;
+
+import java.nio.file.Path;
+import java.util.Optional;
+
 /**
  * Immutable lexer configurations.
  */
 
 public final class JSXLexerConfiguration
 {
-  private final boolean square_brackets;
-  private final boolean string_newlines;
+  private final boolean        square_brackets;
+  private final boolean        string_newlines;
+  private final Optional<Path> file;
 
   private JSXLexerConfiguration(
     final boolean in_string_newlines,
-    final boolean in_square_brackets)
+    final boolean in_square_brackets,
+    final Optional<Path> in_file)
   {
     this.string_newlines = in_string_newlines;
     this.square_brackets = in_square_brackets;
+    this.file = NullCheck.notNull(in_file);
   }
 
   /**
@@ -41,13 +49,14 @@ public final class JSXLexerConfiguration
   {
     return new JSXLexerConfigurationBuilderType()
     {
+      private Optional<Path> file = Optional.empty();
       private boolean square_brackets = true;
       private boolean string_newlines = true;
 
       @Override public JSXLexerConfiguration build()
       {
         return new JSXLexerConfiguration(
-          this.string_newlines, this.square_brackets);
+          this.string_newlines, this.square_brackets, this.file);
       }
 
       @Override public void setNewlinesInQuotedStrings(
@@ -61,7 +70,21 @@ public final class JSXLexerConfiguration
       {
         this.square_brackets = e;
       }
+
+      @Override public void setFile(final Optional<Path> in_file)
+      {
+        this.file = NullCheck.notNull(in_file);
+      }
     };
+  }
+
+  /**
+   * @return The file name that will be used in lexical information, if any
+   */
+
+  public Optional<Path> getFile()
+  {
+    return this.file;
   }
 
   /**

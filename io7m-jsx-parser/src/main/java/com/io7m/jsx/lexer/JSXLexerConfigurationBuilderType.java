@@ -16,6 +16,9 @@
 
 package com.io7m.jsx.lexer;
 
+import java.nio.file.Path;
+import java.util.Optional;
+
 /**
  * The type of mutable builders for lexer configurations.
  */
@@ -48,4 +51,12 @@ public interface JSXLexerConfigurationBuilderType
 
   void setSquareBrackets(
     boolean e);
+
+  /**
+   * Set the file name that will appear in lexical information.
+   *
+   * @param file The file, if any
+   */
+
+  void setFile(Optional<Path> file);
 }

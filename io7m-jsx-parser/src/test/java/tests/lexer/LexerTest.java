@@ -23,6 +23,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.StringReader;
+import java.nio.file.Paths;
+import java.util.Optional;
 
 public final class LexerTest
 {
@@ -38,6 +40,24 @@ public final class LexerTest
       JSXLexerConfiguration.newBuilder();
     final JSXLexerConfiguration c = cb.build();
     return c;
+  }
+
+  @Test public void testFile_0()
+    throws Exception
+  {
+    final JSXLexerConfigurationBuilderType cb =
+      JSXLexerConfiguration.newBuilder();
+    cb.setFile(Optional.of(Paths.get("file.txt")));
+    final JSXLexerConfiguration c = cb.build();
+
+    final JSXLexerType lex = JSXLexer.newLexer(c, LexerTest.stringReader("("));
+    final TokenLeftParenthesis t = (TokenLeftParenthesis) lex.token();
+    System.out.println(t);
+
+    Assert.assertEquals(
+      Optional.of(Paths.get("file.txt")), t.getLexicalInformation().getFile());
+    Assert.assertEquals(0L, (long) t.getLexicalInformation().getLine());
+    Assert.assertEquals(1L, (long) t.getLexicalInformation().getColumn());
   }
 
   @Test public void testLeftParen_0()
