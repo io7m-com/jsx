@@ -16,14 +16,28 @@
 
 package com.io7m.jsx;
 
-import java.util.List;
-
 /**
  * The type of lists.
  */
 
-public interface SExpressionListType extends SExpressionType, List<SExpressionType>
+public interface SExpressionListType extends SExpressionType
 {
+  /**
+   * @param index The list index
+   *
+   * @return The expression at {@code index}
+   *
+   * @throws IndexOutOfBoundsException Iff {@code index >= {@link #size()}}
+   */
+
+  SExpressionType get(int index);
+
+  /**
+   * @return The number of elements in the list
+   */
+
+  int size();
+
   /**
    * @return <tt>true</tt> if the original list used square brackets
    */
