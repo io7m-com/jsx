@@ -1,5 +1,5 @@
 /*
- * Copyright © 2015 <code@io7m.com> http://io7m.com
+ * Copyright © 2016 <code@io7m.com> http://io7m.com
  * 
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -204,7 +204,7 @@ public final class JSXParser implements JSXParserType
     throws JSXLexerException, IOException, JSXParserGrammarException
   {
     final PList xs = new PList(
-      new ArrayList<>(16), JSXParser.getTokenLexical(c, peek), false);
+      new ArrayList<>(16), JSXParser.getTokenLexical(c, peek), true);
 
     while (true) {
       final TokenType t = lexer.token();

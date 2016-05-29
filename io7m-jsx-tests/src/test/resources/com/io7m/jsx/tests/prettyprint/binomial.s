@@ -1,0 +1,7 @@
+(define (binomial n k)
+  (letrec ((binomial-pos (lambda (m i)
+                           (car (pascal m i i)))))
+    (cond ((not (integer? k)) (error "binomial : second argument must be an integer."))
+          ((negative? k) 0)
+          ((negative? n) (* (expt -1 k) (binomial-pos (- k n 1) k)))
+          (else (binomial-pos n k)))))

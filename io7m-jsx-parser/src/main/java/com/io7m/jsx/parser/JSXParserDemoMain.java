@@ -1,5 +1,5 @@
 /*
- * Copyright © 2015 <code@io7m.com> http://io7m.com
+ * Copyright © 2016 <code@io7m.com> http://io7m.com
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -29,6 +29,7 @@ import com.io7m.junreachable.UnreachableCodeException;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Optional;
 
 /**
  * Simple parser demo that parses and then serializes.
@@ -53,34 +54,39 @@ public final class JSXParserDemoMain
     final String[] args)
     throws IOException
   {
-    try {
-      final JSXLexerConfigurationBuilderType lcb =
-        JSXLexerConfiguration.newBuilder();
-      lcb.setNewlinesInQuotedStrings(false);
-      final JSXLexerConfiguration lc = lcb.build();
+    final JSXLexerConfigurationBuilderType lcb =
+      JSXLexerConfiguration.newBuilder();
+    lcb.setNewlinesInQuotedStrings(false);
+    final JSXLexerConfiguration lc = lcb.build();
 
-      final UnicodeCharacterReaderPushBackType r =
-        UnicodeCharacterReader.newReader(new InputStreamReader(System.in));
-      final JSXLexerType lex = JSXLexer.newLexer(lc, r);
+    final UnicodeCharacterReaderPushBackType r =
+      UnicodeCharacterReader.newReader(new InputStreamReader(System.in));
+    final JSXLexerType lex = JSXLexer.newLexer(lc, r);
 
-      final JSXParserConfigurationBuilderType pcb =
-        JSXParserConfiguration.newBuilder();
-      pcb.preserveLexicalInformation(true);
-      final JSXParserConfiguration pc = pcb.build();
-      final JSXParserType p = JSXParser.newParser(pc, lex);
+    final JSXParserConfigurationBuilderType pcb =
+      JSXParserConfiguration.newBuilder();
+    pcb.preserveLexicalInformation(true);
+    final JSXParserConfiguration pc = pcb.build();
+    final JSXParserType p = JSXParser.newParser(pc, lex);
 
-      final JSXSerializerType s = JSXSerializerTrivial.newSerializer();
+    final JSXSerializerType s = JSXSerializerTrivial.newSerializer();
 
-      while (true) {
-        final SExpressionType e = p.parseExpression();
-        s.serialize(e, System.out);
+    while (true) {
+      try {
+        final Optional<SExpressionType> e_opt = p.parseExpressionOrEOF();
+        if (e_opt.isPresent()) {
+          final SExpressionType e = e_opt.get();
+          s.serialize(e, System.out);
+        } else {
+          break;
+        }
+      } catch (final JSXParserException x) {
+        System.err.println(
+          "error: parse error: "
+            + x.getLexicalInformation()
+            + ": "
+            + x.getMessage());
       }
-    } catch (final JSXParserException e) {
-      System.err.println(
-        "error: parse error: "
-        + e.getLexicalInformation()
-        + ": "
-        + e.getMessage());
     }
   }
 }
