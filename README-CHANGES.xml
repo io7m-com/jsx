@@ -4,7 +4,7 @@
 
   <c:release c:ticket-system="com.github.io7m.jsx">
     <c:date>2016-05-31</c:date>
-    <c:version>0.5.1-SNAPSHOT</c:version>
+    <c:version>0.5.1</c:version>
     <c:item>
       <c:date>2016-05-31</c:date>
       <c:type-code-fix/>
