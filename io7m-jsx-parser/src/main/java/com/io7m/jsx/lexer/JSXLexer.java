@@ -30,7 +30,6 @@ import com.io7m.jsx.tokens.TokenRightParenthesis;
 import com.io7m.jsx.tokens.TokenRightSquare;
 import com.io7m.jsx.tokens.TokenSymbol;
 import com.io7m.jsx.tokens.TokenType;
-import com.io7m.junreachable.UnreachableCodeException;
 
 import java.io.IOException;
 import java.nio.file.Path;
