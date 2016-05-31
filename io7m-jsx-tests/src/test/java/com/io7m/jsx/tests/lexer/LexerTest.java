@@ -35,12 +35,17 @@ import com.io7m.jsx.tokens.TokenQuotedString;
 import com.io7m.jsx.tokens.TokenRightParenthesis;
 import com.io7m.jsx.tokens.TokenRightSquare;
 import com.io7m.jsx.tokens.TokenSymbol;
+import com.io7m.jsx.tokens.TokenType;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.nio.file.Paths;
 import java.util.Optional;
+import java.util.zip.GZIPInputStream;
 
 public final class LexerTest
 {
@@ -56,6 +61,37 @@ public final class LexerTest
       JSXLexerConfiguration.newBuilder();
     final JSXLexerConfiguration c = cb.build();
     return c;
+  }
+
+  @Test public void testLargeData()
+    throws Exception
+  {
+    final JSXLexerConfigurationBuilderType cb =
+      JSXLexerConfiguration.newBuilder();
+    cb.setFile(Optional.of(Paths.get("file.txt")));
+    final JSXLexerConfiguration c = cb.build();
+
+    final InputStream is =
+      LexerTest.class.getResourceAsStream("/com/io7m/jsx/tests/main.sdi.gz");
+    final GZIPInputStream zis =
+      new GZIPInputStream(new BufferedInputStream(is));
+    final InputStreamReader zis_r =
+      new InputStreamReader(zis);
+    final UnicodeCharacterReaderPushBackType cr =
+      UnicodeCharacterReader.newReader(zis_r);
+
+    final JSXLexerType lex = JSXLexer.newLexer(c, cr);
+
+    int count = 0;
+    while (true) {
+      final TokenType t = lex.token();
+      ++count;
+      if (t instanceof TokenEOF) {
+        break;
+      }
+    }
+
+    Assert.assertEquals(40483L, (long) count);
   }
 
   @Test public void testFile_0()
