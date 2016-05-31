@@ -3,6 +3,17 @@
   <c:project>io7m-jsx</c:project>
 
   <c:release c:ticket-system="com.github.io7m.jsx">
+    <c:date>2016-05-31</c:date>
+    <c:version>0.5.1-SNAPSHOT</c:version>
+    <c:item>
+      <c:date>2016-05-31</c:date>
+      <c:type-code-fix/>
+      <c:ticket>4</c:ticket>
+      <c:summary>Switch to an iterative implementation of the lexer that uses constant stack space</c:summary>
+    </c:item>
+  </c:release>
+
+  <c:release c:ticket-system="com.github.io7m.jsx">
     <c:date>2016-05-29</c:date>
     <c:version>0.5.0</c:version>
     <c:item>

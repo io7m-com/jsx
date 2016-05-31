@@ -30,7 +30,6 @@ import com.io7m.jsx.tokens.TokenRightParenthesis;
 import com.io7m.jsx.tokens.TokenRightSquare;
 import com.io7m.jsx.tokens.TokenSymbol;
 import com.io7m.jsx.tokens.TokenType;
-import com.io7m.junreachable.UnreachableCodeException;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -320,129 +319,128 @@ public final class JSXLexer implements JSXLexerType
     JSXLexerBareCarriageReturnException,
     JSXLexerNewLinesInStringsException
   {
-    switch (this.state) {
-      case STATE_INITIAL: {
-        final int c = this.readChar();
-        if (c == -1) {
-          return new TokenEOF(this.snapshotPosition());
-        }
-
-        if (c == '\n') {
-          this.completeNewline();
-          return this.token();
-        }
-        if (c == '\r') {
-          this.state = State.STATE_IN_CRLF;
-          return this.token();
-        }
-        if (c == '"') {
-          this.startQuotedString();
-          return this.token();
-        }
-        if (c == '(') {
-          return new TokenLeftParenthesis(this.snapshotPosition());
-        }
-        if (c == ')') {
-          return new TokenRightParenthesis(this.snapshotPosition());
-        }
-        if (c == '[') {
-          if (this.config.allowSquareBrackets()) {
-            return new TokenLeftSquare(this.snapshotPosition());
+    while (true) {
+      switch (this.state) {
+        case STATE_INITIAL: {
+          final int c = this.readChar();
+          if (c == -1) {
+            return new TokenEOF(this.snapshotPosition());
           }
-        }
-        if (c == ']') {
-          if (this.config.allowSquareBrackets()) {
-            return new TokenRightSquare(this.snapshotPosition());
+
+          if (c == '\n') {
+            this.completeNewline();
+            continue;
           }
-        }
-
-        if (Character.isSpaceChar(c)) {
-          return this.token();
-        }
-
-        this.startSymbol(c);
-        return this.token();
-      }
-
-      case STATE_IN_CRLF: {
-        final int c = this.readCharNotEOF();
-
-        if (c == '\n') {
-          this.completeNewline();
-          return this.token();
-        }
-
-        throw this.errorBareCarriageReturn();
-      }
-
-      case STATE_IN_STRING_QUOTED: {
-        final int c = this.readCharNotEOF();
-        if (c == '\\') {
-          this.parseEscape();
-          return this.token();
-        }
-        if ((c == '\r') || (c == '\n')) {
-          if (!this.config.allowNewlinesInQuotedStrings()) {
-            throw this.errorNewLinesNotInQuotedStrings();
+          if (c == '\r') {
+            this.state = State.STATE_IN_CRLF;
+            continue;
           }
-        }
-        if (c == '"') {
-          return this.completeQuotedString();
+          if (c == '"') {
+            this.startQuotedString();
+            continue;
+          }
+          if (c == '(') {
+            return new TokenLeftParenthesis(this.snapshotPosition());
+          }
+          if (c == ')') {
+            return new TokenRightParenthesis(this.snapshotPosition());
+          }
+          if (c == '[') {
+            if (this.config.allowSquareBrackets()) {
+              return new TokenLeftSquare(this.snapshotPosition());
+            }
+          }
+          if (c == ']') {
+            if (this.config.allowSquareBrackets()) {
+              return new TokenRightSquare(this.snapshotPosition());
+            }
+          }
+
+          if (Character.isSpaceChar(c)) {
+            continue;
+          }
+
+          this.startSymbol(c);
+          continue;
         }
 
-        this.buffer.appendCodePoint(c);
-        return this.token();
-      }
+        case STATE_IN_CRLF: {
+          final int c = this.readCharNotEOF();
 
-      case STATE_IN_SYMBOL: {
-        final int c = this.readChar();
-        if (c == -1) {
-          return this.completeSymbol();
+          if (c == '\n') {
+            this.completeNewline();
+            continue;
+          }
+
+          throw this.errorBareCarriageReturn();
         }
-        if (c == '\n') {
-          this.completeNewline();
-          return this.completeSymbol();
+
+        case STATE_IN_STRING_QUOTED: {
+          final int c = this.readCharNotEOF();
+          if (c == '\\') {
+            this.parseEscape();
+            continue;
+          }
+          if ((c == '\r') || (c == '\n')) {
+            if (!this.config.allowNewlinesInQuotedStrings()) {
+              throw this.errorNewLinesNotInQuotedStrings();
+            }
+          }
+          if (c == '"') {
+            return this.completeQuotedString();
+          }
+
+          this.buffer.appendCodePoint(c);
+          continue;
         }
-        if (c == '\r') {
-          this.state = State.STATE_IN_CRLF;
-          return this.completeSymbol();
-        }
-        if (c == '"') {
-          final TokenType s = this.completeSymbol();
-          this.reader.pushCodePoint(c);
-          return s;
-        }
-        if (c == '(') {
-          this.reader.pushCodePoint(c);
-          return this.completeSymbol();
-        }
-        if (c == ')') {
-          this.reader.pushCodePoint(c);
-          return this.completeSymbol();
-        }
-        if (c == '[') {
-          if (this.config.allowSquareBrackets()) {
+
+        case STATE_IN_SYMBOL: {
+          final int c = this.readChar();
+          if (c == -1) {
+            return this.completeSymbol();
+          }
+          if (c == '\n') {
+            this.completeNewline();
+            return this.completeSymbol();
+          }
+          if (c == '\r') {
+            this.state = State.STATE_IN_CRLF;
+            return this.completeSymbol();
+          }
+          if (c == '"') {
+            final TokenType s = this.completeSymbol();
+            this.reader.pushCodePoint(c);
+            return s;
+          }
+          if (c == '(') {
             this.reader.pushCodePoint(c);
             return this.completeSymbol();
           }
-        }
-        if (c == ']') {
-          if (this.config.allowSquareBrackets()) {
+          if (c == ')') {
             this.reader.pushCodePoint(c);
             return this.completeSymbol();
           }
-        }
+          if (c == '[') {
+            if (this.config.allowSquareBrackets()) {
+              this.reader.pushCodePoint(c);
+              return this.completeSymbol();
+            }
+          }
+          if (c == ']') {
+            if (this.config.allowSquareBrackets()) {
+              this.reader.pushCodePoint(c);
+              return this.completeSymbol();
+            }
+          }
 
-        if (Character.isSpaceChar(c)) {
-          return this.completeSymbol();
-        }
+          if (Character.isSpaceChar(c)) {
+            return this.completeSymbol();
+          }
 
-        this.buffer.appendCodePoint(c);
-        return this.token();
+          this.buffer.appendCodePoint(c);
+        }
       }
     }
-
-    throw new UnreachableCodeException();
   }
 
   private ImmutableLexicalPositionType<Path> snapshotPosition()
