@@ -24,6 +24,7 @@ import com.io7m.junreachable.UnreachableCodeException;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Simple lexer demo that prints all tokens.
@@ -54,8 +55,10 @@ public final class JSXLexerDemoMain
       cb.setNewlinesInQuotedStrings(false);
       final JSXLexerConfiguration c = cb.build();
 
+      final InputStreamReader ir =
+        new InputStreamReader(System.in, StandardCharsets.UTF_8);
       final UnicodeCharacterReaderPushBackType r =
-        UnicodeCharacterReader.newReader(new InputStreamReader(System.in));
+        UnicodeCharacterReader.newReader(ir);
       final JSXLexerType lex = JSXLexer.newLexer(c, r);
 
       while (true) {

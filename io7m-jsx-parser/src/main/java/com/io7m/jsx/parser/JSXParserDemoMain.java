@@ -29,6 +29,7 @@ import com.io7m.junreachable.UnreachableCodeException;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 /**
@@ -59,8 +60,10 @@ public final class JSXParserDemoMain
     lcb.setNewlinesInQuotedStrings(false);
     final JSXLexerConfiguration lc = lcb.build();
 
+    final InputStreamReader ir =
+      new InputStreamReader(System.in, StandardCharsets.UTF_8);
     final UnicodeCharacterReaderPushBackType r =
-      UnicodeCharacterReader.newReader(new InputStreamReader(System.in));
+      UnicodeCharacterReader.newReader(ir);
     final JSXLexerType lex = JSXLexer.newLexer(lc, r);
 
     final JSXParserConfigurationBuilderType pcb =

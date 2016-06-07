@@ -25,7 +25,9 @@ import com.io7m.jsx.SExpressionSymbolType;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 
 /**
  * A trivial serializer with no features.
@@ -108,7 +110,11 @@ public final class JSXSerializerTrivial implements JSXSerializerType
     final OutputStream s)
     throws IOException
   {
-    final PrintWriter w = new PrintWriter(new BufferedOutputStream(s));
+    final BufferedOutputStream bs =
+      new BufferedOutputStream(s);
+    final OutputStreamWriter os =
+      new OutputStreamWriter(bs, StandardCharsets.UTF_8);
+    final PrintWriter w = new PrintWriter(os);
     JSXSerializerTrivial.serializeWithWriter(e, w);
     w.flush();
   }
