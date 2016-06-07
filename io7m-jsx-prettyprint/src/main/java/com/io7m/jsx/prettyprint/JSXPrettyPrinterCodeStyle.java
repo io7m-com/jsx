@@ -36,7 +36,6 @@ import java.io.Writer;
 
 public final class JSXPrettyPrinterCodeStyle implements JSXPrettyPrinterType
 {
-  private final Writer out;
   private final WriterBackend backend;
   private final Layouter<IOException> layout;
   private final SExpressionMatcherType<Unit, IOException> matcher;
@@ -65,8 +64,8 @@ public final class JSXPrettyPrinterCodeStyle implements JSXPrettyPrinterType
     final int width,
     final int indent)
   {
-    this.out = NullCheck.notNull(in_out);
-    this.backend = new WriterBackend(this.out, width);
+    final Writer out = NullCheck.notNull(in_out);
+    this.backend = new WriterBackend(out, width);
     this.layout = new Layouter<>(this.backend, indent);
     this.matcher = new SExpressionMatcherType<Unit, IOException>()
     {

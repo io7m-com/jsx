@@ -166,31 +166,31 @@ public final class JSXLexer implements JSXLexerType
     throws JSXLexerException, IOException
   {
     final int c = this.readCharNotEOF();
-    if (c == '"') {
+    if (c == (int) '"') {
       this.buffer.append('"');
       return;
     }
-    if (c == '\\') {
+    if (c == (int) '\\') {
       this.buffer.append('\\');
       return;
     }
-    if (c == 'r') {
+    if (c == (int) 'r') {
       this.buffer.append('\r');
       return;
     }
-    if (c == 'n') {
+    if (c == (int) 'n') {
       this.buffer.append("\n");
       return;
     }
-    if (c == 't') {
+    if (c == (int) 't') {
       this.buffer.append("\t");
       return;
     }
-    if (c == 'u') {
+    if (c == (int) 'u') {
       this.parseUnicode4();
       return;
     }
-    if (c == 'U') {
+    if (c == (int) 'U') {
       this.parseUnicode8();
       return;
     }
@@ -327,30 +327,30 @@ public final class JSXLexer implements JSXLexerType
             return new TokenEOF(this.snapshotPosition());
           }
 
-          if (c == '\n') {
+          if (c == (int) '\n') {
             this.completeNewline();
             continue;
           }
-          if (c == '\r') {
+          if (c == (int) '\r') {
             this.state = State.STATE_IN_CRLF;
             continue;
           }
-          if (c == '"') {
+          if (c == (int) '"') {
             this.startQuotedString();
             continue;
           }
-          if (c == '(') {
+          if (c == (int) '(') {
             return new TokenLeftParenthesis(this.snapshotPosition());
           }
-          if (c == ')') {
+          if (c == (int) ')') {
             return new TokenRightParenthesis(this.snapshotPosition());
           }
-          if (c == '[') {
+          if (c == (int) '[') {
             if (this.config.allowSquareBrackets()) {
               return new TokenLeftSquare(this.snapshotPosition());
             }
           }
-          if (c == ']') {
+          if (c == (int) ']') {
             if (this.config.allowSquareBrackets()) {
               return new TokenRightSquare(this.snapshotPosition());
             }
@@ -367,7 +367,7 @@ public final class JSXLexer implements JSXLexerType
         case STATE_IN_CRLF: {
           final int c = this.readCharNotEOF();
 
-          if (c == '\n') {
+          if (c == (int) '\n') {
             this.completeNewline();
             continue;
           }
@@ -377,16 +377,16 @@ public final class JSXLexer implements JSXLexerType
 
         case STATE_IN_STRING_QUOTED: {
           final int c = this.readCharNotEOF();
-          if (c == '\\') {
+          if (c == (int) '\\') {
             this.parseEscape();
             continue;
           }
-          if ((c == '\r') || (c == '\n')) {
+          if ((c == (int) '\r') || (c == (int) '\n')) {
             if (!this.config.allowNewlinesInQuotedStrings()) {
               throw this.errorNewLinesNotInQuotedStrings();
             }
           }
-          if (c == '"') {
+          if (c == (int) '"') {
             return this.completeQuotedString();
           }
 
@@ -399,34 +399,34 @@ public final class JSXLexer implements JSXLexerType
           if (c == -1) {
             return this.completeSymbol();
           }
-          if (c == '\n') {
+          if (c == (int) '\n') {
             this.completeNewline();
             return this.completeSymbol();
           }
-          if (c == '\r') {
+          if (c == (int) '\r') {
             this.state = State.STATE_IN_CRLF;
             return this.completeSymbol();
           }
-          if (c == '"') {
+          if (c == (int) '"') {
             final TokenType s = this.completeSymbol();
             this.reader.pushCodePoint(c);
             return s;
           }
-          if (c == '(') {
+          if (c == (int) '(') {
             this.reader.pushCodePoint(c);
             return this.completeSymbol();
           }
-          if (c == ')') {
+          if (c == (int) ')') {
             this.reader.pushCodePoint(c);
             return this.completeSymbol();
           }
-          if (c == '[') {
+          if (c == (int) '[') {
             if (this.config.allowSquareBrackets()) {
               this.reader.pushCodePoint(c);
               return this.completeSymbol();
             }
           }
-          if (c == ']') {
+          if (c == (int) ']') {
             if (this.config.allowSquareBrackets()) {
               this.reader.pushCodePoint(c);
               return this.completeSymbol();
