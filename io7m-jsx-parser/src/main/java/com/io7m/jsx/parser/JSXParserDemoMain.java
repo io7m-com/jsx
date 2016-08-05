@@ -16,22 +16,19 @@
 
 package com.io7m.jsx.parser;
 
-import com.io7m.jeucreader.UnicodeCharacterReader;
-import com.io7m.jeucreader.UnicodeCharacterReaderPushBackType;
 import com.io7m.jsx.SExpressionType;
 import com.io7m.jsx.api.lexer.JSXLexerConfiguration;
-import com.io7m.jsx.api.lexer.JSXLexerType;
+import com.io7m.jsx.api.lexer.JSXLexerSupplierType;
 import com.io7m.jsx.api.parser.JSXParserConfiguration;
 import com.io7m.jsx.api.parser.JSXParserException;
+import com.io7m.jsx.api.parser.JSXParserSupplierType;
 import com.io7m.jsx.api.parser.JSXParserType;
 import com.io7m.jsx.api.serializer.JSXSerializerType;
-import com.io7m.jsx.lexer.JSXLexer;
+import com.io7m.jsx.lexer.JSXLexerSupplier;
 import com.io7m.jsx.serializer.JSXSerializerTrivial;
 import com.io7m.junreachable.UnreachableCodeException;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 /**
@@ -57,29 +54,33 @@ public final class JSXParserDemoMain
     final String[] args)
     throws IOException
   {
-    final JSXLexerConfiguration.Builder lcb = JSXLexerConfiguration.builder();
-    lcb.setNewlinesInQuotedStrings(false);
-    final JSXLexerConfiguration lc = lcb.build();
-
-    final InputStreamReader ir =
-      new InputStreamReader(System.in, StandardCharsets.UTF_8);
-    final UnicodeCharacterReaderPushBackType r =
-      UnicodeCharacterReader.newReader(ir);
-    final JSXLexerType lex = JSXLexer.newLexer(lc, r);
+    final JSXLexerConfiguration.Builder lexer_config_builder =
+      JSXLexerConfiguration.builder();
+    lexer_config_builder.setNewlinesInQuotedStrings(false);
+    final JSXLexerConfiguration lexer_config =
+      lexer_config_builder.build();
 
     final JSXParserConfiguration.Builder pcb = JSXParserConfiguration.builder();
     pcb.setPreserveLexical(true);
-    final JSXParserConfiguration pc = pcb.build();
-    final JSXParserType p = JSXParser.newParser(pc, lex);
+    final JSXParserConfiguration parser_config = pcb.build();
 
-    final JSXSerializerType s = JSXSerializerTrivial.newSerializer();
+    final JSXLexerSupplierType lexer_supplier =
+      JSXLexerSupplier.createSupplier();
+    final JSXParserSupplierType parser_supplier =
+      JSXParserSupplier.createSupplier();
+
+    final JSXParserType parser =
+      parser_supplier.createFromStreamUTF8(
+        parser_config, lexer_config, lexer_supplier, System.in);
+
+    final JSXSerializerType serializer = JSXSerializerTrivial.newSerializer();
 
     while (true) {
       try {
-        final Optional<SExpressionType> e_opt = p.parseExpressionOrEOF();
+        final Optional<SExpressionType> e_opt = parser.parseExpressionOrEOF();
         if (e_opt.isPresent()) {
           final SExpressionType e = e_opt.get();
-          s.serialize(e, System.out);
+          serializer.serialize(e, System.out);
         } else {
           break;
         }
