@@ -29,18 +29,15 @@ import org.osgi.service.component.annotations.Component;
 @Component
 public final class JSXParserSupplier implements JSXParserSupplierType
 {
-  private JSXParserSupplier()
-  {
-
-  }
-
   /**
-   * @return A new parser supplier
+   * Create a new parser supplier.
+   *
+   * Note: This constructor must be public and zero-arg for OSGi compatibility.
    */
 
-  public static JSXParserSupplierType createSupplier()
+  public JSXParserSupplier()
   {
-    return new JSXParserSupplier();
+
   }
 
   @Override

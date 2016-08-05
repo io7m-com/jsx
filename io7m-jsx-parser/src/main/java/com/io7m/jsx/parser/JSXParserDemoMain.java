@@ -65,9 +65,9 @@ public final class JSXParserDemoMain
     final JSXParserConfiguration parser_config = pcb.build();
 
     final JSXLexerSupplierType lexer_supplier =
-      JSXLexerSupplier.createSupplier();
+      new JSXLexerSupplier();
     final JSXParserSupplierType parser_supplier =
-      JSXParserSupplier.createSupplier();
+      new JSXParserSupplier();
 
     final JSXParserType parser =
       parser_supplier.createFromStreamUTF8(

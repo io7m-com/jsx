@@ -57,7 +57,7 @@ public final class JSXLexerDemoMain
         lexer_config_builder.build();
 
       final JSXLexerSupplierType lexer_supplier =
-        JSXLexerSupplier.createSupplier();
+        new JSXLexerSupplier();
       final JSXLexerType lexer =
         lexer_supplier.createFromStreamUTF8(lexer_config, System.in);
 

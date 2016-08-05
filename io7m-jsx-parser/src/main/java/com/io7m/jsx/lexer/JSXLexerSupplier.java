@@ -29,18 +29,15 @@ import org.osgi.service.component.annotations.Component;
 @Component
 public final class JSXLexerSupplier implements JSXLexerSupplierType
 {
-  private JSXLexerSupplier()
-  {
-
-  }
-
   /**
-   * @return A new lexer supplier
+   * Create a new lexer supplier.
+   *
+   * Note: This constructor must be public and zero-arg for OSGi compatibility.
    */
 
-  public static JSXLexerSupplierType createSupplier()
+  public JSXLexerSupplier()
   {
-    return new JSXLexerSupplier();
+
   }
 
   @Override
