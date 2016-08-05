@@ -19,6 +19,7 @@ package com.io7m.jsx.api.lexer;
 import com.io7m.jeucreader.UnicodeCharacterReader;
 import com.io7m.jeucreader.UnicodeCharacterReaderPushBackType;
 import com.io7m.jnull.NullCheck;
+import org.osgi.annotation.versioning.ProviderType;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -30,6 +31,7 @@ import java.nio.charset.StandardCharsets;
  * The type of lexer suppliers.
  */
 
+@ProviderType
 @FunctionalInterface
 public interface JSXLexerSupplierType
 {
@@ -83,9 +85,8 @@ public interface JSXLexerSupplierType
     NullCheck.notNull(charset, "Charset");
     NullCheck.notNull(stream, "Stream");
 
-    return this.create(
-      configuration,
-      new UnicodeCharacterReader(new InputStreamReader(stream, charset)));
+    return this.createFromReader(
+      configuration, new InputStreamReader(stream, charset));
   }
 
   /**
@@ -105,9 +106,6 @@ public interface JSXLexerSupplierType
     NullCheck.notNull(configuration, "Configuration");
     NullCheck.notNull(stream, "Stream");
 
-    return this.create(
-      configuration,
-      new UnicodeCharacterReader(
-        new InputStreamReader(stream, StandardCharsets.UTF_8)));
+    return this.createFromStream(configuration, StandardCharsets.UTF_8, stream);
   }
 }

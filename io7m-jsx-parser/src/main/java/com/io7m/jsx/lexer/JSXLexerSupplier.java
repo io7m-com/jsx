@@ -20,11 +20,13 @@ import com.io7m.jeucreader.UnicodeCharacterReaderPushBackType;
 import com.io7m.jsx.api.lexer.JSXLexerConfigurationType;
 import com.io7m.jsx.api.lexer.JSXLexerSupplierType;
 import com.io7m.jsx.api.lexer.JSXLexerType;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * A lexer supplier.
  */
 
+@Component
 public final class JSXLexerSupplier implements JSXLexerSupplierType
 {
   private JSXLexerSupplier()

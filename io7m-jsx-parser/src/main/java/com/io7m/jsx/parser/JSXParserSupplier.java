@@ -20,11 +20,13 @@ import com.io7m.jsx.api.lexer.JSXLexerType;
 import com.io7m.jsx.api.parser.JSXParserConfigurationType;
 import com.io7m.jsx.api.parser.JSXParserSupplierType;
 import com.io7m.jsx.api.parser.JSXParserType;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * The default implementation of the {@link JSXParserSupplierType} interface.
  */
 
+@Component
 public final class JSXParserSupplier implements JSXParserSupplierType
 {
   private JSXParserSupplier()

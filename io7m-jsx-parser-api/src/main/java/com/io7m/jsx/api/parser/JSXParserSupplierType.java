@@ -21,6 +21,7 @@ import com.io7m.jnull.NullCheck;
 import com.io7m.jsx.api.lexer.JSXLexerConfigurationType;
 import com.io7m.jsx.api.lexer.JSXLexerSupplierType;
 import com.io7m.jsx.api.lexer.JSXLexerType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import java.io.InputStream;
 import java.nio.charset.Charset;
@@ -29,6 +30,7 @@ import java.nio.charset.Charset;
  * The type of parser suppliers.
  */
 
+@ProviderType
 @FunctionalInterface
 public interface JSXParserSupplierType
 {
