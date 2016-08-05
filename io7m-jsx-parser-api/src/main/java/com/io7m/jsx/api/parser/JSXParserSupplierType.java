@@ -16,7 +16,6 @@
 
 package com.io7m.jsx.api.parser;
 
-import com.io7m.jeucreader.UnicodeCharacterReader;
 import com.io7m.jeucreader.UnicodeCharacterReaderPushBackType;
 import com.io7m.jnull.NullCheck;
 import com.io7m.jsx.api.lexer.JSXLexerConfigurationType;
@@ -24,9 +23,7 @@ import com.io7m.jsx.api.lexer.JSXLexerSupplierType;
 import com.io7m.jsx.api.lexer.JSXLexerType;
 
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 
 /**
  * The type of parser suppliers.
