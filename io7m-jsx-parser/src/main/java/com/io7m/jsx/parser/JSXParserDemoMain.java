@@ -19,12 +19,14 @@ package com.io7m.jsx.parser;
 import com.io7m.jeucreader.UnicodeCharacterReader;
 import com.io7m.jeucreader.UnicodeCharacterReaderPushBackType;
 import com.io7m.jsx.SExpressionType;
+import com.io7m.jsx.api.lexer.JSXLexerConfiguration;
+import com.io7m.jsx.api.lexer.JSXLexerType;
+import com.io7m.jsx.api.parser.JSXParserConfiguration;
+import com.io7m.jsx.api.parser.JSXParserException;
+import com.io7m.jsx.api.parser.JSXParserType;
+import com.io7m.jsx.api.serializer.JSXSerializerType;
 import com.io7m.jsx.lexer.JSXLexer;
-import com.io7m.jsx.lexer.JSXLexerConfiguration;
-import com.io7m.jsx.lexer.JSXLexerConfigurationBuilderType;
-import com.io7m.jsx.lexer.JSXLexerType;
 import com.io7m.jsx.serializer.JSXSerializerTrivial;
-import com.io7m.jsx.serializer.JSXSerializerType;
 import com.io7m.junreachable.UnreachableCodeException;
 
 import java.io.IOException;
@@ -55,8 +57,7 @@ public final class JSXParserDemoMain
     final String[] args)
     throws IOException
   {
-    final JSXLexerConfigurationBuilderType lcb =
-      JSXLexerConfiguration.newBuilder();
+    final JSXLexerConfiguration.Builder lcb = JSXLexerConfiguration.builder();
     lcb.setNewlinesInQuotedStrings(false);
     final JSXLexerConfiguration lc = lcb.build();
 
@@ -66,9 +67,8 @@ public final class JSXParserDemoMain
       UnicodeCharacterReader.newReader(ir);
     final JSXLexerType lex = JSXLexer.newLexer(lc, r);
 
-    final JSXParserConfigurationBuilderType pcb =
-      JSXParserConfiguration.newBuilder();
-    pcb.preserveLexicalInformation(true);
+    final JSXParserConfiguration.Builder pcb = JSXParserConfiguration.builder();
+    pcb.setPreserveLexical(true);
     final JSXParserConfiguration pc = pcb.build();
     final JSXParserType p = JSXParser.newParser(pc, lex);
 

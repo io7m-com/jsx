@@ -40,25 +40,6 @@ public final class JSXPrettyPrinterCodeStyle implements JSXPrettyPrinterType
   private final Layouter<IOException> layout;
   private final SExpressionMatcherType<Unit, IOException> matcher;
 
-  /**
-   * Create a new pretty printer.
-   *
-   * @param in_out    The output writer
-   * @param in_width  The maximum output width (note that unbreakable lines may
-   *                  exceed this width)
-   * @param in_indent The indent for nested expressions
-   *
-   * @return A new printer
-   */
-
-  public static JSXPrettyPrinterType newPrinterWithWidthIndent(
-    final Writer in_out,
-    final int in_width,
-    final int in_indent)
-  {
-    return new JSXPrettyPrinterCodeStyle(in_out, in_width, in_indent);
-  }
-
   private JSXPrettyPrinterCodeStyle(
     final Writer in_out,
     final int width,
@@ -124,6 +105,25 @@ public final class JSXPrettyPrinterCodeStyle implements JSXPrettyPrinterType
         return Unit.unit();
       }
     };
+  }
+
+  /**
+   * Create a new pretty printer.
+   *
+   * @param in_out    The output writer
+   * @param in_width  The maximum output width (note that unbreakable lines may
+   *                  exceed this width)
+   * @param in_indent The indent for nested expressions
+   *
+   * @return A new printer
+   */
+
+  public static JSXPrettyPrinterType newPrinterWithWidthIndent(
+    final Writer in_out,
+    final int in_width,
+    final int in_indent)
+  {
+    return new JSXPrettyPrinterCodeStyle(in_out, in_width, in_indent);
   }
 
   @Override

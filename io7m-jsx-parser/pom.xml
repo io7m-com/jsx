@@ -29,6 +29,11 @@
       <artifactId>io7m-jsx-core</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>io7m-jsx-parser-api</artifactId>
+      <version>${project.version}</version>
+    </dependency>
 
     <dependency>
       <groupId>com.io7m.jnull</groupId>
@@ -45,6 +50,12 @@
     <dependency>
       <groupId>com.io7m.jeucreader</groupId>
       <artifactId>io7m-jeucreader-core</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>org.osgi.service.component.annotations</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>
@@ -71,8 +82,7 @@
             <Export-Package>
               com.io7m.jsx.lexer,
               com.io7m.jsx.parser,
-              com.io7m.jsx.serializer,
-              com.io7m.jsx.tokens
+              com.io7m.jsx.serializer
             </Export-Package>
           </instructions>
         </configuration>

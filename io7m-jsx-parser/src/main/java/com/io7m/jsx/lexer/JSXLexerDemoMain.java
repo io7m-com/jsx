@@ -18,8 +18,11 @@ package com.io7m.jsx.lexer;
 
 import com.io7m.jeucreader.UnicodeCharacterReader;
 import com.io7m.jeucreader.UnicodeCharacterReaderPushBackType;
-import com.io7m.jsx.tokens.TokenEOF;
-import com.io7m.jsx.tokens.TokenType;
+import com.io7m.jsx.api.lexer.JSXLexerConfiguration;
+import com.io7m.jsx.api.lexer.JSXLexerException;
+import com.io7m.jsx.api.lexer.JSXLexerType;
+import com.io7m.jsx.api.tokens.TokenEOF;
+import com.io7m.jsx.api.tokens.TokenType;
 import com.io7m.junreachable.UnreachableCodeException;
 
 import java.io.IOException;
@@ -50,8 +53,7 @@ public final class JSXLexerDemoMain
     throws IOException
   {
     try {
-      final JSXLexerConfigurationBuilderType cb =
-        JSXLexerConfiguration.newBuilder();
+      final JSXLexerConfiguration.Builder cb = JSXLexerConfiguration.builder();
       cb.setNewlinesInQuotedStrings(false);
       final JSXLexerConfiguration c = cb.build();
 
@@ -71,9 +73,9 @@ public final class JSXLexerDemoMain
     } catch (final JSXLexerException e) {
       System.err.println(
         "error: lexical error: "
-        + e.getLexicalInformation()
-        + ": "
-        + e.getMessage());
+          + e.getLexicalInformation()
+          + ": "
+          + e.getMessage());
     }
   }
 }
