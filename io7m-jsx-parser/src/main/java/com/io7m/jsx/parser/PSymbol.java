@@ -27,7 +27,7 @@ import java.util.Optional;
 final class PSymbol implements SExpressionSymbolType
 {
   private final Optional<LexicalPositionType<Path>> lex;
-  private final String                              text;
+  private final String text;
 
   PSymbol(
     final String t,
@@ -37,17 +37,20 @@ final class PSymbol implements SExpressionSymbolType
     this.lex = NullCheck.notNull(in_lex);
   }
 
-  @Override public Optional<LexicalPositionType<Path>> getLexicalInformation()
+  @Override
+  public Optional<LexicalPositionType<Path>> getLexicalInformation()
   {
     return this.lex;
   }
 
-  @Override public String getText()
+  @Override
+  public String getText()
   {
     return this.text;
   }
 
-  @Override public <A, E extends Exception> A matchExpression(
+  @Override
+  public <A, E extends Exception> A matchExpression(
     final SExpressionMatcherType<A, E> m)
     throws E
   {

@@ -17,10 +17,11 @@
 package com.io7m.jsx.serializer;
 
 import com.io7m.jsx.SExpressionListType;
-import com.io7m.jsx.SExpressionQuotedStringType;
 import com.io7m.jsx.SExpressionMatcherType;
-import com.io7m.jsx.SExpressionType;
+import com.io7m.jsx.SExpressionQuotedStringType;
 import com.io7m.jsx.SExpressionSymbolType;
+import com.io7m.jsx.SExpressionType;
+import com.io7m.jsx.api.serializer.JSXSerializerType;
 
 import java.io.BufferedOutputStream;
 import java.io.IOException;
@@ -57,7 +58,8 @@ public final class JSXSerializerTrivial implements JSXSerializerType
     e.matchExpression(
       new SExpressionMatcherType<Integer, IOException>()
       {
-        @Override public Integer list(
+        @Override
+        public Integer list(
           final SExpressionListType xs)
           throws IOException
         {
@@ -85,7 +87,8 @@ public final class JSXSerializerTrivial implements JSXSerializerType
           return Integer.valueOf(0);
         }
 
-        @Override public Integer quotedString(
+        @Override
+        public Integer quotedString(
           final SExpressionQuotedStringType qs)
           throws IOException
         {
@@ -95,7 +98,8 @@ public final class JSXSerializerTrivial implements JSXSerializerType
           return Integer.valueOf(0);
         }
 
-        @Override public Integer symbol(
+        @Override
+        public Integer symbol(
           final SExpressionSymbolType ss)
           throws IOException
         {
@@ -105,7 +109,8 @@ public final class JSXSerializerTrivial implements JSXSerializerType
       });
   }
 
-  @Override public void serialize(
+  @Override
+  public void serialize(
     final SExpressionType e,
     final OutputStream s)
     throws IOException

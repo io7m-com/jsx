@@ -22,14 +22,23 @@ import com.io7m.jlexing.core.ImmutableLexicalPositionType;
 import com.io7m.jlexing.core.MutableLexicalPosition;
 import com.io7m.jlexing.core.MutableLexicalPositionType;
 import com.io7m.jnull.NullCheck;
-import com.io7m.jsx.tokens.TokenEOF;
-import com.io7m.jsx.tokens.TokenLeftParenthesis;
-import com.io7m.jsx.tokens.TokenLeftSquare;
-import com.io7m.jsx.tokens.TokenQuotedString;
-import com.io7m.jsx.tokens.TokenRightParenthesis;
-import com.io7m.jsx.tokens.TokenRightSquare;
-import com.io7m.jsx.tokens.TokenSymbol;
-import com.io7m.jsx.tokens.TokenType;
+import com.io7m.jsx.api.lexer.JSXLexerBareCarriageReturnException;
+import com.io7m.jsx.api.lexer.JSXLexerConfigurationType;
+import com.io7m.jsx.api.lexer.JSXLexerException;
+import com.io7m.jsx.api.lexer.JSXLexerInvalidCodePointException;
+import com.io7m.jsx.api.lexer.JSXLexerNewLinesInStringsException;
+import com.io7m.jsx.api.lexer.JSXLexerNotHexCharException;
+import com.io7m.jsx.api.lexer.JSXLexerType;
+import com.io7m.jsx.api.lexer.JSXLexerUnexpectedEOFException;
+import com.io7m.jsx.api.lexer.JSXLexerUnknownEscapeCodeException;
+import com.io7m.jsx.api.tokens.TokenEOF;
+import com.io7m.jsx.api.tokens.TokenLeftParenthesis;
+import com.io7m.jsx.api.tokens.TokenLeftSquare;
+import com.io7m.jsx.api.tokens.TokenQuotedString;
+import com.io7m.jsx.api.tokens.TokenRightParenthesis;
+import com.io7m.jsx.api.tokens.TokenRightSquare;
+import com.io7m.jsx.api.tokens.TokenSymbol;
+import com.io7m.jsx.api.tokens.TokenType;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -40,15 +49,15 @@ import java.nio.file.Path;
 
 public final class JSXLexer implements JSXLexerType
 {
-  private final StringBuilder                      buffer;
-  private final JSXLexerConfiguration              config;
+  private final StringBuilder buffer;
+  private final JSXLexerConfigurationType config;
   private final UnicodeCharacterReaderPushBackType reader;
-  private final MutableLexicalPositionType<Path>   position;
-  private final MutableLexicalPositionType<Path>   buffer_position;
-  private       State                              state;
+  private final MutableLexicalPositionType<Path> position;
+  private final MutableLexicalPositionType<Path> buffer_position;
+  private State state;
 
   private JSXLexer(
-    final JSXLexerConfiguration c,
+    final JSXLexerConfigurationType c,
     final UnicodeCharacterReaderPushBackType r)
   {
     this.config = NullCheck.notNull(c);
@@ -58,8 +67,8 @@ public final class JSXLexer implements JSXLexerType
     this.position = MutableLexicalPosition.newPosition(0, 0);
     this.buffer_position = MutableLexicalPosition.newPosition(0, 0);
 
-    this.position.setFile(c.getFile());
-    this.buffer_position.setFile(c.getFile());
+    this.position.setFile(c.file());
+    this.buffer_position.setFile(c.file());
   }
 
   /**
@@ -72,7 +81,7 @@ public final class JSXLexer implements JSXLexerType
    */
 
   public static JSXLexerType newLexer(
-    final JSXLexerConfiguration c,
+    final JSXLexerConfigurationType c,
     final UnicodeCharacterReaderPushBackType r)
   {
     return new JSXLexer(c, r);
@@ -128,7 +137,7 @@ public final class JSXLexer implements JSXLexerType
     return new JSXLexerNewLinesInStringsException(
       this.snapshotPosition(),
       "Lexer configuration does not permit newlines (U+000A or U+000D) in "
-      + "quoted strings");
+        + "quoted strings");
   }
 
   private JSXLexerNotHexCharException errorNotHexChar(
@@ -305,7 +314,8 @@ public final class JSXLexer implements JSXLexerType
     this.buffer.appendCodePoint(c);
   }
 
-  @Override public TokenType token()
+  @Override
+  public TokenType token()
     throws IOException, JSXLexerException
   {
     return this.tokenRead();
@@ -346,12 +356,12 @@ public final class JSXLexer implements JSXLexerType
             return new TokenRightParenthesis(this.snapshotPosition());
           }
           if (c == (int) '[') {
-            if (this.config.allowSquareBrackets()) {
+            if (this.config.squareBrackets()) {
               return new TokenLeftSquare(this.snapshotPosition());
             }
           }
           if (c == (int) ']') {
-            if (this.config.allowSquareBrackets()) {
+            if (this.config.squareBrackets()) {
               return new TokenRightSquare(this.snapshotPosition());
             }
           }
@@ -382,7 +392,7 @@ public final class JSXLexer implements JSXLexerType
             continue;
           }
           if ((c == (int) '\r') || (c == (int) '\n')) {
-            if (!this.config.allowNewlinesInQuotedStrings()) {
+            if (!this.config.newlinesInQuotedStrings()) {
               throw this.errorNewLinesNotInQuotedStrings();
             }
           }
@@ -421,13 +431,13 @@ public final class JSXLexer implements JSXLexerType
             return this.completeSymbol();
           }
           if (c == (int) '[') {
-            if (this.config.allowSquareBrackets()) {
+            if (this.config.squareBrackets()) {
               this.reader.pushCodePoint(c);
               return this.completeSymbol();
             }
           }
           if (c == (int) ']') {
-            if (this.config.allowSquareBrackets()) {
+            if (this.config.squareBrackets()) {
               this.reader.pushCodePoint(c);
               return this.completeSymbol();
             }

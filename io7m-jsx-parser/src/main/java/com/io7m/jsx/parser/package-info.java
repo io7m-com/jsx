@@ -18,4 +18,5 @@
  * Parser.
  */
 
-@com.io7m.jnull.NonNullByDefault package com.io7m.jsx.parser;
+@com.io7m.jnull.NonNullByDefault
+package com.io7m.jsx.parser;

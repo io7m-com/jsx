@@ -20,16 +20,21 @@ import com.io7m.jlexing.core.LexicalPositionType;
 import com.io7m.jnull.NullCheck;
 import com.io7m.jsx.SExpressionQuotedStringType;
 import com.io7m.jsx.SExpressionType;
-import com.io7m.jsx.lexer.JSXLexerException;
-import com.io7m.jsx.lexer.JSXLexerType;
-import com.io7m.jsx.tokens.TokenEOF;
-import com.io7m.jsx.tokens.TokenLeftParenthesis;
-import com.io7m.jsx.tokens.TokenLeftSquare;
-import com.io7m.jsx.tokens.TokenQuotedString;
-import com.io7m.jsx.tokens.TokenRightParenthesis;
-import com.io7m.jsx.tokens.TokenRightSquare;
-import com.io7m.jsx.tokens.TokenSymbol;
-import com.io7m.jsx.tokens.TokenType;
+import com.io7m.jsx.api.lexer.JSXLexerException;
+import com.io7m.jsx.api.lexer.JSXLexerType;
+import com.io7m.jsx.api.parser.JSXParserConfigurationType;
+import com.io7m.jsx.api.parser.JSXParserException;
+import com.io7m.jsx.api.parser.JSXParserGrammarException;
+import com.io7m.jsx.api.parser.JSXParserLexicalException;
+import com.io7m.jsx.api.parser.JSXParserType;
+import com.io7m.jsx.api.tokens.TokenEOF;
+import com.io7m.jsx.api.tokens.TokenLeftParenthesis;
+import com.io7m.jsx.api.tokens.TokenLeftSquare;
+import com.io7m.jsx.api.tokens.TokenQuotedString;
+import com.io7m.jsx.api.tokens.TokenRightParenthesis;
+import com.io7m.jsx.api.tokens.TokenRightSquare;
+import com.io7m.jsx.api.tokens.TokenSymbol;
+import com.io7m.jsx.api.tokens.TokenType;
 import com.io7m.junreachable.UnreachableCodeException;
 
 import java.io.IOException;
@@ -44,11 +49,11 @@ import java.util.Optional;
 
 public final class JSXParser implements JSXParserType
 {
-  private final JSXParserConfiguration config;
-  private final JSXLexerType           lexer;
+  private final JSXParserConfigurationType config;
+  private final JSXLexerType lexer;
 
   private JSXParser(
-    final JSXParserConfiguration in_config,
+    final JSXParserConfigurationType in_config,
     final JSXLexerType in_lexer)
   {
     this.config = NullCheck.notNull(in_config);
@@ -56,14 +61,14 @@ public final class JSXParser implements JSXParserType
   }
 
   private static SExpressionQuotedStringType completeQuotedString(
-    final JSXParserConfiguration c,
+    final JSXParserConfigurationType c,
     final TokenQuotedString t)
   {
     return new PQuotedString(t.getText(), JSXParser.getTokenLexical(c, t));
   }
 
   private static SExpressionType completeSymbol(
-    final JSXParserConfiguration c,
+    final JSXParserConfigurationType c,
     final TokenSymbol t)
   {
     final Optional<LexicalPositionType<Path>> lex =
@@ -72,14 +77,14 @@ public final class JSXParser implements JSXParserType
   }
 
   private static Optional<LexicalPositionType<Path>> getTokenLexical(
-    final JSXParserConfiguration c,
+    final JSXParserConfigurationType c,
     final TokenType t)
   {
     final Optional<LexicalPositionType<Path>> lex;
-    if (!c.preserveLexicalInformation()) {
+    if (!c.preserveLexical()) {
       lex = Optional.empty();
     } else {
-      lex = Optional.of(t.getLexicalInformation());
+      lex = Optional.of(t.lexicalInformation());
     }
     return lex;
   }
@@ -88,14 +93,14 @@ public final class JSXParser implements JSXParserType
     final TokenEOF t)
   {
     return new JSXParserGrammarException(
-      t.getLexicalInformation(), "Unexpected EOF during list parsing");
+      t.lexicalInformation(), "Unexpected EOF during list parsing");
   }
 
   private static JSXParserGrammarException errorUnexpectedRightParen(
     final TokenRightParenthesis t)
   {
     return new JSXParserGrammarException(
-      t.getLexicalInformation(), "Unbalanced parentheses (unexpected ')')");
+      t.lexicalInformation(), "Unbalanced parentheses (unexpected ')')");
   }
 
   private static JSXParserGrammarException
@@ -103,16 +108,16 @@ public final class JSXParser implements JSXParserType
     final TokenRightParenthesis t)
   {
     return new JSXParserGrammarException(
-      t.getLexicalInformation(),
+      t.lexicalInformation(),
       "Attempted to end a list started with '[' with ')' - unbalanced "
-      + "round/square brackets");
+        + "round/square brackets");
   }
 
   private static JSXParserGrammarException errorUnexpectedRightSquare(
     final TokenRightSquare t)
   {
     return new JSXParserGrammarException(
-      t.getLexicalInformation(), "Unbalanced parentheses (unexpected ']')");
+      t.lexicalInformation(), "Unbalanced parentheses (unexpected ']')");
   }
 
   private static JSXParserGrammarException
@@ -120,9 +125,9 @@ public final class JSXParser implements JSXParserType
     final TokenRightSquare t)
   {
     return new JSXParserGrammarException(
-      t.getLexicalInformation(),
+      t.lexicalInformation(),
       "Attempted to end a list started with '(' with ']' - unbalanced "
-      + "round/square brackets");
+        + "round/square brackets");
   }
 
   /**
@@ -135,14 +140,14 @@ public final class JSXParser implements JSXParserType
    */
 
   public static JSXParserType newParser(
-    final JSXParserConfiguration pc,
+    final JSXParserConfigurationType pc,
     final JSXLexerType lex)
   {
     return new JSXParser(pc, lex);
   }
 
   private static SExpressionType parseExpressionPeeked(
-    final JSXParserConfiguration c,
+    final JSXParserConfigurationType c,
     final JSXLexerType lexer,
     final TokenType peek)
     throws JSXLexerException, IOException, JSXParserGrammarException
@@ -173,7 +178,7 @@ public final class JSXParser implements JSXParserType
   }
 
   private static SExpressionType parseListParens(
-    final JSXParserConfiguration c,
+    final JSXParserConfigurationType c,
     final JSXLexerType lexer,
     final TokenLeftParenthesis peek)
     throws JSXLexerException, IOException, JSXParserGrammarException
@@ -198,7 +203,7 @@ public final class JSXParser implements JSXParserType
   }
 
   private static SExpressionType parseListSquares(
-    final JSXParserConfiguration c,
+    final JSXParserConfigurationType c,
     final JSXLexerType lexer,
     final TokenLeftSquare peek)
     throws JSXLexerException, IOException, JSXParserGrammarException
@@ -222,7 +227,8 @@ public final class JSXParser implements JSXParserType
     }
   }
 
-  @Override public SExpressionType parseExpression()
+  @Override
+  public SExpressionType parseExpression()
     throws JSXParserException, IOException
   {
     try {
@@ -233,7 +239,8 @@ public final class JSXParser implements JSXParserType
     }
   }
 
-  @Override public Optional<SExpressionType> parseExpressionOrEOF()
+  @Override
+  public Optional<SExpressionType> parseExpressionOrEOF()
     throws JSXParserException, IOException
   {
     try {
@@ -243,14 +250,14 @@ public final class JSXParser implements JSXParserType
       }
 
       return Optional.of(
-        JSXParser.parseExpressionPeeked(
-          this.config, this.lexer, peek));
+        JSXParser.parseExpressionPeeked(this.config, this.lexer, peek));
     } catch (final JSXLexerException e) {
       throw new JSXParserLexicalException(e);
     }
   }
 
-  @Override public List<SExpressionType> parseExpressions()
+  @Override
+  public List<SExpressionType> parseExpressions()
     throws JSXParserException, IOException
   {
     try {

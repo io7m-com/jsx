@@ -24,22 +24,23 @@ import com.io7m.jsx.SExpressionListType;
 import com.io7m.jsx.SExpressionQuotedStringType;
 import com.io7m.jsx.SExpressionSymbolType;
 import com.io7m.jsx.SExpressionType;
+import com.io7m.jsx.api.lexer.JSXLexerBareCarriageReturnException;
+import com.io7m.jsx.api.lexer.JSXLexerConfiguration;
+import com.io7m.jsx.api.lexer.JSXLexerConfigurationType;
+import com.io7m.jsx.api.lexer.JSXLexerType;
+import com.io7m.jsx.api.parser.JSXParserConfiguration;
+import com.io7m.jsx.api.parser.JSXParserConfigurationType;
+import com.io7m.jsx.api.parser.JSXParserGrammarException;
+import com.io7m.jsx.api.parser.JSXParserLexicalException;
+import com.io7m.jsx.api.parser.JSXParserType;
 import com.io7m.jsx.lexer.JSXLexer;
-import com.io7m.jsx.lexer.JSXLexerBareCarriageReturnException;
-import com.io7m.jsx.lexer.JSXLexerConfiguration;
-import com.io7m.jsx.lexer.JSXLexerConfigurationBuilderType;
-import com.io7m.jsx.lexer.JSXLexerType;
 import com.io7m.jsx.parser.JSXParser;
-import com.io7m.jsx.parser.JSXParserConfiguration;
-import com.io7m.jsx.parser.JSXParserConfigurationBuilderType;
-import com.io7m.jsx.parser.JSXParserGrammarException;
-import com.io7m.jsx.parser.JSXParserLexicalException;
-import com.io7m.jsx.parser.JSXParserType;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.StringReader;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Optional;
 
 public final class ParserTest
@@ -50,48 +51,52 @@ public final class ParserTest
     return UnicodeCharacterReader.newReader(new StringReader(s));
   }
 
-  private static JSXLexerConfiguration defaultLexerConfig()
+  private static JSXLexerConfigurationType defaultLexerConfig()
   {
-    final JSXLexerConfigurationBuilderType cb =
-      JSXLexerConfiguration.newBuilder();
+    final JSXLexerConfiguration.Builder cb =
+      JSXLexerConfiguration.builder();
+    final JSXLexerConfiguration c = cb.build();
+    return c;
+  }
+
+  private static JSXParserConfigurationType defaultParserConfig()
+  {
+    final JSXParserConfiguration.Builder cb =
+      JSXParserConfiguration.builder();
     return cb.build();
   }
 
-  private static JSXParserConfiguration defaultParserConfig()
-  {
-    final JSXParserConfigurationBuilderType cb =
-      JSXParserConfiguration.newBuilder();
-    return cb.build();
-  }
-
-  @Test(expected = JSXParserGrammarException.class) public void testEOF_0()
+  @Test(expected = JSXParserGrammarException.class)
+  public void testEOF_0()
     throws Exception
   {
-    final JSXLexerConfiguration lc = ParserTest.defaultLexerConfig();
+    final JSXLexerConfigurationType lc = ParserTest.defaultLexerConfig();
     final JSXLexerType lex = JSXLexer.newLexer(lc, ParserTest.stringReader(""));
-    final JSXParserConfiguration pc = ParserTest.defaultParserConfig();
+    final JSXParserConfigurationType pc = ParserTest.defaultParserConfig();
     final JSXParserType p = JSXParser.newParser(pc, lex);
     p.parseExpression();
   }
 
-  @Test(expected = JSXParserGrammarException.class) public void testEOF_1()
+  @Test(expected = JSXParserGrammarException.class)
+  public void testEOF_1()
     throws Exception
   {
-    final JSXLexerConfiguration lc = ParserTest.defaultLexerConfig();
+    final JSXLexerConfigurationType lc = ParserTest.defaultLexerConfig();
     final JSXLexerType lex = JSXLexer.newLexer(
       lc, ParserTest.stringReader("(a b "));
-    final JSXParserConfiguration pc = ParserTest.defaultParserConfig();
+    final JSXParserConfigurationType pc = ParserTest.defaultParserConfig();
     final JSXParserType p = JSXParser.newParser(pc, lex);
     p.parseExpression();
   }
 
-  @Test public void testEOF_2()
+  @Test
+  public void testEOF_2()
     throws Exception
   {
-    final JSXLexerConfiguration lc = ParserTest.defaultLexerConfig();
+    final JSXLexerConfigurationType lc = ParserTest.defaultLexerConfig();
     final JSXLexerType lex =
       JSXLexer.newLexer(lc, ParserTest.stringReader("(a b c)"));
-    final JSXParserConfiguration pc = ParserTest.defaultParserConfig();
+    final JSXParserConfigurationType pc = ParserTest.defaultParserConfig();
     final JSXParserType p = JSXParser.newParser(pc, lex);
     final Optional<SExpressionType> r0 = p.parseExpressionOrEOF();
     Assert.assertTrue(r0.isPresent());
@@ -100,36 +105,68 @@ public final class ParserTest
     Assert.assertFalse(r1.isPresent());
   }
 
-  @Test(expected = JSXParserGrammarException.class) public void testEOF_3()
+  @Test(expected = JSXParserGrammarException.class)
+  public void testEOF_3()
     throws Exception
   {
-    final JSXLexerConfiguration lc = ParserTest.defaultLexerConfig();
+    final JSXLexerConfiguration.Builder cb = JSXLexerConfiguration.builder();
+    cb.setSquareBrackets(true);
+    final JSXLexerConfiguration lc = cb.build();
+
     final JSXLexerType lex = JSXLexer.newLexer(
       lc, ParserTest.stringReader("[a b "));
-    final JSXParserConfiguration pc = ParserTest.defaultParserConfig();
+    final JSXParserConfigurationType pc = ParserTest.defaultParserConfig();
     final JSXParserType p = JSXParser.newParser(pc, lex);
     p.parseExpression();
   }
 
-  @Test(expected = JSXParserLexicalException.class) public void testLexError_0()
+  @Test(expected = JSXParserLexicalException.class)
+  public void testLexError_0()
     throws Exception
   {
     final JSXLexerType lex = () -> {
       throw new JSXLexerBareCarriageReturnException(
         ImmutableLexicalPosition.newPosition(0, 0), "Error!");
     };
-    final JSXParserConfiguration pc = ParserTest.defaultParserConfig();
+    final JSXParserConfigurationType pc = ParserTest.defaultParserConfig();
     final JSXParserType p = JSXParser.newParser(pc, lex);
     p.parseExpression();
   }
 
-  @Test public void testParseList_0()
+  @Test(expected = JSXParserLexicalException.class)
+  public void testLexError_1()
     throws Exception
   {
-    final JSXLexerConfiguration lc = ParserTest.defaultLexerConfig();
+    final JSXLexerType lex = () -> {
+      throw new JSXLexerBareCarriageReturnException(
+        ImmutableLexicalPosition.newPosition(0, 0), "Error!");
+    };
+    final JSXParserConfigurationType pc = ParserTest.defaultParserConfig();
+    final JSXParserType p = JSXParser.newParser(pc, lex);
+    p.parseExpressionOrEOF();
+  }
+
+  @Test(expected = JSXParserLexicalException.class)
+  public void testLexError_2()
+    throws Exception
+  {
+    final JSXLexerType lex = () -> {
+      throw new JSXLexerBareCarriageReturnException(
+        ImmutableLexicalPosition.newPosition(0, 0), "Error!");
+    };
+    final JSXParserConfigurationType pc = ParserTest.defaultParserConfig();
+    final JSXParserType p = JSXParser.newParser(pc, lex);
+    p.parseExpressions();
+  }
+
+  @Test
+  public void testParseList_0()
+    throws Exception
+  {
+    final JSXLexerConfigurationType lc = ParserTest.defaultLexerConfig();
     final JSXLexerType lex =
       JSXLexer.newLexer(lc, ParserTest.stringReader("(a b c)"));
-    final JSXParserConfiguration pc = ParserTest.defaultParserConfig();
+    final JSXParserConfigurationType pc = ParserTest.defaultParserConfig();
     final JSXParserType p = JSXParser.newParser(pc, lex);
 
     final SExpressionListType s = (SExpressionListType) p.parseExpression();
@@ -161,16 +198,17 @@ public final class ParserTest
     }
   }
 
-  @Test public void testParseListNoLex_0()
+  @Test
+  public void testParseListNoLex_0()
     throws Exception
   {
-    final JSXLexerConfiguration lc = ParserTest.defaultLexerConfig();
+    final JSXLexerConfigurationType lc = ParserTest.defaultLexerConfig();
     final JSXLexerType lex =
       JSXLexer.newLexer(lc, ParserTest.stringReader("(a b c)"));
-    final JSXParserConfigurationBuilderType pcb =
-      JSXParserConfiguration.newBuilder();
-    pcb.preserveLexicalInformation(false);
-    final JSXParserConfiguration pc = pcb.build();
+    final JSXParserConfiguration.Builder pcb =
+      JSXParserConfiguration.builder();
+    pcb.setPreserveLexical(false);
+    final JSXParserConfigurationType pc = pcb.build();
     final JSXParserType p = JSXParser.newParser(pc, lex);
 
     final SExpressionListType s = (SExpressionListType) p.parseExpression();
@@ -196,16 +234,20 @@ public final class ParserTest
     }
   }
 
-  @Test public void testParseListSquareNoLex_1()
+  @Test
+  public void testParseListSquareNoLex_1()
     throws Exception
   {
-    final JSXLexerConfiguration lc = ParserTest.defaultLexerConfig();
+    final JSXLexerConfiguration.Builder cb = JSXLexerConfiguration.builder();
+    cb.setSquareBrackets(true);
+    final JSXLexerConfiguration lc = cb.build();
+
     final JSXLexerType lex =
       JSXLexer.newLexer(lc, ParserTest.stringReader("[a b c]"));
-    final JSXParserConfigurationBuilderType pcb =
-      JSXParserConfiguration.newBuilder();
-    pcb.preserveLexicalInformation(false);
-    final JSXParserConfiguration pc = pcb.build();
+    final JSXParserConfiguration.Builder pcb =
+      JSXParserConfiguration.builder();
+    pcb.setPreserveLexical(false);
+    final JSXParserConfigurationType pc = pcb.build();
     final JSXParserType p = JSXParser.newParser(pc, lex);
 
     final SExpressionListType s = (SExpressionListType) p.parseExpression();
@@ -231,13 +273,17 @@ public final class ParserTest
     }
   }
 
-  @Test public void testParseSquareList_0()
+  @Test
+  public void testParseSquareList_0()
     throws Exception
   {
-    final JSXLexerConfiguration lc = ParserTest.defaultLexerConfig();
+    final JSXLexerConfiguration.Builder cb = JSXLexerConfiguration.builder();
+    cb.setSquareBrackets(true);
+    final JSXLexerConfiguration lc = cb.build();
+
     final JSXLexerType lex =
       JSXLexer.newLexer(lc, ParserTest.stringReader("[a b c]"));
-    final JSXParserConfiguration pc = ParserTest.defaultParserConfig();
+    final JSXParserConfigurationType pc = ParserTest.defaultParserConfig();
     final JSXParserType p = JSXParser.newParser(pc, lex);
 
     final SExpressionListType s = (SExpressionListType) p.parseExpression();
@@ -269,13 +315,14 @@ public final class ParserTest
     }
   }
 
-  @Test public void testParseSymbol_0()
+  @Test
+  public void testParseSymbol_0()
     throws Exception
   {
-    final JSXLexerConfiguration lc = ParserTest.defaultLexerConfig();
+    final JSXLexerConfigurationType lc = ParserTest.defaultLexerConfig();
     final JSXLexerType lex =
       JSXLexer.newLexer(lc, ParserTest.stringReader("a"));
-    final JSXParserConfiguration pc = ParserTest.defaultParserConfig();
+    final JSXParserConfigurationType pc = ParserTest.defaultParserConfig();
     final JSXParserType p = JSXParser.newParser(pc, lex);
 
     final SExpressionSymbolType s = (SExpressionSymbolType) p.parseExpression();
@@ -286,16 +333,17 @@ public final class ParserTest
     Assert.assertEquals(Optional.empty(), sl.getFile());
   }
 
-  @Test public void testParseSymbolNoLex_0()
+  @Test
+  public void testParseSymbolNoLex_0()
     throws Exception
   {
-    final JSXLexerConfiguration lc = ParserTest.defaultLexerConfig();
+    final JSXLexerConfigurationType lc = ParserTest.defaultLexerConfig();
     final JSXLexerType lex =
       JSXLexer.newLexer(lc, ParserTest.stringReader("a"));
-    final JSXParserConfigurationBuilderType pcb =
-      JSXParserConfiguration.newBuilder();
-    pcb.preserveLexicalInformation(false);
-    final JSXParserConfiguration pc = pcb.build();
+    final JSXParserConfiguration.Builder pcb =
+      JSXParserConfiguration.builder();
+    pcb.setPreserveLexical(false);
+    final JSXParserConfigurationType pc = pcb.build();
     final JSXParserType p = JSXParser.newParser(pc, lex);
 
     final SExpressionSymbolType s = (SExpressionSymbolType) p.parseExpression();
@@ -305,7 +353,8 @@ public final class ParserTest
     Assert.assertEquals("a", s.getText());
   }
 
-  @Test public void testQuotedString_0()
+  @Test
+  public void testQuotedString_0()
     throws Exception
   {
     final StringBuilder sb = new StringBuilder();
@@ -313,10 +362,10 @@ public final class ParserTest
     sb.append("a");
     sb.append('"');
 
-    final JSXLexerConfiguration lc = ParserTest.defaultLexerConfig();
+    final JSXLexerConfigurationType lc = ParserTest.defaultLexerConfig();
     final JSXLexerType lex =
       JSXLexer.newLexer(lc, ParserTest.stringReader(sb.toString()));
-    final JSXParserConfiguration pc = ParserTest.defaultParserConfig();
+    final JSXParserConfigurationType pc = ParserTest.defaultParserConfig();
     final JSXParserType p = JSXParser.newParser(pc, lex);
 
     final SExpressionQuotedStringType s =
@@ -328,7 +377,8 @@ public final class ParserTest
     Assert.assertEquals(Optional.empty(), sl.getFile());
   }
 
-  @Test public void testQuotedStringNoLex_0()
+  @Test
+  public void testQuotedStringNoLex_0()
     throws Exception
   {
     final StringBuilder sb = new StringBuilder();
@@ -336,14 +386,14 @@ public final class ParserTest
     sb.append("a");
     sb.append('"');
 
-    final JSXLexerConfiguration lc = ParserTest.defaultLexerConfig();
+    final JSXLexerConfigurationType lc = ParserTest.defaultLexerConfig();
     final JSXLexerType lex =
       JSXLexer.newLexer(lc, ParserTest.stringReader(sb.toString()));
 
-    final JSXParserConfigurationBuilderType pcb =
-      JSXParserConfiguration.newBuilder();
-    pcb.preserveLexicalInformation(false);
-    final JSXParserConfiguration pc = pcb.build();
+    final JSXParserConfiguration.Builder pcb =
+      JSXParserConfiguration.builder();
+    pcb.setPreserveLexical(false);
+    final JSXParserConfigurationType pc = pcb.build();
     final JSXParserType p = JSXParser.newParser(pc, lex);
 
     final SExpressionQuotedStringType s =
@@ -358,10 +408,13 @@ public final class ParserTest
   public void testUnbalancedRoundSquare_0()
     throws Exception
   {
-    final JSXLexerConfiguration lc = ParserTest.defaultLexerConfig();
+    final JSXLexerConfiguration.Builder cb = JSXLexerConfiguration.builder();
+    cb.setSquareBrackets(true);
+    final JSXLexerConfiguration lc = cb.build();
+
     final JSXLexerType lex =
       JSXLexer.newLexer(lc, ParserTest.stringReader("(]"));
-    final JSXParserConfiguration pc = ParserTest.defaultParserConfig();
+    final JSXParserConfigurationType pc = ParserTest.defaultParserConfig();
     final JSXParserType p = JSXParser.newParser(pc, lex);
     p.parseExpression();
   }
@@ -370,10 +423,13 @@ public final class ParserTest
   public void testUnbalancedRoundSquare_1()
     throws Exception
   {
-    final JSXLexerConfiguration lc = ParserTest.defaultLexerConfig();
+    final JSXLexerConfiguration.Builder cb = JSXLexerConfiguration.builder();
+    cb.setSquareBrackets(true);
+    final JSXLexerConfiguration lc = cb.build();
+
     final JSXLexerType lex =
       JSXLexer.newLexer(lc, ParserTest.stringReader("[)"));
-    final JSXParserConfiguration pc = ParserTest.defaultParserConfig();
+    final JSXParserConfigurationType pc = ParserTest.defaultParserConfig();
     final JSXParserType p = JSXParser.newParser(pc, lex);
     p.parseExpression();
   }
@@ -382,10 +438,10 @@ public final class ParserTest
   public void testUnexpectedRight_0()
     throws Exception
   {
-    final JSXLexerConfiguration lc = ParserTest.defaultLexerConfig();
+    final JSXLexerConfigurationType lc = ParserTest.defaultLexerConfig();
     final JSXLexerType lex =
       JSXLexer.newLexer(lc, ParserTest.stringReader(")"));
-    final JSXParserConfiguration pc = ParserTest.defaultParserConfig();
+    final JSXParserConfigurationType pc = ParserTest.defaultParserConfig();
     final JSXParserType p = JSXParser.newParser(pc, lex);
     p.parseExpression();
   }
@@ -394,11 +450,49 @@ public final class ParserTest
   public void testUnexpectedRightSquare_0()
     throws Exception
   {
-    final JSXLexerConfiguration lc = ParserTest.defaultLexerConfig();
+    final JSXLexerConfiguration.Builder cb = JSXLexerConfiguration.builder();
+    cb.setSquareBrackets(true);
+    final JSXLexerConfiguration lc = cb.build();
+
     final JSXLexerType lex =
       JSXLexer.newLexer(lc, ParserTest.stringReader("]"));
-    final JSXParserConfiguration pc = ParserTest.defaultParserConfig();
+    final JSXParserConfigurationType pc = ParserTest.defaultParserConfig();
     final JSXParserType p = JSXParser.newParser(pc, lex);
     p.parseExpression();
+  }
+
+  @Test
+  public void testParseExpressions()
+    throws Exception
+  {
+    final JSXLexerConfigurationType lc = ParserTest.defaultLexerConfig();
+    final JSXLexerType lex =
+      JSXLexer.newLexer(lc, ParserTest.stringReader("a b c"));
+    final JSXParserConfiguration.Builder pcb =
+      JSXParserConfiguration.builder();
+    pcb.setPreserveLexical(false);
+    final JSXParserConfigurationType pc = pcb.build();
+    final JSXParserType p = JSXParser.newParser(pc, lex);
+
+    final List<SExpressionType> s = p.parseExpressions();
+    Assert.assertEquals(3L, (long) s.size());
+
+    {
+      final SExpressionSymbolType ss = (SExpressionSymbolType) s.get(0);
+      Assert.assertEquals("a", ss.getText());
+      Assert.assertFalse(ss.getLexicalInformation().isPresent());
+    }
+
+    {
+      final SExpressionSymbolType ss = (SExpressionSymbolType) s.get(1);
+      Assert.assertEquals("b", ss.getText());
+      Assert.assertFalse(ss.getLexicalInformation().isPresent());
+    }
+
+    {
+      final SExpressionSymbolType ss = (SExpressionSymbolType) s.get(2);
+      Assert.assertEquals("c", ss.getText());
+      Assert.assertFalse(ss.getLexicalInformation().isPresent());
+    }
   }
 }
