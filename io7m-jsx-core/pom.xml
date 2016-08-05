@@ -8,11 +8,11 @@
   <parent>
     <groupId>com.io7m.jsx</groupId>
     <artifactId>io7m-jsx</artifactId>
-    <version>0.5.1</version>
+    <version>0.6.0</version>
   </parent>
   <artifactId>io7m-jsx-core</artifactId>
 
-  <packaging>jar</packaging>
+  <packaging>bundle</packaging>
   <description>S-expression parsing (Core)</description>
   <url>http://io7m.github.io/jsx</url>
   <name>${project.artifactId}</name>
@@ -42,6 +42,12 @@
     </dependency>
 
     <dependency>
+      <groupId>org.immutables</groupId>
+      <artifactId>value</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>
@@ -53,6 +59,20 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
+      </plugin>
+
+      <!-- Produce OSGi bundle -->
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <Export-Package>
+              com.io7m.jsx
+            </Export-Package>
+          </instructions>
+        </configuration>
       </plugin>
     </plugins>
   </build>

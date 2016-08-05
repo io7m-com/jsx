@@ -3,6 +3,31 @@
   <c:project>io7m-jsx</c:project>
 
   <c:release c:ticket-system="com.github.io7m.jsx">
+    <c:date>2016-08-05</c:date>
+    <c:version>0.6.0</c:version>
+    <c:item>
+      <c:date>2016-08-05</c:date>
+      <c:type-code-fix/>
+      <c:summary>Update plugins and dependencies.</c:summary>
+    </c:item>
+    <c:item>
+      <c:date>2016-08-05</c:date>
+      <c:type-code-fix/>
+      <c:summary>The produced jars are now OSGi bundles.</c:summary>
+    </c:item>
+    <c:item>
+      <c:date>2016-08-05</c:date>
+      <c:type-code-change/>
+      <c:summary>Reorganize APIs and implementations into their own modules/bundles.</c:summary>
+    </c:item>
+    <c:item>
+      <c:date>2016-08-05</c:date>
+      <c:type-code-change/>
+      <c:summary>Use immutables.org to generate configuration types.</c:summary>
+    </c:item>
+  </c:release>
+
+  <c:release c:ticket-system="com.github.io7m.jsx">
     <c:date>2016-05-31</c:date>
     <c:version>0.5.1</c:version>
     <c:item>

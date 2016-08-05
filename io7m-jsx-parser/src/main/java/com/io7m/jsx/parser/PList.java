@@ -31,8 +31,8 @@ import java.util.Optional;
 final class PList extends AbstractList<SExpressionType>
   implements SExpressionListType
 {
-  private final List<SExpressionType>               data;
-  private final boolean                             square;
+  private final List<SExpressionType> data;
+  private final boolean square;
   private final Optional<LexicalPositionType<Path>> lex;
 
   PList(
@@ -45,50 +45,58 @@ final class PList extends AbstractList<SExpressionType>
     this.square = in_square;
   }
 
-  @Override public void add(
+  @Override
+  public void add(
     final int index,
     final @Nullable SExpressionType element)
   {
     this.data.add(index, NullCheck.notNull(element));
   }
 
-  @Override public SExpressionType get(
+  @Override
+  public SExpressionType get(
     final int index)
   {
     return NullCheck.notNull(this.data.get(index));
   }
 
-  @Override public boolean isSquare()
+  @Override
+  public boolean isSquare()
   {
     return this.square;
   }
 
-  @Override public Optional<LexicalPositionType<Path>> getLexicalInformation()
+  @Override
+  public Optional<LexicalPositionType<Path>> getLexicalInformation()
   {
     return this.lex;
   }
 
-  @Override public <A, E extends Exception> A matchExpression(
+  @Override
+  public <A, E extends Exception> A matchExpression(
     final SExpressionMatcherType<A, E> m)
     throws E
   {
     return m.list(this);
   }
 
-  @Override public SExpressionType remove(
+  @Override
+  public SExpressionType remove(
     final int index)
   {
     return NullCheck.notNull(this.data.remove(index));
   }
 
-  @Override public SExpressionType set(
+  @Override
+  public SExpressionType set(
     final int index,
     final @Nullable SExpressionType element)
   {
     return NullCheck.notNull(this.data.set(index, NullCheck.notNull(element)));
   }
 
-  @Override public int size()
+  @Override
+  public int size()
   {
     return this.data.size();
   }

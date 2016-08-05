@@ -18,4 +18,5 @@
  * A trivial serializer.
  */
 
-@com.io7m.jnull.NonNullByDefault package com.io7m.jsx.serializer;
+@com.io7m.jnull.NonNullByDefault
+package com.io7m.jsx.serializer;

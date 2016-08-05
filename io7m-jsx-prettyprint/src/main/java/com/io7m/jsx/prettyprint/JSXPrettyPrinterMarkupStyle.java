@@ -36,37 +36,17 @@ import java.io.Writer;
 
 public final class JSXPrettyPrinterMarkupStyle implements JSXPrettyPrinterType
 {
-  private final Writer out;
   private final WriterBackend backend;
   private final Layouter<IOException> layout;
   private final SExpressionMatcherType<Unit, IOException> matcher;
-
-  /**
-   * Create a new pretty printer.
-   *
-   * @param in_out    The output writer
-   * @param in_width  The maximum output width (note that unbreakable lines may
-   *                  exceed this width)
-   * @param in_indent The indent for nested expressions
-   *
-   * @return A new printer
-   */
-
-  public static JSXPrettyPrinterType newPrinterWithWidthIndent(
-    final Writer in_out,
-    final int in_width,
-    final int in_indent)
-  {
-    return new JSXPrettyPrinterMarkupStyle(in_out, in_width, in_indent);
-  }
 
   private JSXPrettyPrinterMarkupStyle(
     final Writer in_out,
     final int width,
     final int indent)
   {
-    this.out = NullCheck.notNull(in_out);
-    this.backend = new WriterBackend(this.out, width);
+    final Writer out = NullCheck.notNull(in_out);
+    this.backend = new WriterBackend(out, width);
     this.layout = new Layouter<>(this.backend, indent);
     this.matcher = new SExpressionMatcherType<Unit, IOException>()
     {
@@ -132,6 +112,25 @@ public final class JSXPrettyPrinterMarkupStyle implements JSXPrettyPrinterType
         return Unit.unit();
       }
     };
+  }
+
+  /**
+   * Create a new pretty printer.
+   *
+   * @param in_out    The output writer
+   * @param in_width  The maximum output width (note that unbreakable lines may
+   *                  exceed this width)
+   * @param in_indent The indent for nested expressions
+   *
+   * @return A new printer
+   */
+
+  public static JSXPrettyPrinterType newPrinterWithWidthIndent(
+    final Writer in_out,
+    final int in_width,
+    final int in_indent)
+  {
+    return new JSXPrettyPrinterMarkupStyle(in_out, in_width, in_indent);
   }
 
   @Override

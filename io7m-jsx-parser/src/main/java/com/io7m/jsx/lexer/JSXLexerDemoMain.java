@@ -16,14 +16,15 @@
 
 package com.io7m.jsx.lexer;
 
-import com.io7m.jeucreader.UnicodeCharacterReader;
-import com.io7m.jeucreader.UnicodeCharacterReaderPushBackType;
-import com.io7m.jsx.tokens.TokenEOF;
-import com.io7m.jsx.tokens.TokenType;
+import com.io7m.jsx.api.lexer.JSXLexerConfiguration;
+import com.io7m.jsx.api.lexer.JSXLexerException;
+import com.io7m.jsx.api.lexer.JSXLexerSupplierType;
+import com.io7m.jsx.api.lexer.JSXLexerType;
+import com.io7m.jsx.api.tokens.TokenEOF;
+import com.io7m.jsx.api.tokens.TokenType;
 import com.io7m.junreachable.UnreachableCodeException;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 /**
  * Simple lexer demo that prints all tokens.
@@ -49,17 +50,19 @@ public final class JSXLexerDemoMain
     throws IOException
   {
     try {
-      final JSXLexerConfigurationBuilderType cb =
-        JSXLexerConfiguration.newBuilder();
-      cb.setNewlinesInQuotedStrings(false);
-      final JSXLexerConfiguration c = cb.build();
+      final JSXLexerConfiguration.Builder lexer_config_builder =
+        JSXLexerConfiguration.builder();
+      lexer_config_builder.setNewlinesInQuotedStrings(false);
+      final JSXLexerConfiguration lexer_config =
+        lexer_config_builder.build();
 
-      final UnicodeCharacterReaderPushBackType r =
-        UnicodeCharacterReader.newReader(new InputStreamReader(System.in));
-      final JSXLexerType lex = JSXLexer.newLexer(c, r);
+      final JSXLexerSupplierType lexer_supplier =
+        new JSXLexerSupplier();
+      final JSXLexerType lexer =
+        lexer_supplier.createFromStreamUTF8(lexer_config, System.in);
 
       while (true) {
-        final TokenType t = lex.token();
+        final TokenType t = lexer.token();
         System.out.println(t);
         if (t instanceof TokenEOF) {
           break;
@@ -68,9 +71,9 @@ public final class JSXLexerDemoMain
     } catch (final JSXLexerException e) {
       System.err.println(
         "error: lexical error: "
-        + e.getLexicalInformation()
-        + ": "
-        + e.getMessage());
+          + e.getLexicalInformation()
+          + ": "
+          + e.getMessage());
     }
   }
 }
