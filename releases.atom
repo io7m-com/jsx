@@ -6,37 +6,44 @@
   </a:author>
   <a:id>http://io7m.github.io/jsx//releases.atom</a:id>
   <a:title>io7m-jsx Releases</a:title>
-  <a:updated>2016-05-31T00:00:00Z</a:updated>
+  <a:updated>2016-08-05T00:00:00Z</a:updated>
   <a:entry>
     <a:id>0</a:id>
+    <a:updated>2016-08-05T00:00:00Z</a:updated>
+    <a:published>2016-08-05T00:00:00Z</a:published>
+    <a:title>io7m-jsx 0.6.0 released</a:title>
+    <a:content type="text"> io7m-jsx 0.6.0 released </a:content>
+  </a:entry>
+  <a:entry>
+    <a:id>1</a:id>
     <a:updated>2016-05-31T00:00:00Z</a:updated>
     <a:published>2016-05-31T00:00:00Z</a:published>
     <a:title>io7m-jsx 0.5.1 released</a:title>
     <a:content type="text"> io7m-jsx 0.5.1 released </a:content>
   </a:entry>
   <a:entry>
-    <a:id>1</a:id>
+    <a:id>2</a:id>
     <a:updated>2016-05-29T00:00:00Z</a:updated>
     <a:published>2016-05-29T00:00:00Z</a:published>
     <a:title>io7m-jsx 0.5.0 released</a:title>
     <a:content type="text"> io7m-jsx 0.5.0 released </a:content>
   </a:entry>
   <a:entry>
-    <a:id>2</a:id>
+    <a:id>3</a:id>
     <a:updated>2015-11-12T00:00:00Z</a:updated>
     <a:published>2015-11-12T00:00:00Z</a:published>
     <a:title>io7m-jsx 0.4.1 released</a:title>
     <a:content type="text"> io7m-jsx 0.4.1 released </a:content>
   </a:entry>
   <a:entry>
-    <a:id>3</a:id>
+    <a:id>4</a:id>
     <a:updated>2015-10-20T00:00:00Z</a:updated>
     <a:published>2015-10-20T00:00:00Z</a:published>
     <a:title>io7m-jsx 0.4.0 released</a:title>
     <a:content type="text"> io7m-jsx 0.4.0 released </a:content>
   </a:entry>
   <a:entry>
-    <a:id>4</a:id>
+    <a:id>5</a:id>
     <a:updated>2015-03-28T00:00:00Z</a:updated>
     <a:published>2015-03-28T00:00:00Z</a:published>
     <a:title>io7m-jsx 0.2.0 released</a:title>
