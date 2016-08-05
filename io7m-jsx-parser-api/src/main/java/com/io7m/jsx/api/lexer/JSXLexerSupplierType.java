@@ -18,8 +18,13 @@ package com.io7m.jsx.api.lexer;
 
 import com.io7m.jeucreader.UnicodeCharacterReader;
 import com.io7m.jeucreader.UnicodeCharacterReaderPushBackType;
+import com.io7m.jnull.NullCheck;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 /**
  * The type of lexer suppliers.
@@ -54,6 +59,55 @@ public interface JSXLexerSupplierType
     final JSXLexerConfigurationType configuration,
     final Reader reader)
   {
+    NullCheck.notNull(configuration, "Configuration");
+    NullCheck.notNull(reader, "Reader");
     return this.create(configuration, new UnicodeCharacterReader(reader));
+  }
+
+  /**
+   * Create a new lexer from the given configuration and stream.
+   *
+   * @param configuration The configuration
+   * @param charset       The character set of the stream data
+   * @param stream        The stream
+   *
+   * @return A new lexer
+   */
+
+  default JSXLexerType createFromStream(
+    final JSXLexerConfigurationType configuration,
+    final Charset charset,
+    final InputStream stream)
+  {
+    NullCheck.notNull(configuration, "Configuration");
+    NullCheck.notNull(charset, "Charset");
+    NullCheck.notNull(stream, "Stream");
+
+    return this.create(
+      configuration,
+      new UnicodeCharacterReader(new InputStreamReader(stream, charset)));
+  }
+
+  /**
+   * Create a new lexer from the given configuration and stream. The stream is
+   * parsed as UTF-8 data.
+   *
+   * @param configuration The configuration
+   * @param stream        The stream
+   *
+   * @return A new lexer
+   */
+
+  default JSXLexerType createFromStreamUTF8(
+    final JSXLexerConfigurationType configuration,
+    final InputStream stream)
+  {
+    NullCheck.notNull(configuration, "Configuration");
+    NullCheck.notNull(stream, "Stream");
+
+    return this.create(
+      configuration,
+      new UnicodeCharacterReader(
+        new InputStreamReader(stream, StandardCharsets.UTF_8)));
   }
 }

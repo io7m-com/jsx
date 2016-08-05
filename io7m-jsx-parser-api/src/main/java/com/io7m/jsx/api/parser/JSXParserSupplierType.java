@@ -16,7 +16,17 @@
 
 package com.io7m.jsx.api.parser;
 
+import com.io7m.jeucreader.UnicodeCharacterReader;
+import com.io7m.jeucreader.UnicodeCharacterReaderPushBackType;
+import com.io7m.jnull.NullCheck;
+import com.io7m.jsx.api.lexer.JSXLexerConfigurationType;
+import com.io7m.jsx.api.lexer.JSXLexerSupplierType;
 import com.io7m.jsx.api.lexer.JSXLexerType;
+
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 /**
  * The type of parser suppliers.
@@ -37,4 +47,88 @@ public interface JSXParserSupplierType
   JSXParserType create(
     JSXParserConfigurationType configuration,
     JSXLexerType lexer);
+
+  /**
+   * Create a new parser from the given parser configuration and lexer.
+   *
+   * @param parser_configuration The parser configuration
+   * @param lexer_supplier       A lexer supplier
+   * @param lexer_configuration  A lexer configuration
+   * @param reader               The reader
+   *
+   * @return A new parser
+   */
+
+  default JSXParserType createFromReader(
+    final JSXParserConfigurationType parser_configuration,
+    final JSXLexerConfigurationType lexer_configuration,
+    final JSXLexerSupplierType lexer_supplier,
+    final UnicodeCharacterReaderPushBackType reader)
+  {
+    NullCheck.notNull(parser_configuration, "Parser configuration");
+    NullCheck.notNull(lexer_configuration, "Lexer configuration");
+    NullCheck.notNull(lexer_supplier, "Lexer supplier");
+    NullCheck.notNull(reader, "Reader");
+
+    return this.create(
+      parser_configuration, lexer_supplier.create(lexer_configuration, reader));
+  }
+
+  /**
+   * Create a new parser from the given parser configuration and lexer.
+   *
+   * @param parser_configuration The parser configuration
+   * @param lexer_supplier       A lexer supplier
+   * @param lexer_configuration  A lexer configuration
+   * @param charset              The character set of the stream data
+   * @param stream               The stream
+   *
+   * @return A new parser
+   */
+
+  default JSXParserType createFromStream(
+    final JSXParserConfigurationType parser_configuration,
+    final JSXLexerConfigurationType lexer_configuration,
+    final JSXLexerSupplierType lexer_supplier,
+    final Charset charset,
+    final InputStream stream)
+  {
+    NullCheck.notNull(parser_configuration, "Parser configuration");
+    NullCheck.notNull(lexer_configuration, "Lexer configuration");
+    NullCheck.notNull(lexer_supplier, "Lexer supplier");
+    NullCheck.notNull(charset, "Charset");
+    NullCheck.notNull(stream, "Stream");
+
+    return this.create(
+      parser_configuration,
+      lexer_supplier.createFromStream(lexer_configuration, charset, stream));
+  }
+
+  /**
+   * Create a new parser from the given parser configuration and lexer. The
+   * stream is parsed as UTF-8 data.
+   *
+   * @param parser_configuration The parser configuration
+   * @param lexer_supplier       A lexer supplier
+   * @param lexer_configuration  A lexer configuration
+   * @param stream               The stream
+   *
+   * @return A new parser
+   */
+
+  default JSXParserType createFromStreamUTF8(
+    final JSXParserConfigurationType parser_configuration,
+    final JSXLexerConfigurationType lexer_configuration,
+    final JSXLexerSupplierType lexer_supplier,
+    final InputStream stream)
+  {
+    NullCheck.notNull(parser_configuration, "Parser configuration");
+    NullCheck.notNull(lexer_configuration, "Lexer configuration");
+    NullCheck.notNull(lexer_supplier, "Lexer supplier");
+    NullCheck.notNull(stream, "Stream");
+
+    return this.create(
+      parser_configuration,
+      lexer_supplier.createFromStreamUTF8(lexer_configuration, stream));
+  }
 }
