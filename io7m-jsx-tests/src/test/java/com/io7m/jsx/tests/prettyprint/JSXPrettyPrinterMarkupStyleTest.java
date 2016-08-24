@@ -16,13 +16,13 @@
 
 package com.io7m.jsx.tests.prettyprint;
 
-import com.io7m.jsx.prettyprint.JSXPrettyPrinterCodeStyle;
 import com.io7m.jsx.prettyprint.JSXPrettyPrinterMarkupStyle;
 import com.io7m.jsx.prettyprint.JSXPrettyPrinterType;
 
 import java.io.Writer;
 
-public final class JSXPrettyPrinterMarkupStyleTest extends JSXPrettyPrinterContract
+public final class JSXPrettyPrinterMarkupStyleTest extends
+  JSXPrettyPrinterContract
 {
   @Override
   protected JSXPrettyPrinterType newPrettyPrinter(

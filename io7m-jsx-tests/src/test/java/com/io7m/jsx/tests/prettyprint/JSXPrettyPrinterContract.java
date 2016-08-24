@@ -41,11 +41,6 @@ public abstract class JSXPrettyPrinterContract
 {
   private final int SIZES[] = {10, 20, 40, 80, 120, 9999};
 
-  protected abstract JSXPrettyPrinterType newPrettyPrinter(
-    Writer out,
-    int width,
-    int indent);
-
   private static JSXLexerConfigurationType defaultLexerConfig()
   {
     final JSXLexerConfiguration.Builder cb =
@@ -77,6 +72,11 @@ public abstract class JSXPrettyPrinterContract
       JSXPrettyPrinterContract.defaultParserConfig();
     return JSXParser.newParser(pc, lex);
   }
+
+  protected abstract JSXPrettyPrinterType newPrettyPrinter(
+    Writer out,
+    int width,
+    int indent);
 
   @Test
   public final void testPrettyPrintBinomial()

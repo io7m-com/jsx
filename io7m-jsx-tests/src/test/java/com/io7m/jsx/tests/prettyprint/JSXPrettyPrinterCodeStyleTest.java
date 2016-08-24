@@ -21,7 +21,8 @@ import com.io7m.jsx.prettyprint.JSXPrettyPrinterType;
 
 import java.io.Writer;
 
-public final class JSXPrettyPrinterCodeStyleTest extends JSXPrettyPrinterContract
+public final class JSXPrettyPrinterCodeStyleTest extends
+  JSXPrettyPrinterContract
 {
   @Override
   protected JSXPrettyPrinterType newPrettyPrinter(
