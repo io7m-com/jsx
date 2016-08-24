@@ -67,7 +67,7 @@ public final class ParserTest
   }
 
   @Test(expected = JSXParserGrammarException.class)
-  public void testEOF_0()
+  public void testEOF0()
     throws Exception
   {
     final JSXLexerConfigurationType lc = ParserTest.defaultLexerConfig();
@@ -78,7 +78,7 @@ public final class ParserTest
   }
 
   @Test(expected = JSXParserGrammarException.class)
-  public void testEOF_1()
+  public void testEOF1()
     throws Exception
   {
     final JSXLexerConfigurationType lc = ParserTest.defaultLexerConfig();
@@ -90,7 +90,7 @@ public final class ParserTest
   }
 
   @Test
-  public void testEOF_2()
+  public void testEOF2()
     throws Exception
   {
     final JSXLexerConfigurationType lc = ParserTest.defaultLexerConfig();
@@ -106,7 +106,7 @@ public final class ParserTest
   }
 
   @Test(expected = JSXParserGrammarException.class)
-  public void testEOF_3()
+  public void testEOF3()
     throws Exception
   {
     final JSXLexerConfiguration.Builder cb = JSXLexerConfiguration.builder();
@@ -121,7 +121,7 @@ public final class ParserTest
   }
 
   @Test(expected = JSXParserLexicalException.class)
-  public void testLexError_0()
+  public void testLexError0()
     throws Exception
   {
     final JSXLexerType lex = () -> {
@@ -134,7 +134,7 @@ public final class ParserTest
   }
 
   @Test(expected = JSXParserLexicalException.class)
-  public void testLexError_1()
+  public void testLexError1()
     throws Exception
   {
     final JSXLexerType lex = () -> {
@@ -147,7 +147,7 @@ public final class ParserTest
   }
 
   @Test(expected = JSXParserLexicalException.class)
-  public void testLexError_2()
+  public void testLexError2()
     throws Exception
   {
     final JSXLexerType lex = () -> {
@@ -160,7 +160,7 @@ public final class ParserTest
   }
 
   @Test
-  public void testParseList_0()
+  public void testParseList0()
     throws Exception
   {
     final JSXLexerConfigurationType lc = ParserTest.defaultLexerConfig();
@@ -199,7 +199,7 @@ public final class ParserTest
   }
 
   @Test
-  public void testParseListNoLex_0()
+  public void testParseListNoLex0()
     throws Exception
   {
     final JSXLexerConfigurationType lc = ParserTest.defaultLexerConfig();
@@ -235,7 +235,7 @@ public final class ParserTest
   }
 
   @Test
-  public void testParseListSquareNoLex_1()
+  public void testParseListSquareNoLex1()
     throws Exception
   {
     final JSXLexerConfiguration.Builder cb = JSXLexerConfiguration.builder();
@@ -274,7 +274,7 @@ public final class ParserTest
   }
 
   @Test
-  public void testParseSquareList_0()
+  public void testParseSquareList0()
     throws Exception
   {
     final JSXLexerConfiguration.Builder cb = JSXLexerConfiguration.builder();
@@ -316,7 +316,7 @@ public final class ParserTest
   }
 
   @Test
-  public void testParseSymbol_0()
+  public void testParseSymbol0()
     throws Exception
   {
     final JSXLexerConfigurationType lc = ParserTest.defaultLexerConfig();
@@ -334,7 +334,7 @@ public final class ParserTest
   }
 
   @Test
-  public void testParseSymbolNoLex_0()
+  public void testParseSymbolNoLex0()
     throws Exception
   {
     final JSXLexerConfigurationType lc = ParserTest.defaultLexerConfig();
@@ -354,7 +354,7 @@ public final class ParserTest
   }
 
   @Test
-  public void testQuotedString_0()
+  public void testQuotedString0()
     throws Exception
   {
     final StringBuilder sb = new StringBuilder();
@@ -378,7 +378,7 @@ public final class ParserTest
   }
 
   @Test
-  public void testQuotedStringNoLex_0()
+  public void testQuotedStringNoLex0()
     throws Exception
   {
     final StringBuilder sb = new StringBuilder();
@@ -405,7 +405,7 @@ public final class ParserTest
   }
 
   @Test(expected = JSXParserGrammarException.class)
-  public void testUnbalancedRoundSquare_0()
+  public void testUnbalancedRoundSquare0()
     throws Exception
   {
     final JSXLexerConfiguration.Builder cb = JSXLexerConfiguration.builder();
@@ -420,7 +420,7 @@ public final class ParserTest
   }
 
   @Test(expected = JSXParserGrammarException.class)
-  public void testUnbalancedRoundSquare_1()
+  public void testUnbalancedRoundSquare1()
     throws Exception
   {
     final JSXLexerConfiguration.Builder cb = JSXLexerConfiguration.builder();
@@ -435,7 +435,7 @@ public final class ParserTest
   }
 
   @Test(expected = JSXParserGrammarException.class)
-  public void testUnexpectedRight_0()
+  public void testUnexpectedRight0()
     throws Exception
   {
     final JSXLexerConfigurationType lc = ParserTest.defaultLexerConfig();
@@ -447,7 +447,7 @@ public final class ParserTest
   }
 
   @Test(expected = JSXParserGrammarException.class)
-  public void testUnexpectedRightSquare_0()
+  public void testUnexpectedRightSquare0()
     throws Exception
   {
     final JSXLexerConfiguration.Builder cb = JSXLexerConfiguration.builder();

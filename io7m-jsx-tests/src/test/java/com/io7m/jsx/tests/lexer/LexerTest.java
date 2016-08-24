@@ -98,7 +98,7 @@ public final class LexerTest
   }
 
   @Test
-  public void testFile_0()
+  public void testFile0()
     throws Exception
   {
     final JSXLexerConfiguration.Builder cb =
@@ -117,7 +117,7 @@ public final class LexerTest
   }
 
   @Test
-  public void testLeftParen_0()
+  public void testLeftParen0()
     throws Exception
   {
     final JSXLexerConfigurationType c = LexerTest.defaultLexerConfig();
@@ -130,7 +130,7 @@ public final class LexerTest
   }
 
   @Test
-  public void testLeftSquare_0()
+  public void testLeftSquare0()
     throws Exception
   {
     final JSXLexerConfiguration.Builder cb = JSXLexerConfiguration.builder();
@@ -147,7 +147,7 @@ public final class LexerTest
   }
 
   @Test
-  public void testLeftSquare_1()
+  public void testLeftSquare1()
     throws Exception
   {
     final JSXLexerConfiguration.Builder cb = JSXLexerConfiguration.builder();
@@ -163,7 +163,7 @@ public final class LexerTest
   }
 
   @Test
-  public void testLeftSquare_2()
+  public void testLeftSquare2()
     throws Exception
   {
     final JSXLexerConfiguration.Builder cb =
@@ -179,7 +179,7 @@ public final class LexerTest
   }
 
   @Test
-  public void testLeftSquare_3()
+  public void testLeftSquare3()
     throws Exception
   {
     final JSXLexerConfiguration.Builder cb =
@@ -196,7 +196,7 @@ public final class LexerTest
   }
 
   @Test
-  public void testNewline_0()
+  public void testNewline0()
     throws Exception
   {
     final JSXLexerConfigurationType c = LexerTest.defaultLexerConfig();
@@ -209,7 +209,7 @@ public final class LexerTest
   }
 
   @Test
-  public void testNewline_1()
+  public void testNewline1()
     throws Exception
   {
     final JSXLexerConfigurationType c = LexerTest.defaultLexerConfig();
@@ -222,7 +222,7 @@ public final class LexerTest
   }
 
   @Test
-  public void testNewline_2()
+  public void testNewline2()
     throws Exception
   {
     final JSXLexerConfigurationType c = LexerTest.defaultLexerConfig();
@@ -236,7 +236,7 @@ public final class LexerTest
   }
 
   @Test(expected = JSXLexerUnexpectedEOFException.class)
-  public void testNewlineBad_0()
+  public void testNewlineBad0()
     throws Exception
   {
     final JSXLexerConfigurationType c = LexerTest.defaultLexerConfig();
@@ -245,7 +245,7 @@ public final class LexerTest
   }
 
   @Test(expected = JSXLexerBareCarriageReturnException.class)
-  public void testNewlineBad_1()
+  public void testNewlineBad1()
     throws Exception
   {
     final JSXLexerConfigurationType c = LexerTest.defaultLexerConfig();
@@ -255,7 +255,7 @@ public final class LexerTest
   }
 
   @Test
-  public void testQuoted_0()
+  public void testQuoted0()
     throws Exception
   {
     final JSXLexerConfigurationType c = LexerTest.defaultLexerConfig();
@@ -272,7 +272,7 @@ public final class LexerTest
   }
 
   @Test
-  public void testQuoted_1()
+  public void testQuoted1()
     throws Exception
   {
     final JSXLexerConfigurationType c = LexerTest.defaultLexerConfig();
@@ -293,7 +293,7 @@ public final class LexerTest
   }
 
   @Test
-  public void testQuoted_2()
+  public void testQuoted2()
     throws Exception
   {
     final JSXLexerConfigurationType c = LexerTest.defaultLexerConfig();
@@ -315,7 +315,7 @@ public final class LexerTest
   }
 
   @Test
-  public void testQuotedCarriage_0()
+  public void testQuotedCarriage0()
     throws Exception
   {
     final JSXLexerConfigurationType c = LexerTest.defaultLexerConfig();
@@ -332,7 +332,7 @@ public final class LexerTest
   }
 
   @Test(expected = JSXLexerUnknownEscapeCodeException.class)
-  public void testQuotedEscapeBad_0()
+  public void testQuotedEscapeBad0()
     throws Exception
   {
     final JSXLexerConfigurationType c = LexerTest.defaultLexerConfig();
@@ -342,7 +342,7 @@ public final class LexerTest
   }
 
   @Test
-  public void testQuotedNewline_0()
+  public void testQuotedNewline0()
     throws Exception
   {
     final JSXLexerConfigurationType c = LexerTest.defaultLexerConfig();
@@ -359,7 +359,7 @@ public final class LexerTest
   }
 
   @Test(expected = JSXLexerNewLinesInStringsException.class)
-  public void testQuotedNewlineBad_0()
+  public void testQuotedNewlineBad0()
     throws Exception
   {
     final JSXLexerConfiguration.Builder cb =
@@ -378,7 +378,7 @@ public final class LexerTest
   }
 
   @Test(expected = JSXLexerNewLinesInStringsException.class)
-  public void testQuotedNewlineBad_1()
+  public void testQuotedNewlineBad1()
     throws Exception
   {
     final JSXLexerConfiguration.Builder cb =
@@ -397,7 +397,7 @@ public final class LexerTest
   }
 
   @Test
-  public void testQuotedNewlineOK_0()
+  public void testQuotedNewlineOK0()
     throws Exception
   {
     final JSXLexerConfiguration.Builder cb = JSXLexerConfiguration.builder();
@@ -422,7 +422,7 @@ public final class LexerTest
   }
 
   @Test
-  public void testQuotedNewlineOK_1()
+  public void testQuotedNewlineOK1()
     throws Exception
   {
     final JSXLexerConfiguration.Builder cb = JSXLexerConfiguration.builder();
@@ -447,7 +447,7 @@ public final class LexerTest
   }
 
   @Test
-  public void testQuotedQuote_0()
+  public void testQuotedQuote0()
     throws Exception
   {
     final StringBuilder sb = new StringBuilder();
@@ -470,7 +470,7 @@ public final class LexerTest
   }
 
   @Test(expected = JSXLexerUnexpectedEOFException.class)
-  public void testQuotedStringBad_0()
+  public void testQuotedStringBad0()
     throws Exception
   {
     final JSXLexerConfigurationType c = LexerTest.defaultLexerConfig();
@@ -479,7 +479,7 @@ public final class LexerTest
   }
 
   @Test
-  public void testQuotedTab_0()
+  public void testQuotedTab0()
     throws Exception
   {
     final JSXLexerConfigurationType c = LexerTest.defaultLexerConfig();
@@ -496,7 +496,7 @@ public final class LexerTest
   }
 
   @Test
-  public void testQuotedUnicode4_0()
+  public void testQuotedUnicode40()
     throws Exception
   {
     final JSXLexerConfigurationType c = LexerTest.defaultLexerConfig();
@@ -513,7 +513,7 @@ public final class LexerTest
   }
 
   @Test
-  public void testQuotedUnicode4_1()
+  public void testQuotedUnicode41()
     throws Exception
   {
     final JSXLexerConfigurationType c = LexerTest.defaultLexerConfig();
@@ -530,7 +530,7 @@ public final class LexerTest
   }
 
   @Test
-  public void testQuotedUnicode8_0()
+  public void testQuotedUnicode80()
     throws Exception
   {
     final JSXLexerConfigurationType c = LexerTest.defaultLexerConfig();
@@ -547,7 +547,7 @@ public final class LexerTest
   }
 
   @Test
-  public void testQuotedUnicode8_1()
+  public void testQuotedUnicode81()
     throws Exception
   {
     final JSXLexerConfigurationType c = LexerTest.defaultLexerConfig();
@@ -567,7 +567,7 @@ public final class LexerTest
   }
 
   @Test(expected = JSXLexerNotHexCharException.class)
-  public void testQuotedUnicodeBad4_0()
+  public void testQuotedUnicodeBad40()
     throws Exception
   {
     final JSXLexerConfigurationType c = LexerTest.defaultLexerConfig();
@@ -577,7 +577,7 @@ public final class LexerTest
   }
 
   @Test(expected = JSXLexerInvalidCodePointException.class)
-  public void testQuotedUnicodeBad8_0()
+  public void testQuotedUnicodeBad80()
     throws Exception
   {
     final JSXLexerConfigurationType c = LexerTest.defaultLexerConfig();
@@ -587,7 +587,7 @@ public final class LexerTest
   }
 
   @Test
-  public void testRightParen_0()
+  public void testRightParen0()
     throws Exception
   {
     final JSXLexerConfigurationType c = LexerTest.defaultLexerConfig();
@@ -600,7 +600,7 @@ public final class LexerTest
   }
 
   @Test
-  public void testRightSquare_0()
+  public void testRightSquare0()
     throws Exception
   {
     final JSXLexerConfiguration.Builder cb = JSXLexerConfiguration.builder();
@@ -616,7 +616,7 @@ public final class LexerTest
   }
 
   @Test
-  public void testRightSquare_1()
+  public void testRightSquare1()
     throws Exception
   {
     final JSXLexerConfiguration.Builder cb =
@@ -632,7 +632,7 @@ public final class LexerTest
   }
 
   @Test
-  public void testRightSquare_2()
+  public void testRightSquare2()
     throws Exception
   {
     final JSXLexerConfiguration.Builder cb =
@@ -648,7 +648,7 @@ public final class LexerTest
   }
 
   @Test
-  public void testRightSquare_3()
+  public void testRightSquare3()
     throws Exception
   {
     final JSXLexerConfiguration.Builder cb =
@@ -665,7 +665,7 @@ public final class LexerTest
   }
 
   @Test
-  public void testSymbol_0()
+  public void testSymbol0()
     throws Exception
   {
     final JSXLexerConfigurationType c = LexerTest.defaultLexerConfig();
@@ -687,7 +687,7 @@ public final class LexerTest
   }
 
   @Test
-  public void testSymbol_1()
+  public void testSymbol1()
     throws Exception
   {
     final JSXLexerConfigurationType c = LexerTest.defaultLexerConfig();
@@ -709,7 +709,7 @@ public final class LexerTest
   }
 
   @Test
-  public void testSymbol_2()
+  public void testSymbol2()
     throws Exception
   {
     final JSXLexerConfigurationType c = LexerTest.defaultLexerConfig();
@@ -731,7 +731,7 @@ public final class LexerTest
   }
 
   @Test
-  public void testSymbol_3()
+  public void testSymbol3()
     throws Exception
   {
     final JSXLexerConfigurationType c = LexerTest.defaultLexerConfig();
@@ -758,7 +758,7 @@ public final class LexerTest
   }
 
   @Test
-  public void testSymbol_4()
+  public void testSymbol4()
     throws Exception
   {
     final JSXLexerConfigurationType c = LexerTest.defaultLexerConfig();
@@ -785,7 +785,7 @@ public final class LexerTest
   }
 
   @Test
-  public void testSymbol_5()
+  public void testSymbol5()
     throws Exception
   {
     final JSXLexerConfigurationType c = LexerTest.defaultLexerConfig();
@@ -812,7 +812,7 @@ public final class LexerTest
   }
 
   @Test
-  public void testSymbol_6()
+  public void testSymbol6()
     throws Exception
   {
     final JSXLexerConfigurationType c = LexerTest.defaultLexerConfig();
