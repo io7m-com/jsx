@@ -14,23 +14,10 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.io7m.jsx.tests.prettyprint;
+/**
+ * Lexer unit tests.
+ */
 
-import com.io7m.jsx.prettyprint.JSXPrettyPrinterMarkupStyle;
-import com.io7m.jsx.prettyprint.JSXPrettyPrinterType;
+@com.io7m.jnull.NonNullByDefault
+package com.io7m.jsx.tests.lexer;
 
-import java.io.Writer;
-
-public final class JSXPrettyPrinterMarkupStyleTest extends
-  JSXPrettyPrinterContract
-{
-  @Override
-  protected JSXPrettyPrinterType newPrettyPrinter(
-    final Writer out,
-    final int width,
-    final int indent)
-  {
-    return JSXPrettyPrinterMarkupStyle.newPrinterWithWidthIndent(
-      out, width, indent);
-  }
-}

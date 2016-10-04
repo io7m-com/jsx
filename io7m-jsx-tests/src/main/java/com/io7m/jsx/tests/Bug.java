@@ -14,23 +14,17 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.io7m.jsx.tests.prettyprint;
+package com.io7m.jsx.tests;
 
-import com.io7m.jsx.prettyprint.JSXPrettyPrinterMarkupStyle;
-import com.io7m.jsx.prettyprint.JSXPrettyPrinterType;
+/**
+ * This class exists to prevent a bug in Maven's jar plugin. The bug is
+ * triggered at deploy time when a project does not contain any sources.
+ */
 
-import java.io.Writer;
-
-public final class JSXPrettyPrinterMarkupStyleTest extends
-  JSXPrettyPrinterContract
+public final class Bug
 {
-  @Override
-  protected JSXPrettyPrinterType newPrettyPrinter(
-    final Writer out,
-    final int width,
-    final int indent)
+  private Bug()
   {
-    return JSXPrettyPrinterMarkupStyle.newPrinterWithWidthIndent(
-      out, width, indent);
+
   }
 }

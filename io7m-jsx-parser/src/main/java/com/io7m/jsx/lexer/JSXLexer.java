@@ -291,9 +291,9 @@ public final class JSXLexer implements JSXLexerType
       case 'f':
       case 'F':
         return c;
+      default:
+        throw this.errorNotHexChar(c);
     }
-
-    throw this.errorNotHexChar(c);
   }
 
   private void startQuotedString()

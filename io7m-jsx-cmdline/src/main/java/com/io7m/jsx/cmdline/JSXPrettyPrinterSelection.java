@@ -14,23 +14,53 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.io7m.jsx.tests.prettyprint;
+package com.io7m.jsx.cmdline;
 
-import com.io7m.jsx.prettyprint.JSXPrettyPrinterMarkupStyle;
-import com.io7m.jsx.prettyprint.JSXPrettyPrinterType;
+import com.io7m.jnull.NullCheck;
 
-import java.io.Writer;
+/**
+ * The type of pretty printer that will be used.
+ */
 
-public final class JSXPrettyPrinterMarkupStyleTest extends
-  JSXPrettyPrinterContract
+public enum JSXPrettyPrinterSelection
 {
-  @Override
-  protected JSXPrettyPrinterType newPrettyPrinter(
-    final Writer out,
-    final int width,
-    final int indent)
+  /**
+   * No pretty printing.
+   */
+
+  NONE("none"),
+
+  /**
+   * Markup style pretty printing.
+   */
+
+  MARKUP("markup"),
+
+  /**
+   * Code style pretty printing.
+   */
+
+  CODE("code");
+
+  private final String name;
+
+  JSXPrettyPrinterSelection(final String in_name)
   {
-    return JSXPrettyPrinterMarkupStyle.newPrinterWithWidthIndent(
-      out, width, indent);
+    this.name = NullCheck.notNull(in_name, "Name");
+  }
+
+  @Override
+  public String toString()
+  {
+    return this.name;
+  }
+
+  /**
+   * @return The short name of the printer
+   */
+
+  public String getName()
+  {
+    return this.name;
   }
 }

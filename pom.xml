@@ -7,7 +7,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.io7m.jsx</groupId>
   <artifactId>io7m-jsx</artifactId>
-  <version>0.6.0</version>
+  <version>0.7.0</version>
 
   <packaging>pom</packaging>
   <name>io7m-jsx</name>
@@ -16,6 +16,7 @@
 
   <modules>
     <module>io7m-jsx-checkstyle</module>
+    <module>io7m-jsx-cmdline</module>
     <module>io7m-jsx-core</module>
     <module>io7m-jsx-documentation</module>
     <module>io7m-jsx-parser-api</module>
@@ -161,6 +162,17 @@
       </dependency>
 
       <dependency>
+        <groupId>com.beust</groupId>
+        <artifactId>jcommander</artifactId>
+        <version>1.48</version>
+      </dependency>
+      <dependency>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-classic</artifactId>
+        <version>1.1.7</version>
+      </dependency>
+
+      <dependency>
         <groupId>org.osgi</groupId>
         <artifactId>org.osgi.annotation</artifactId>
         <version>6.0.0</version>
@@ -248,6 +260,7 @@
                 <encoding>UTF-8</encoding>
                 <consoleOutput>true</consoleOutput>
                 <failsOnError>true</failsOnError>
+                <sourceDirectory>${project.build.sourceDirectory}</sourceDirectory>
               </configuration>
               <goals>
                 <goal>check</goal>
@@ -256,6 +269,11 @@
           </executions>
         </plugin>
 
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-shade-plugin</artifactId>
+          <version>2.4.3</version>
+        </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-assembly-plugin</artifactId>
@@ -434,7 +452,6 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
-            <Export-Package>com.io7m.jnull</Export-Package>
             <Specification-Title>${project.name}</Specification-Title>
             <Specification-Version>${project.version}</Specification-Version>
             <Specification-Vendor>io7m.com</Specification-Vendor>

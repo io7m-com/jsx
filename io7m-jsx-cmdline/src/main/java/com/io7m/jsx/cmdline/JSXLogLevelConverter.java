@@ -14,23 +14,36 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.io7m.jsx.tests.prettyprint;
+package com.io7m.jsx.cmdline;
 
-import com.io7m.jsx.prettyprint.JSXPrettyPrinterMarkupStyle;
-import com.io7m.jsx.prettyprint.JSXPrettyPrinterType;
+import com.beust.jcommander.IStringConverter;
 
-import java.io.Writer;
+/**
+ * A converter for {@link JSXLogLevel} values.
+ */
 
-public final class JSXPrettyPrinterMarkupStyleTest extends
-  JSXPrettyPrinterContract
+public final class JSXLogLevelConverter implements
+  IStringConverter<JSXLogLevel>
 {
-  @Override
-  protected JSXPrettyPrinterType newPrettyPrinter(
-    final Writer out,
-    final int width,
-    final int indent)
+  /**
+   * Construct a new converter.
+   */
+
+  public JSXLogLevelConverter()
   {
-    return JSXPrettyPrinterMarkupStyle.newPrinterWithWidthIndent(
-      out, width, indent);
+
+  }
+
+  @Override
+  public JSXLogLevel convert(final String value)
+  {
+    for (final JSXLogLevel v : JSXLogLevel.values()) {
+      if (value.equals(v.getName())) {
+        return v;
+      }
+    }
+
+    throw new JSXLogLevelUnrecognized(
+      "Unrecognized verbosity level: " + value);
   }
 }
