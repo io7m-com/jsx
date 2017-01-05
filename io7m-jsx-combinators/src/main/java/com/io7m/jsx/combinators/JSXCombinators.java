@@ -23,6 +23,7 @@ import com.io7m.jsx.SExpressionQuotedStringType;
 import com.io7m.jsx.SExpressionSymbolType;
 import com.io7m.jsx.SExpressionType;
 import com.io7m.junreachable.UnreachableCodeException;
+import javaslang.Value;
 import javaslang.collection.List;
 import javaslang.control.Validation;
 
@@ -132,7 +133,7 @@ public final class JSXCombinators
   /**
    * Assert that the given expression is a symbol with any of the given names.
    *
-   * @param e    The expression
+   * @param e     The expression
    * @param names The symbol names
    *
    * @return The symbol, or an invalid value if {@code e} is not a symbol with
@@ -224,7 +225,7 @@ public final class JSXCombinators
   /**
    * Assert that the given expression is a symbol with any of the given names.
    *
-   * @param e    The expression
+   * @param e     The expression
    * @param texts The quoted string texts
    *
    * @return The symbol, or an invalid value if {@code e} is not a symbol with
@@ -488,5 +489,29 @@ public final class JSXCombinators
             sb.toString())));
         }
       });
+  }
+
+  /**
+   * Apply a validation function to each element of the given list expression.
+   *
+   * @param e        The list expression
+   * @param receiver The validation function
+   * @param <T>      The type of returned elements
+   *
+   * @return A valid value if all of the elements were validated, otherwise an
+   * invalid value
+   */
+
+  public static <T> Validation<List<JSXValidationErrorType>, List<T>>
+  listMap(
+    final SExpressionListType e,
+    final Function<SExpressionType, Validation<List<JSXValidationErrorType>, T>> receiver)
+  {
+    List<Validation<List<JSXValidationErrorType>, T>> xs = List.empty();
+    for (int index = 0; index < e.size(); ++index) {
+      xs = xs.append(receiver.apply(e.get(index)));
+    }
+
+    return Validation.sequence(xs).map(Value::toList);
   }
 }

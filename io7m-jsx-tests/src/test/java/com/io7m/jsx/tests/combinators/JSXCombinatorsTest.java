@@ -16,8 +16,10 @@
 
 package com.io7m.jsx.tests.combinators;
 
+import com.io7m.jlexing.core.ImmutableLexicalPosition;
 import com.io7m.jsx.SExpressionType;
 import com.io7m.jsx.combinators.JSXCombinators;
+import com.io7m.jsx.combinators.JSXValidationError;
 import com.io7m.jsx.combinators.JSXValidationErrorType;
 import javaslang.collection.List;
 import javaslang.control.Validation;
@@ -205,5 +207,32 @@ public final class JSXCombinatorsTest
       JSXCombinators.exactQuotedString(
         new PSymbol("x", Optional.empty()),
         "x").isValid());
+  }
+
+  @Test
+  public void testListMap()
+  {
+    final ArrayList<SExpressionType> xs = new ArrayList<>(3);
+    xs.add(new PSymbol("x", Optional.empty()));
+    xs.add(new PSymbol("y", Optional.empty()));
+    xs.add(new PSymbol("z", Optional.empty()));
+
+    Assert.assertTrue(
+      JSXCombinators.listMap(
+        new PList(xs, Optional.empty(), false),
+        x -> Validation.valid(Integer.valueOf(23))).isValid());
+
+    final Function<SExpressionType, Validation<List<JSXValidationErrorType>, Integer>> fail =
+      e -> {
+        final JSXValidationError err = JSXValidationError.of(
+          ImmutableLexicalPosition.newPosition(0, 0),
+          "Error");
+        return Validation.invalid(List.of(err));
+      };
+
+    Assert.assertFalse(
+      JSXCombinators.listMap(
+        new PList(xs, Optional.empty(), false),
+        fail).isValid());
   }
 }
