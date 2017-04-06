@@ -102,7 +102,7 @@ public final class JSXCombinators
     final String name)
   {
     return anySymbol(e).flatMap(s -> {
-      if (name.equals(s.text())) {
+      if (Objects.equals(name, s.text())) {
         return Validation.valid(s);
       }
 
@@ -194,7 +194,7 @@ public final class JSXCombinators
     final String name)
   {
     return anyQuotedString(e).flatMap(s -> {
-      if (name.equals(s.text())) {
+      if (Objects.equals(name, s.text())) {
         return Validation.valid(s);
       }
 

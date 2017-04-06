@@ -72,7 +72,7 @@ public final class JSXSerializerTrivial implements JSXSerializerType
           final int max = xs.size();
           for (int index = 0; index < max; ++index) {
             final SExpressionType es = xs.get(index);
-            JSXSerializerTrivial.serializeWithWriter(es, w);
+            serializeWithWriter(es, w);
             if ((index + 1) < max) {
               w.print(" ");
             }
@@ -120,7 +120,7 @@ public final class JSXSerializerTrivial implements JSXSerializerType
     final OutputStreamWriter os =
       new OutputStreamWriter(bs, StandardCharsets.UTF_8);
     final PrintWriter w = new PrintWriter(os);
-    JSXSerializerTrivial.serializeWithWriter(e, w);
+    serializeWithWriter(e, w);
     w.flush();
   }
 }

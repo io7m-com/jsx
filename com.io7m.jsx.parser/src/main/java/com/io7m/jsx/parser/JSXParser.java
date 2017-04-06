@@ -64,7 +64,7 @@ public final class JSXParser implements JSXParserType
     final JSXParserConfigurationType c,
     final TokenQuotedString t)
   {
-    return new PQuotedString(t.text(), JSXParser.getTokenLexical(c, t));
+    return new PQuotedString(t.text(), getTokenLexical(c, t));
   }
 
   private static SExpressionType completeSymbol(
@@ -72,7 +72,7 @@ public final class JSXParser implements JSXParserType
     final TokenSymbol t)
   {
     final Optional<LexicalPositionType<Path>> lex =
-      JSXParser.getTokenLexical(c, t);
+      getTokenLexical(c, t);
     return new PSymbol(t.text(), lex);
   }
 
@@ -153,25 +153,25 @@ public final class JSXParser implements JSXParserType
     throws JSXLexerException, IOException, JSXParserGrammarException
   {
     if (peek instanceof TokenLeftParenthesis) {
-      return JSXParser.parseListParens(c, lexer, (TokenLeftParenthesis) peek);
+      return parseListParens(c, lexer, (TokenLeftParenthesis) peek);
     }
     if (peek instanceof TokenLeftSquare) {
-      return JSXParser.parseListSquares(c, lexer, (TokenLeftSquare) peek);
+      return parseListSquares(c, lexer, (TokenLeftSquare) peek);
     }
     if (peek instanceof TokenRightSquare) {
-      throw JSXParser.errorUnexpectedRightSquare((TokenRightSquare) peek);
+      throw errorUnexpectedRightSquare((TokenRightSquare) peek);
     }
     if (peek instanceof TokenRightParenthesis) {
-      throw JSXParser.errorUnexpectedRightParen((TokenRightParenthesis) peek);
+      throw errorUnexpectedRightParen((TokenRightParenthesis) peek);
     }
     if (peek instanceof TokenQuotedString) {
-      return JSXParser.completeQuotedString(c, (TokenQuotedString) peek);
+      return completeQuotedString(c, (TokenQuotedString) peek);
     }
     if (peek instanceof TokenSymbol) {
-      return JSXParser.completeSymbol(c, (TokenSymbol) peek);
+      return completeSymbol(c, (TokenSymbol) peek);
     }
     if (peek instanceof TokenEOF) {
-      throw JSXParser.errorUnexpectedEOF((TokenEOF) peek);
+      throw errorUnexpectedEOF((TokenEOF) peek);
     }
 
     throw new UnreachableCodeException();
@@ -184,21 +184,21 @@ public final class JSXParser implements JSXParserType
     throws JSXLexerException, IOException, JSXParserGrammarException
   {
     final PList xs = new PList(
-      new ArrayList<>(16), JSXParser.getTokenLexical(c, peek), false);
+      new ArrayList<>(16), getTokenLexical(c, peek), false);
 
     while (true) {
       final TokenType t = lexer.token();
       if (t instanceof TokenEOF) {
-        throw JSXParser.errorUnexpectedEOF((TokenEOF) t);
+        throw errorUnexpectedEOF((TokenEOF) t);
       }
       if (t instanceof TokenRightParenthesis) {
         return xs;
       }
       if (t instanceof TokenRightSquare) {
-        throw JSXParser.errorUnexpectedRightSquareWantedParens(
+        throw errorUnexpectedRightSquareWantedParens(
           (TokenRightSquare) t);
       }
-      xs.add(JSXParser.parseExpressionPeeked(c, lexer, t));
+      xs.add(parseExpressionPeeked(c, lexer, t));
     }
   }
 
@@ -209,21 +209,21 @@ public final class JSXParser implements JSXParserType
     throws JSXLexerException, IOException, JSXParserGrammarException
   {
     final PList xs = new PList(
-      new ArrayList<>(16), JSXParser.getTokenLexical(c, peek), true);
+      new ArrayList<>(16), getTokenLexical(c, peek), true);
 
     while (true) {
       final TokenType t = lexer.token();
       if (t instanceof TokenEOF) {
-        throw JSXParser.errorUnexpectedEOF((TokenEOF) t);
+        throw errorUnexpectedEOF((TokenEOF) t);
       }
       if (t instanceof TokenRightParenthesis) {
-        throw JSXParser.errorUnexpectedRightParenWantedSquare(
+        throw errorUnexpectedRightParenWantedSquare(
           (TokenRightParenthesis) t);
       }
       if (t instanceof TokenRightSquare) {
         return xs;
       }
-      xs.add(JSXParser.parseExpressionPeeked(c, lexer, t));
+      xs.add(parseExpressionPeeked(c, lexer, t));
     }
   }
 
@@ -233,7 +233,7 @@ public final class JSXParser implements JSXParserType
   {
     try {
       final TokenType peek = this.lexer.token();
-      return JSXParser.parseExpressionPeeked(this.config, this.lexer, peek);
+      return parseExpressionPeeked(this.config, this.lexer, peek);
     } catch (final JSXLexerException e) {
       throw new JSXParserLexicalException(e);
     }
@@ -250,7 +250,7 @@ public final class JSXParser implements JSXParserType
       }
 
       return Optional.of(
-        JSXParser.parseExpressionPeeked(this.config, this.lexer, peek));
+        parseExpressionPeeked(this.config, this.lexer, peek));
     } catch (final JSXLexerException e) {
       throw new JSXParserLexicalException(e);
     }
@@ -267,7 +267,7 @@ public final class JSXParser implements JSXParserType
         if (peek instanceof TokenEOF) {
           return xs;
         }
-        xs.add(JSXParser.parseExpressionPeeked(this.config, this.lexer, peek));
+        xs.add(parseExpressionPeeked(this.config, this.lexer, peek));
       }
     } catch (final JSXLexerException e) {
       throw new JSXParserLexicalException(e);

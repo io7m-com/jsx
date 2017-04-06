@@ -18,6 +18,8 @@ package com.io7m.jsx.cmdline;
 
 import com.beust.jcommander.IStringConverter;
 
+import java.util.Objects;
+
 /**
  * A converter for {@link JSXLogLevel} values.
  */
@@ -38,7 +40,7 @@ public final class JSXLogLevelConverter implements
   public JSXLogLevel convert(final String value)
   {
     for (final JSXLogLevel v : JSXLogLevel.values()) {
-      if (value.equals(v.getName())) {
+      if (Objects.equals(value, v.getName())) {
         return v;
       }
     }

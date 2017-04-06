@@ -18,6 +18,8 @@ package com.io7m.jsx.cmdline;
 
 import com.beust.jcommander.IStringConverter;
 
+import java.util.Objects;
+
 /**
  * A converter for {@link JSXPrettyPrinterSelection} values.
  */
@@ -38,7 +40,7 @@ public final class JSXPrettyPrinterSelectionConverter implements
   public JSXPrettyPrinterSelection convert(final String value)
   {
     for (final JSXPrettyPrinterSelection v : JSXPrettyPrinterSelection.values()) {
-      if (value.equals(v.getName())) {
+      if (Objects.equals(value, v.getName())) {
         return v;
       }
     }

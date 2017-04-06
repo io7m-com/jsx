@@ -122,7 +122,7 @@ public final class Main implements Runnable
       if (cmd == null) {
         final StringBuilder sb = new StringBuilder(128);
         this.commander.usage(sb);
-        Main.LOG.info("Arguments required.\n{}", sb.toString());
+        LOG.info("Arguments required.\n{}", sb.toString());
         return;
       }
 
@@ -132,10 +132,10 @@ public final class Main implements Runnable
     } catch (final ParameterException e) {
       final StringBuilder sb = new StringBuilder(128);
       this.commander.usage(sb);
-      Main.LOG.error("{}\n{}", e.getMessage(), sb.toString());
+      LOG.error("{}\n{}", e.getMessage(), sb.toString());
       this.exit_code = 1;
     } catch (final Exception e) {
-      Main.LOG.error("{}", e.getMessage(), e);
+      LOG.error("{}", e.getMessage(), e);
       this.exit_code = 1;
     }
   }
@@ -306,7 +306,7 @@ public final class Main implements Runnable
         for (final JSXParserException e : errors) {
           final LexicalPosition<Path> lex =
             e.getLexicalInformation();
-          Main.LOG.error(
+          LOG.error(
             "parse error: {}:{}:{}: {}",
             lex.file().orElse(Paths.get("")),
             Integer.valueOf(lex.line()),
