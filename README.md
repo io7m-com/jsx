@@ -6,3 +6,5 @@ jsx
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f1f96b15af7049eba148aeb6abf04995)](https://www.codacy.com/app/github_79/jsx?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=io7m/jsx&amp;utm_campaign=Badge_Grade)
 
 See https://io7m.github.io/jsx/ for more information.
+
+![jsx](./src/site/resources/jsx.jpg?raw=true)
