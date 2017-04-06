@@ -55,7 +55,7 @@
   <s:section xml:id="com.io7m.jsx.lang.language">
     <s:section-title>Language</s:section-title>
     <s:paragraph>
-      The language understood by the <s:term s:type="package">io7m-jsx</s:term>
+      The language understood by the <s:term s:type="package">com.io7m.jsx</s:term>
       package can be defined by the following grammar:
     </s:paragraph>
     <s:formal-item s:kind="specification">
@@ -63,7 +63,7 @@
       <s:verbatim><xi:include href="expressions.txt" parse="text"/></s:verbatim>
     </s:formal-item>
     <s:paragraph>
-      The <s:term s:type="package">io7m-jsx</s:term> lexer
+      The <s:term s:type="package">com.io7m.jsx</s:term> lexer
       recognizes the sequences <s:term s:type="constant">U+000D U+000A</s:term>
       and <s:term s:type="constant">U+000A</s:term> as line terminators for the
       purposes of tracking line and column numbers for diagnostic messages. The
@@ -83,13 +83,13 @@
       Note that the second version that uses square brackets is slightly
       easier to understand due to the square brackets more clearly indicating
       which of the nested lists are being terminated. The 
-      <s:term s:type="package">io7m-jsx</s:term> lexer can 
+      <s:term s:type="package">com.io7m.jsx</s:term> lexer can 
       optionally treat <s:term s:type="constant">U+005B [</s:term> and
       <s:term s:type="constant">U+005D ]</s:term> as tokens, and the parser
       ensures that the use of the brackets is balanced with respect to
       ordinary parentheses as part of the grammar above. If square brackets
       are enabled, the language understood by the 
-      <s:term s:type="package">io7m-jsx</s:term> package is
+      <s:term s:type="package">com.io7m.jsx</s:term> package is
       defined by <s:term s:type="constant">expression_squares</s:term>.
       Otherwise, the language is defined by
       <s:term s:type="constant">expression</s:term>.
