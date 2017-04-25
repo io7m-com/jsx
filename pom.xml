@@ -118,7 +118,7 @@
       <dependency>
         <groupId>com.io7m.jlexing</groupId>
         <artifactId>com.io7m.jlexing.core</artifactId>
-        <version>0.2.1</version>
+        <version>[1.0.0, 2.0.0)</version>
       </dependency>
       <dependency>
         <groupId>com.io7m.jpplib</groupId>
