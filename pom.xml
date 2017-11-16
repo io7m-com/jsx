@@ -36,6 +36,7 @@
     <io7m.checkstyle.artifact>com.io7m.jsx.checkstyle</io7m.checkstyle.artifact>
     <io7m.checkstyle.path>/com/io7m/jsx/checkstyle/checkstyle.xml</io7m.checkstyle.path>
     <io7m.api.previousVersion>0.8.0</io7m.api.previousVersion>
+    <io7m.org.immutables.version>2.6.0-alpha1</io7m.org.immutables.version>
   </properties>
 
   <licenses>
@@ -117,7 +118,7 @@
       <dependency>
         <groupId>org.immutables</groupId>
         <artifactId>value</artifactId>
-        <version>2.6.0.alpha0</version>
+        <version>${io7m.org.immutables.version}</version>
       </dependency>
       <dependency>
         <groupId>org.immutables.vavr</groupId>
@@ -133,7 +134,7 @@
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-api</artifactId>
-        <version>1.8.0-beta0</version>
+        <version>1.7.25</version>
       </dependency>
       <dependency>
         <groupId>ch.qos.logback</groupId>
