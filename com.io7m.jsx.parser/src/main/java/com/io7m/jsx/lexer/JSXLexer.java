@@ -19,7 +19,7 @@ package com.io7m.jsx.lexer;
 import com.io7m.jeucreader.UnicodeCharacterReaderPushBackType;
 import com.io7m.jlexing.core.LexicalPosition;
 import com.io7m.jlexing.core.LexicalPositionMutable;
-import com.io7m.jnull.NullCheck;
+import java.util.Objects;
 import com.io7m.jsx.api.lexer.JSXLexerBareCarriageReturnException;
 import com.io7m.jsx.api.lexer.JSXLexerConfigurationType;
 import com.io7m.jsx.api.lexer.JSXLexerException;
@@ -59,8 +59,8 @@ public final class JSXLexer implements JSXLexerType
     final JSXLexerConfigurationType c,
     final UnicodeCharacterReaderPushBackType r)
   {
-    this.config = NullCheck.notNull(c, "Configuration");
-    this.reader = NullCheck.notNull(r, "Reader");
+    this.config = Objects.requireNonNull(c, "Configuration");
+    this.reader = Objects.requireNonNull(r, "Reader");
     this.state = State.STATE_INITIAL;
     this.buffer = new StringBuilder(256);
     this.position =
@@ -98,7 +98,7 @@ public final class JSXLexer implements JSXLexerType
   private TokenType completeQuotedString()
   {
     this.state = State.STATE_INITIAL;
-    final String text = NullCheck.notNull(this.buffer.toString(), "Text");
+    final String text = Objects.requireNonNull(this.buffer.toString(), "Text");
     this.buffer.setLength(0);
     return new TokenQuotedString(this.buffer_position.toImmutable(), text);
   }
@@ -106,7 +106,7 @@ public final class JSXLexer implements JSXLexerType
   private TokenType completeSymbol()
   {
     this.state = State.STATE_INITIAL;
-    final String text = NullCheck.notNull(this.buffer.toString(), "Text");
+    final String text = Objects.requireNonNull(this.buffer.toString(), "Text");
     this.buffer.setLength(0);
     return new TokenSymbol(this.buffer_position.toImmutable(), text);
   }
@@ -115,7 +115,7 @@ public final class JSXLexer implements JSXLexerType
   {
     final StringBuilder sb = new StringBuilder(32);
     sb.append("Bare carriage return (U+000D) in source");
-    final String s = NullCheck.notNull(sb.toString(), "Message");
+    final String s = Objects.requireNonNull(sb.toString(), "Message");
     return new JSXLexerBareCarriageReturnException(
       this.snapshotPosition(), s);
   }
@@ -127,7 +127,7 @@ public final class JSXLexer implements JSXLexerType
     sb.append("Invalid code point given in escape (U+");
     sb.append(Long.toUnsignedString(cp, 16));
     sb.append(")");
-    final String s = NullCheck.notNull(sb.toString(), "Message");
+    final String s = Objects.requireNonNull(sb.toString(), "Message");
     return new JSXLexerInvalidCodePointException(this.snapshotPosition(), s);
   }
 
@@ -146,7 +146,7 @@ public final class JSXLexer implements JSXLexerType
     sb.append("Expected a character [0123456789aAbBcCdDeEfF] (got ");
     sb.appendCodePoint(c);
     sb.append(")");
-    final String s = NullCheck.notNull(sb.toString(), "Message");
+    final String s = Objects.requireNonNull(sb.toString(), "Message");
     return new JSXLexerNotHexCharException(this.snapshotPosition(), s);
   }
 
@@ -154,7 +154,7 @@ public final class JSXLexer implements JSXLexerType
   {
     final StringBuilder sb = new StringBuilder(32);
     sb.append("Unexpected EOF");
-    final String s = NullCheck.notNull(sb.toString(), "Message");
+    final String s = Objects.requireNonNull(sb.toString(), "Message");
     return new JSXLexerUnexpectedEOFException(this.snapshotPosition(), s);
   }
 
@@ -165,7 +165,7 @@ public final class JSXLexer implements JSXLexerType
     sb.append("Unknown escape code (");
     sb.appendCodePoint(c);
     sb.append(")");
-    final String s = NullCheck.notNull(sb.toString(), "Message");
+    final String s = Objects.requireNonNull(sb.toString(), "Message");
     return new JSXLexerUnknownEscapeCodeException(
       this.snapshotPosition(), s);
   }
@@ -214,7 +214,7 @@ public final class JSXLexer implements JSXLexerType
     hexbuf.appendCodePoint(this.readHexCharNotEOF());
     hexbuf.appendCodePoint(this.readHexCharNotEOF());
     hexbuf.appendCodePoint(this.readHexCharNotEOF());
-    final String hex = NullCheck.notNull(hexbuf.toString(), "Hex code");
+    final String hex = Objects.requireNonNull(hexbuf.toString(), "Hex code");
     final int code = Integer.parseInt(hex, 16);
     this.buffer.appendCodePoint(code);
   }
@@ -231,7 +231,7 @@ public final class JSXLexer implements JSXLexerType
     hexbuf.appendCodePoint(this.readHexCharNotEOF());
     hexbuf.appendCodePoint(this.readHexCharNotEOF());
     hexbuf.appendCodePoint(this.readHexCharNotEOF());
-    final String hex = NullCheck.notNull(hexbuf.toString(), "Hex code");
+    final String hex = Objects.requireNonNull(hexbuf.toString(), "Hex code");
     final long code = Long.parseUnsignedLong(hex, 16);
     final int cp = (int) code;
 

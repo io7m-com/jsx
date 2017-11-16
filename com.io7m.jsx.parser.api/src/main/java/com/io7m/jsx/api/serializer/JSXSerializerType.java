@@ -37,7 +37,7 @@ public interface JSXSerializerType
    */
 
   void serialize(
-    final SExpressionType e,
-    final OutputStream s)
+    SExpressionType e,
+    OutputStream s)
     throws IOException;
 }

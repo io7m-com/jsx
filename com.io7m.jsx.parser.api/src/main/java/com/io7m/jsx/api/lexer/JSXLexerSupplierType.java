@@ -18,7 +18,7 @@ package com.io7m.jsx.api.lexer;
 
 import com.io7m.jeucreader.UnicodeCharacterReader;
 import com.io7m.jeucreader.UnicodeCharacterReaderPushBackType;
-import com.io7m.jnull.NullCheck;
+import java.util.Objects;
 import org.osgi.annotation.versioning.ProviderType;
 
 import java.io.InputStream;
@@ -61,8 +61,8 @@ public interface JSXLexerSupplierType
     final JSXLexerConfigurationType configuration,
     final Reader reader)
   {
-    NullCheck.notNull(configuration, "Configuration");
-    NullCheck.notNull(reader, "Reader");
+    Objects.requireNonNull(configuration, "Configuration");
+    Objects.requireNonNull(reader, "Reader");
     return this.create(configuration, new UnicodeCharacterReader(reader));
   }
 
@@ -81,9 +81,9 @@ public interface JSXLexerSupplierType
     final Charset charset,
     final InputStream stream)
   {
-    NullCheck.notNull(configuration, "Configuration");
-    NullCheck.notNull(charset, "Charset");
-    NullCheck.notNull(stream, "Stream");
+    Objects.requireNonNull(configuration, "Configuration");
+    Objects.requireNonNull(charset, "Charset");
+    Objects.requireNonNull(stream, "Stream");
 
     return this.createFromReader(
       configuration, new InputStreamReader(stream, charset));
@@ -103,8 +103,8 @@ public interface JSXLexerSupplierType
     final JSXLexerConfigurationType configuration,
     final InputStream stream)
   {
-    NullCheck.notNull(configuration, "Configuration");
-    NullCheck.notNull(stream, "Stream");
+    Objects.requireNonNull(configuration, "Configuration");
+    Objects.requireNonNull(stream, "Stream");
 
     return this.createFromStream(configuration, StandardCharsets.UTF_8, stream);
   }

@@ -16,8 +16,6 @@
 
 package com.io7m.jsx.prettyprint;
 
-import com.io7m.jfunctional.Unit;
-import com.io7m.jnull.NullCheck;
 import com.io7m.jsx.SExpressionListType;
 import com.io7m.jsx.SExpressionMatcherType;
 import com.io7m.jsx.SExpressionQuotedStringType;
@@ -28,6 +26,7 @@ import de.uka.ilkd.pp.WriterBackend;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.Objects;
 
 /**
  * A pretty printer tailored to printing expressions that represent Lisp-like
@@ -38,20 +37,20 @@ public final class JSXPrettyPrinterCodeStyle implements JSXPrettyPrinterType
 {
   private final WriterBackend backend;
   private final Layouter<IOException> layout;
-  private final SExpressionMatcherType<Unit, IOException> matcher;
+  private final SExpressionMatcherType<Void, IOException> matcher;
 
   private JSXPrettyPrinterCodeStyle(
     final Writer in_out,
     final int width,
     final int indent)
   {
-    final Writer out = NullCheck.notNull(in_out, "Writer");
+    final Writer out = Objects.requireNonNull(in_out, "Writer");
     this.backend = new WriterBackend(out, width);
     this.layout = new Layouter<>(this.backend, indent);
-    this.matcher = new SExpressionMatcherType<Unit, IOException>()
+    this.matcher = new SExpressionMatcherType<Void, IOException>()
     {
       @Override
-      public Unit list(final SExpressionListType e)
+      public Void list(final SExpressionListType e)
         throws IOException
       {
         final Layouter<IOException> x = JSXPrettyPrinterCodeStyle.this.layout;
@@ -85,24 +84,24 @@ public final class JSXPrettyPrinterCodeStyle implements JSXPrettyPrinterType
         }
 
         x.end();
-        return Unit.unit();
+        return null;
       }
 
       @Override
-      public Unit quotedString(final SExpressionQuotedStringType e)
+      public Void quotedString(final SExpressionQuotedStringType e)
         throws IOException
       {
         JSXPrettyPrinterCodeStyle.this.layout.print(
           String.format("\"%s\"", e.text()));
-        return Unit.unit();
+        return null;
       }
 
       @Override
-      public Unit symbol(final SExpressionSymbolType e)
+      public Void symbol(final SExpressionSymbolType e)
         throws IOException
       {
         JSXPrettyPrinterCodeStyle.this.layout.print(e.text());
-        return Unit.unit();
+        return null;
       }
     };
   }

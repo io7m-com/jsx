@@ -17,12 +17,6 @@
   <url>http://io7m.github.io/jsx</url>
   <name>${project.artifactId}</name>
 
-  <scm>
-    <url>${project.parent.scm.url}</url>
-    <connection>${project.parent.scm.connection}</connection>
-    <developerConnection>${project.parent.scm.developerConnection}</developerConnection>
-  </scm>
-
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
@@ -35,10 +29,6 @@
       <version>${project.version}</version>
     </dependency>
 
-    <dependency>
-      <groupId>com.io7m.jnull</groupId>
-      <artifactId>com.io7m.jnull.core</artifactId>
-    </dependency>
     <dependency>
       <groupId>com.io7m.jlexing</groupId>
       <artifactId>com.io7m.jlexing.core</artifactId>

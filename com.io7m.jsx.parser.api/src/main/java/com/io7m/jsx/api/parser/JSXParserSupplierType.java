@@ -17,7 +17,7 @@
 package com.io7m.jsx.api.parser;
 
 import com.io7m.jeucreader.UnicodeCharacterReaderPushBackType;
-import com.io7m.jnull.NullCheck;
+import java.util.Objects;
 import com.io7m.jsx.api.lexer.JSXLexerConfigurationType;
 import com.io7m.jsx.api.lexer.JSXLexerSupplierType;
 import com.io7m.jsx.api.lexer.JSXLexerType;
@@ -64,10 +64,10 @@ public interface JSXParserSupplierType
     final JSXLexerSupplierType lexer_supplier,
     final UnicodeCharacterReaderPushBackType reader)
   {
-    NullCheck.notNull(parser_configuration, "Parser configuration");
-    NullCheck.notNull(lexer_configuration, "Lexer configuration");
-    NullCheck.notNull(lexer_supplier, "Lexer supplier");
-    NullCheck.notNull(reader, "Reader");
+    Objects.requireNonNull(parser_configuration, "Parser configuration");
+    Objects.requireNonNull(lexer_configuration, "Lexer configuration");
+    Objects.requireNonNull(lexer_supplier, "Lexer supplier");
+    Objects.requireNonNull(reader, "Reader");
 
     return this.create(
       parser_configuration, lexer_supplier.create(lexer_configuration, reader));
@@ -92,11 +92,11 @@ public interface JSXParserSupplierType
     final Charset charset,
     final InputStream stream)
   {
-    NullCheck.notNull(parser_configuration, "Parser configuration");
-    NullCheck.notNull(lexer_configuration, "Lexer configuration");
-    NullCheck.notNull(lexer_supplier, "Lexer supplier");
-    NullCheck.notNull(charset, "Charset");
-    NullCheck.notNull(stream, "Stream");
+    Objects.requireNonNull(parser_configuration, "Parser configuration");
+    Objects.requireNonNull(lexer_configuration, "Lexer configuration");
+    Objects.requireNonNull(lexer_supplier, "Lexer supplier");
+    Objects.requireNonNull(charset, "Charset");
+    Objects.requireNonNull(stream, "Stream");
 
     return this.create(
       parser_configuration,
@@ -121,10 +121,10 @@ public interface JSXParserSupplierType
     final JSXLexerSupplierType lexer_supplier,
     final InputStream stream)
   {
-    NullCheck.notNull(parser_configuration, "Parser configuration");
-    NullCheck.notNull(lexer_configuration, "Lexer configuration");
-    NullCheck.notNull(lexer_supplier, "Lexer supplier");
-    NullCheck.notNull(stream, "Stream");
+    Objects.requireNonNull(parser_configuration, "Parser configuration");
+    Objects.requireNonNull(lexer_configuration, "Lexer configuration");
+    Objects.requireNonNull(lexer_supplier, "Lexer supplier");
+    Objects.requireNonNull(stream, "Stream");
 
     return this.create(
       parser_configuration,

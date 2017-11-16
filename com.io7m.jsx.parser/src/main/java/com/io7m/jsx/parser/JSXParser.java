@@ -17,7 +17,7 @@
 package com.io7m.jsx.parser;
 
 import com.io7m.jlexing.core.LexicalPositionType;
-import com.io7m.jnull.NullCheck;
+import java.util.Objects;
 import com.io7m.jsx.SExpressionQuotedStringType;
 import com.io7m.jsx.SExpressionType;
 import com.io7m.jsx.api.lexer.JSXLexerException;
@@ -56,8 +56,8 @@ public final class JSXParser implements JSXParserType
     final JSXParserConfigurationType in_config,
     final JSXLexerType in_lexer)
   {
-    this.config = NullCheck.notNull(in_config, "Configuration");
-    this.lexer = NullCheck.notNull(in_lexer, "Lexer");
+    this.config = Objects.requireNonNull(in_config, "Configuration");
+    this.lexer = Objects.requireNonNull(in_lexer, "Lexer");
   }
 
   private static SExpressionQuotedStringType completeQuotedString(

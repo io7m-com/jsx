@@ -22,9 +22,8 @@ import com.beust.jcommander.ParameterException;
 import com.beust.jcommander.Parameters;
 import com.io7m.jeucreader.UnicodeCharacterReader;
 import com.io7m.jeucreader.UnicodeCharacterReaderPushBackType;
-import com.io7m.jfunctional.Unit;
 import com.io7m.jlexing.core.LexicalPosition;
-import com.io7m.jnull.NullCheck;
+import java.util.Objects;
 import com.io7m.jsx.SExpressionType;
 import com.io7m.jsx.api.lexer.JSXLexerConfiguration;
 import com.io7m.jsx.api.lexer.JSXLexerConfigurationType;
@@ -77,7 +76,7 @@ public final class Main implements Runnable
 
   private Main(final String[] in_args)
   {
-    this.args = NullCheck.notNull(in_args, "Command line arguments");
+    this.args = Objects.requireNonNull(in_args, "Command line arguments");
 
     final CommandRoot r = new CommandRoot();
     final CommandFormat format = new CommandFormat();
@@ -140,7 +139,7 @@ public final class Main implements Runnable
     }
   }
 
-  private interface CommandType extends Callable<Unit>
+  private interface CommandType extends Callable<Void>
   {
 
   }
@@ -159,14 +158,14 @@ public final class Main implements Runnable
     }
 
     @Override
-    public Unit call()
+    public Void call()
       throws Exception
     {
       final ch.qos.logback.classic.Logger root =
         (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(
           Logger.ROOT_LOGGER_NAME);
       root.setLevel(this.verbose.toLevel());
-      return Unit.unit();
+      return null;
     }
   }
 
@@ -211,14 +210,14 @@ public final class Main implements Runnable
     }
 
     @Override
-    public Unit call()
+    public Void call()
       throws Exception
     {
       super.call();
 
       final Path path = Paths.get(this.file);
-      try (final InputStream stream = Files.newInputStream(path)) {
-        try (final InputStreamReader stream_reader =
+      try (InputStream stream = Files.newInputStream(path)) {
+        try (InputStreamReader stream_reader =
                new InputStreamReader(stream, StandardCharsets.UTF_8)) {
 
           final UnicodeCharacterReaderPushBackType reader =
@@ -268,10 +267,10 @@ public final class Main implements Runnable
         }
       }
 
-      return Unit.unit();
+      return null;
     }
 
-    private Unit writeSerializing(
+    private Void writeSerializing(
       final JSXParserType parser,
       final JSXSerializerType serial)
       throws IOException
@@ -296,7 +295,7 @@ public final class Main implements Runnable
       }
 
       this.showErrors(errors);
-      return Unit.unit();
+      return null;
     }
 
     private void showErrors(
@@ -317,7 +316,7 @@ public final class Main implements Runnable
       }
     }
 
-    private Unit writePrettyPrinting(
+    private Void writePrettyPrinting(
       final JSXParserType parser,
       final Supplier<JSXPrettyPrinterType> printers)
       throws IOException
@@ -329,7 +328,7 @@ public final class Main implements Runnable
           final Optional<SExpressionType> expr_opt =
             parser.parseExpressionOrEOF();
           if (expr_opt.isPresent()) {
-            try (final JSXPrettyPrinterType printer = printers.get()) {
+            try (JSXPrettyPrinterType printer = printers.get()) {
               final SExpressionType expr = expr_opt.get();
               printer.print(expr);
             }
@@ -344,7 +343,7 @@ public final class Main implements Runnable
       }
 
       this.showErrors(errors);
-      return Unit.unit();
+      return null;
     }
   }
 }

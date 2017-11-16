@@ -17,7 +17,7 @@
 package com.io7m.jsx.tests.combinators;
 
 import com.io7m.jlexing.core.LexicalPositionType;
-import com.io7m.jnull.NullCheck;
+import java.util.Objects;
 import com.io7m.jsx.SExpressionMatcherType;
 import com.io7m.jsx.SExpressionSymbolType;
 
@@ -33,8 +33,8 @@ final class PSymbol implements SExpressionSymbolType
     final String t,
     final Optional<LexicalPositionType<Path>> in_lex)
   {
-    this.text = NullCheck.notNull(t);
-    this.lex = NullCheck.notNull(in_lex);
+    this.text = Objects.requireNonNull(t);
+    this.lex = Objects.requireNonNull(in_lex);
   }
 
   @Override

@@ -45,6 +45,6 @@ public interface TokenType
    */
 
   <A, E extends Exception> A matchToken(
-    final TokenMatcherType<A, E> m)
+    TokenMatcherType<A, E> m)
     throws E;
 }

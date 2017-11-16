@@ -17,7 +17,7 @@
 package com.io7m.jsx.api.tokens;
 
 import com.io7m.jlexing.core.LexicalPosition;
-import com.io7m.jnull.NullCheck;
+import java.util.Objects;
 
 import java.nio.file.Path;
 
@@ -39,8 +39,8 @@ public final class TokenQuotedString implements TokenType
     final LexicalPosition<Path> in_lex,
     final String in_text)
   {
-    this.lex = NullCheck.notNull(in_lex, "Lexical information");
-    this.text = NullCheck.notNull(in_text, "Text");
+    this.lex = Objects.requireNonNull(in_lex, "Lexical information");
+    this.text = Objects.requireNonNull(in_text, "Text");
   }
 
   @Override
@@ -75,6 +75,6 @@ public final class TokenQuotedString implements TokenType
     builder.append(": ");
     builder.append(this.text);
     builder.append("]");
-    return NullCheck.notNull(builder.toString(), "Result string");
+    return Objects.requireNonNull(builder.toString(), "Result string");
   }
 }

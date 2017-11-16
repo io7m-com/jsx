@@ -16,7 +16,7 @@
 
 package com.io7m.jsx.cmdline;
 
-import com.io7m.jnull.NullCheck;
+import java.util.Objects;
 
 /**
  * The type of pretty printer that will be used.
@@ -46,7 +46,7 @@ public enum JSXPrettyPrinterSelection
 
   JSXPrettyPrinterSelection(final String in_name)
   {
-    this.name = NullCheck.notNull(in_name, "Name");
+    this.name = Objects.requireNonNull(in_name, "Name");
   }
 
   @Override

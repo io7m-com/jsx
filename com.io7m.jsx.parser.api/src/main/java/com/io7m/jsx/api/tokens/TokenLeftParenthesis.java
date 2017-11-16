@@ -17,7 +17,7 @@
 package com.io7m.jsx.api.tokens;
 
 import com.io7m.jlexing.core.LexicalPosition;
-import com.io7m.jnull.NullCheck;
+import java.util.Objects;
 
 import java.nio.file.Path;
 
@@ -60,6 +60,6 @@ public final class TokenLeftParenthesis implements TokenType
     builder.append("[TokenLeftParenthesis ");
     builder.append(this.lex);
     builder.append("]");
-    return NullCheck.notNull(builder.toString(), "Result string");
+    return Objects.requireNonNull(builder.toString(), "Result string");
   }
 }
