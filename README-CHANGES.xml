@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<c:changelog xmlns:c="urn:com.io7m.changelog:4.0" project="com.io7m.jsx">
+<?xml version="1.0" encoding="UTF-8"?><c:changelog xmlns:c="urn:com.io7m.changelog:4.0" project="com.io7m.jsx">
   <c:releases>
     <c:release date="2015-03-28T00:00:00+00:00" ticket-system="com.github.io7m.jsx" version="0.2.0">
       <c:changes>
@@ -57,11 +56,16 @@
         <c:change compatible="false" date="2017-11-16T00:00:00+00:00" summary="Removed dependency on com.io7m.jnull."/>
       </c:changes>
     </c:release>
-    <c:release date="2017-11-24T13:17:34+00:00" ticket-system="com.github.io7m.jsx" version="0.9.0">
+    <c:release date="2017-11-24T14:51:40+00:00" ticket-system="com.github.io7m.jsx" version="0.9.0">
       <c:changes>
         <c:change date="2017-11-24T00:00:00+00:00" summary="Add configurable comment tokens">
           <c:tickets>
             <c:ticket id="1"/>
+          </c:tickets>
+        </c:change>
+        <c:change date="2017-11-24T14:51:40+00:00" summary="Optionally start lexical positions at a given line">
+          <c:tickets>
+            <c:ticket id="2"/>
           </c:tickets>
         </c:change>
       </c:changes>
