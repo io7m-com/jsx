@@ -122,4 +122,18 @@ public interface TokenMatcherType<A, E extends Exception>
   A symbol(
     TokenSymbol t)
     throws E;
+
+  /**
+   * Match a token.
+   *
+   * @param t The token
+   *
+   * @return A value of {@code A}
+   *
+   * @throws E If required
+   */
+
+  A comment(
+    TokenComment t)
+    throws E;
 }

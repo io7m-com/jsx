@@ -17,9 +17,9 @@
 package com.io7m.jsx.api.tokens;
 
 import com.io7m.jlexing.core.LexicalPosition;
-import java.util.Objects;
 
 import java.nio.file.Path;
+import java.util.Objects;
 
 /**
  * A symbol.

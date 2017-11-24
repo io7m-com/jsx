@@ -48,17 +48,26 @@
         <c:change date="2016-10-04T00:00:00+00:00" summary="Add command line tool for formatting s-expressions."/>
       </c:changes>
     </c:release>
-    <c:release date="2017-11-16T16:32:57+00:00" ticket-system="com.github.io7m.jsx" version="0.8.0">
+    <c:release date="2017-11-24T00:00:00+00:00" ticket-system="com.github.io7m.jsx" version="0.8.0">
       <c:changes>
         <c:change date="2016-11-10T00:00:00+00:00" summary="Add combinators for validating S-expressions."/>
         <c:change date="2017-04-06T00:00:00+00:00" summary="Rename project. Use the new primogenitor POM and 2017 project conventions."/>
         <c:change compatible="false" date="2017-04-06T00:00:00+00:00" summary="Use jlexing 0.2.1, numerous API changes for consistency (see japicmp report for details)."/>
         <c:change compatible="false" date="2017-11-16T00:00:00+00:00" summary="All modules are now Java 9 modules. JDK 9 is now required."/>
-        <c:change compatible="false" date="2017-11-16T16:32:57+00:00" summary="Removed dependency on com.io7m.jnull."/>
+        <c:change compatible="false" date="2017-11-16T00:00:00+00:00" summary="Removed dependency on com.io7m.jnull."/>
+      </c:changes>
+    </c:release>
+    <c:release date="2017-11-24T13:17:34+00:00" ticket-system="com.github.io7m.jsx" version="0.9.0">
+      <c:changes>
+        <c:change date="2017-11-24T00:00:00+00:00" summary="Add configurable comment tokens">
+          <c:tickets>
+            <c:ticket id="1"/>
+          </c:tickets>
+        </c:change>
       </c:changes>
     </c:release>
   </c:releases>
   <c:ticket-systems>
-    <c:ticket-system default="false" id="com.github.io7m.jsx" url="http://github.com/io7m/jsx/issues/"/>
+    <c:ticket-system default="true" id="com.github.io7m.jsx" url="http://github.com/io7m/jsx/issues/"/>
   </c:ticket-systems>
 </c:changelog>

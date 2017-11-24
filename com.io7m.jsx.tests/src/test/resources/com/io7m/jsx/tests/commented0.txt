@@ -1,0 +1,70 @@
+# Comment
+(: is-zero [→ integer integer integer])
+# Comment
+(define [is-zero x]
+# Comment
+  [match x # Comment
+    (case 0 True) # Comment
+    (case _ False)]) # Comment
+# Comment
+# Comment
+(: [if a] [→ boolean a]) # Comment
+# Comment
+(define [if c e0 e1] # Comment
+  [match c # Comment
+    (case True  (e0)) # Comment
+    (case False (e1))]) # Comment
+
+# Comment
+(define-record none []) # Comment
+# Comment
+(define-record [some a] [(: value a)]) # Comment
+# Comment
+(define-union [option a] [None none] [Some (some a)]) # Comment
+
+# Comment
+(: [is-some a] [→ (option a) boolean]) # Comment
+(define [is-some x] # Comment
+  [match x # Comment
+    (case Some True) # Comment
+    (case None False)]) # Comment
+
+# Comment
+(: [get a] [→ (option a) a]) # Comment
+(define [get x] # Comment
+  [match x # Comment
+    (case [Some y] y.value) # Comment
+    (case None     [error "Is None!"])]) # Comment
+
+# Comment
+(define-record [tree-node a] [(: value a)]) # Comment
+# Comment
+(define-record [tree-branch a] [(: left [tree a]) (: right [tree a])]) # Comment
+# Comment
+(define-union [tree a] [Node (tree-node a)] [Branch (tree-branch a)]) # Comment
+
+# Comment
+(: [tree-map a b] [→ (tree-map a) (→ a b) (tree-map b)]) # Comment
+(define [tree-map t f] # Comment
+  [match t # Comment
+    (case [Node n]   [f n.value]) # Comment
+    (case [Branch b] [branch (tree-map b.left f) (tree-map b.right f)])]) # Comment
+
+# Comment
+(define [gibber] # Comment
+  [begin # Comment
+    (display "HELLO!") # Comment
+    (display "HELLO!") # Comment
+    (display "HELLO!")]) # Comment
+
+# Comment
+(: plus-ex [→ integer integer integer]) # Comment
+(define plus-ex [lambda (x y) (+ x y)]) # Comment
+
+# Comment
+(: plus-exx [→ integer integer integer]) # Comment
+(define plus-exx [λ (x y) (+ x y)]) # Comment
+
+# Comment
+(: plus-exxx [→ integer integer integer]) # Comment
+(define [plus-exxx x y] [+ x y]) # Comment

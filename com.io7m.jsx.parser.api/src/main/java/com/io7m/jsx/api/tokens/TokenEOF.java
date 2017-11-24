@@ -17,9 +17,9 @@
 package com.io7m.jsx.api.tokens;
 
 import com.io7m.jlexing.core.LexicalPosition;
-import java.util.Objects;
 
 import java.nio.file.Path;
+import java.util.Objects;
 
 /**
  * End of file.
@@ -36,7 +36,7 @@ public final class TokenEOF implements TokenType
   public TokenEOF(
     final LexicalPosition<Path> in_lex)
   {
-    this.lex = in_lex;
+    this.lex = Objects.requireNonNull(in_lex, "Lexical");
   }
 
   @Override

@@ -1,10 +1,10 @@
 /*
  * Copyright © 2016 <code@io7m.com> http://io7m.com
- * 
+ *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
  * copyright notice and this permission notice appear in all copies.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
  * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
@@ -17,30 +17,44 @@
 package com.io7m.jsx.api.tokens;
 
 import com.io7m.jlexing.core.LexicalPosition;
+import com.io7m.jsx.api.lexer.JSXLexerComment;
 
 import java.nio.file.Path;
 import java.util.Objects;
 
 /**
- * A quoted string.
+ * A comment.
  */
 
-public final class TokenQuotedString implements TokenType
+public final class TokenComment implements TokenType
 {
   private final LexicalPosition<Path> lex;
   private final String text;
+  private final JSXLexerComment comment;
 
   /**
-   * @param in_lex  The lexical information
-   * @param in_text The token text
+   * @param in_lex     The lexical information
+   * @param in_comment The comment type
+   * @param in_text    The token text
    */
 
-  public TokenQuotedString(
+  public TokenComment(
     final LexicalPosition<Path> in_lex,
+    final JSXLexerComment in_comment,
     final String in_text)
   {
     this.lex = Objects.requireNonNull(in_lex, "Lexical information");
+    this.comment = Objects.requireNonNull(in_comment, "Comment");
     this.text = Objects.requireNonNull(in_text, "Text");
+  }
+
+  /**
+   * @return The comment type
+   */
+
+  public JSXLexerComment comment()
+  {
+    return this.comment;
   }
 
   @Override
@@ -63,14 +77,14 @@ public final class TokenQuotedString implements TokenType
     final TokenMatcherType<A, E> m)
     throws E
   {
-    return m.quotedString(this);
+    return m.comment(this);
   }
 
   @Override
   public String toString()
   {
     final StringBuilder builder = new StringBuilder(64);
-    builder.append("[TokenQuotedString ");
+    builder.append("[TokenComment ");
     builder.append(this.lex);
     builder.append(": ");
     builder.append(this.text);

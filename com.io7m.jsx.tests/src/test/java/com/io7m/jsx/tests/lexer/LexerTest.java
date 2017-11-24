@@ -19,6 +19,7 @@ package com.io7m.jsx.tests.lexer;
 import com.io7m.jeucreader.UnicodeCharacterReader;
 import com.io7m.jeucreader.UnicodeCharacterReaderPushBackType;
 import com.io7m.jsx.api.lexer.JSXLexerBareCarriageReturnException;
+import com.io7m.jsx.api.lexer.JSXLexerComment;
 import com.io7m.jsx.api.lexer.JSXLexerConfiguration;
 import com.io7m.jsx.api.lexer.JSXLexerConfigurationType;
 import com.io7m.jsx.api.lexer.JSXLexerInvalidCodePointException;
@@ -27,6 +28,7 @@ import com.io7m.jsx.api.lexer.JSXLexerNotHexCharException;
 import com.io7m.jsx.api.lexer.JSXLexerType;
 import com.io7m.jsx.api.lexer.JSXLexerUnexpectedEOFException;
 import com.io7m.jsx.api.lexer.JSXLexerUnknownEscapeCodeException;
+import com.io7m.jsx.api.tokens.TokenComment;
 import com.io7m.jsx.api.tokens.TokenEOF;
 import com.io7m.jsx.api.tokens.TokenLeftParenthesis;
 import com.io7m.jsx.api.tokens.TokenLeftSquare;
@@ -44,6 +46,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.nio.file.Paths;
+import java.util.EnumSet;
 import java.util.Optional;
 import java.util.zip.GZIPInputStream;
 
@@ -825,5 +828,41 @@ public final class LexerTest
     Assert.assertEquals(1L, (long) t0.lexical().column());
     final String text0 = t0.text();
     Assert.assertEquals(text0, "ຂອ້ຍກິນແກ້ວໄດ້ໂດຍທີ່ມັນບໍ່ໄດ້ເຮັດໃຫ້ຂອ້ຍເຈັບ");
+  }
+
+  @Test
+  public void testComments0()
+    throws Exception
+  {
+    final JSXLexerConfiguration.Builder cb =
+      JSXLexerConfiguration.builder();
+    cb.setFile(Optional.of(Paths.get("file.txt")));
+    cb.setNewlinesInQuotedStrings(true);
+    cb.setSquareBrackets(true);
+    cb.setComments(EnumSet.allOf(JSXLexerComment.class));
+    final JSXLexerConfiguration c = cb.build();
+
+    final InputStream is =
+      LexerTest.class.getResourceAsStream("/com/io7m/jsx/tests/comments.txt");
+    final InputStreamReader is_r =
+      new InputStreamReader(is);
+    final UnicodeCharacterReaderPushBackType cr =
+      UnicodeCharacterReader.newReader(is_r);
+
+    final JSXLexerType lex = JSXLexer.newLexer(c, cr);
+
+    final TokenComment c0 = (TokenComment) lex.token();
+    Assert.assertEquals(" Hash", c0.text());
+    Assert.assertEquals(JSXLexerComment.COMMENT_HASH, c0.comment());
+
+    final TokenComment c1 = (TokenComment) lex.token();
+    Assert.assertEquals(" Percent", c1.text());
+    Assert.assertEquals(JSXLexerComment.COMMENT_PERCENT, c1.comment());
+
+    final TokenComment c2 = (TokenComment) lex.token();
+    Assert.assertEquals(" Semicolon", c2.text());
+    Assert.assertEquals(JSXLexerComment.COMMENT_SEMICOLON, c2.comment());
+
+    final TokenEOF t = (TokenEOF) lex.token();
   }
 }

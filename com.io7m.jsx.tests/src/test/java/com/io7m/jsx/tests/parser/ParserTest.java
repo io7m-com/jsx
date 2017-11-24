@@ -25,6 +25,7 @@ import com.io7m.jsx.SExpressionQuotedStringType;
 import com.io7m.jsx.SExpressionSymbolType;
 import com.io7m.jsx.SExpressionType;
 import com.io7m.jsx.api.lexer.JSXLexerBareCarriageReturnException;
+import com.io7m.jsx.api.lexer.JSXLexerComment;
 import com.io7m.jsx.api.lexer.JSXLexerConfiguration;
 import com.io7m.jsx.api.lexer.JSXLexerConfigurationType;
 import com.io7m.jsx.api.lexer.JSXLexerType;
@@ -38,8 +39,12 @@ import com.io7m.jsx.parser.JSXParser;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.io.StringReader;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -493,6 +498,77 @@ public final class ParserTest
       final SExpressionSymbolType ss = (SExpressionSymbolType) s.get(2);
       Assert.assertEquals("c", ss.text());
       Assert.assertFalse(ss.lexical().isPresent());
+    }
+  }
+
+  @Test
+  public void testParseCommented()
+    throws Exception
+  {
+    final JSXLexerConfigurationType lc =
+      JSXLexerConfiguration.builder()
+        .setSquareBrackets(true)
+        .setNewlinesInQuotedStrings(true)
+        .setComments(EnumSet.allOf(JSXLexerComment.class))
+        .build();
+
+    try (Reader reader =
+           new InputStreamReader(
+             ParserTest.class.getResourceAsStream(
+               "/com/io7m/jsx/tests/commented0.txt"),
+             StandardCharsets.UTF_8)) {
+
+      final JSXLexerType lex =
+        JSXLexer.newLexer(lc, UnicodeCharacterReader.newReader(reader));
+
+      final JSXParserConfiguration.Builder pcb =
+        JSXParserConfiguration.builder();
+      pcb.setPreserveLexical(false);
+      final JSXParserConfigurationType pc = pcb.build();
+      final JSXParserType p = JSXParser.newParser(pc, lex);
+
+      final List<SExpressionType> s = p.parseExpressions();
+      Assert.assertEquals(23L, (long) s.size());
+    }
+  }
+
+  @Test
+  public void testParseCommentedOrEOF()
+    throws Exception
+  {
+    final JSXLexerConfigurationType lc =
+      JSXLexerConfiguration.builder()
+        .setSquareBrackets(true)
+        .setNewlinesInQuotedStrings(true)
+        .setComments(EnumSet.allOf(JSXLexerComment.class))
+        .build();
+
+    try (Reader reader =
+           new InputStreamReader(
+             ParserTest.class.getResourceAsStream(
+               "/com/io7m/jsx/tests/commented0.txt"),
+             StandardCharsets.UTF_8)) {
+
+      final JSXLexerType lex =
+        JSXLexer.newLexer(lc, UnicodeCharacterReader.newReader(reader));
+
+      final JSXParserConfiguration.Builder pcb =
+        JSXParserConfiguration.builder();
+      pcb.setPreserveLexical(false);
+      final JSXParserConfigurationType pc = pcb.build();
+      final JSXParserType p = JSXParser.newParser(pc, lex);
+
+      long count = 0L;
+      while (true) {
+        final Optional<SExpressionType> s = p.parseExpressionOrEOF();
+        if (s.isPresent()) {
+          ++count;
+        } else {
+          break;
+        }
+      }
+
+      Assert.assertEquals(23L, count);
     }
   }
 }

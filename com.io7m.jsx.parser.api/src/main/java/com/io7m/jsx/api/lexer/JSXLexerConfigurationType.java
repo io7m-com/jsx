@@ -20,6 +20,7 @@ import com.io7m.jsx.JSXImmutableStyleType;
 import org.immutables.value.Value;
 
 import java.nio.file.Path;
+import java.util.EnumSet;
 import java.util.Optional;
 
 /**
@@ -58,4 +59,15 @@ public interface JSXLexerConfigurationType
 
   @Value.Parameter(order = 2)
   Optional<Path> file();
+
+  /**
+   * @return The string(s) used to start line comments
+   */
+
+  @Value.Parameter(order = 3)
+  @Value.Default
+  default EnumSet<JSXLexerComment> comments()
+  {
+    return EnumSet.noneOf(JSXLexerComment.class);
+  }
 }
