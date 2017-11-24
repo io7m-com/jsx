@@ -70,4 +70,15 @@ public interface JSXLexerConfigurationType
   {
     return EnumSet.noneOf(JSXLexerComment.class);
   }
+
+  /**
+   * @return The starting line number (for lexical information)
+   */
+
+  @Value.Parameter(order = 4)
+  @Value.Default
+  default int startAtLine()
+  {
+    return 0;
+  }
 }

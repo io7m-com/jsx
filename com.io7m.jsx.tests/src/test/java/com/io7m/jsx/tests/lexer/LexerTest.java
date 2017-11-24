@@ -865,4 +865,67 @@ public final class LexerTest
 
     final TokenEOF t = (TokenEOF) lex.token();
   }
+
+  @Test
+  public void testStartAt0()
+    throws Exception
+  {
+    final JSXLexerConfiguration.Builder cb =
+      JSXLexerConfiguration.builder();
+    cb.setFile(Optional.of(Paths.get("file.txt")));
+    cb.setStartAtLine(0);
+
+    final JSXLexerConfiguration c = cb.build();
+
+    final JSXLexerType lex = JSXLexer.newLexer(c, LexerTest.stringReader("("));
+    final TokenLeftParenthesis t = (TokenLeftParenthesis) lex.token();
+    System.out.println(t);
+
+    Assert.assertEquals(
+      Optional.of(Paths.get("file.txt")), t.lexical().file());
+    Assert.assertEquals(0L, (long) t.lexical().line());
+    Assert.assertEquals(1L, (long) t.lexical().column());
+  }
+
+  @Test
+  public void testStartAt1()
+    throws Exception
+  {
+    final JSXLexerConfiguration.Builder cb =
+      JSXLexerConfiguration.builder();
+    cb.setFile(Optional.of(Paths.get("file.txt")));
+    cb.setStartAtLine(1);
+
+    final JSXLexerConfiguration c = cb.build();
+
+    final JSXLexerType lex = JSXLexer.newLexer(c, LexerTest.stringReader("("));
+    final TokenLeftParenthesis t = (TokenLeftParenthesis) lex.token();
+    System.out.println(t);
+
+    Assert.assertEquals(
+      Optional.of(Paths.get("file.txt")), t.lexical().file());
+    Assert.assertEquals(1L, (long) t.lexical().line());
+    Assert.assertEquals(1L, (long) t.lexical().column());
+  }
+
+  @Test
+  public void testStartAt100()
+    throws Exception
+  {
+    final JSXLexerConfiguration.Builder cb =
+      JSXLexerConfiguration.builder();
+    cb.setFile(Optional.of(Paths.get("file.txt")));
+    cb.setStartAtLine(100);
+
+    final JSXLexerConfiguration c = cb.build();
+
+    final JSXLexerType lex = JSXLexer.newLexer(c, LexerTest.stringReader("("));
+    final TokenLeftParenthesis t = (TokenLeftParenthesis) lex.token();
+    System.out.println(t);
+
+    Assert.assertEquals(
+      Optional.of(Paths.get("file.txt")), t.lexical().file());
+    Assert.assertEquals(100L, (long) t.lexical().line());
+    Assert.assertEquals(1L, (long) t.lexical().column());
+  }
 }

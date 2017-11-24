@@ -69,9 +69,9 @@ public final class JSXLexer implements JSXLexerType
     this.buffer =
       new StringBuilder(256);
     this.position =
-      LexicalPositionMutable.create(0, 0, Optional.empty());
+      LexicalPositionMutable.create(c.startAtLine(), 0, Optional.empty());
     this.buffer_position =
-      LexicalPositionMutable.create(0, 0, Optional.empty());
+      LexicalPositionMutable.create(c.startAtLine(), 0, Optional.empty());
 
     this.position.setFile(c.file());
     this.buffer_position.setFile(c.file());
