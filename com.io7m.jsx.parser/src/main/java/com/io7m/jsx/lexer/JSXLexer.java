@@ -149,8 +149,7 @@ public final class JSXLexer implements JSXLexerType
   {
     return new JSXLexerNewLinesInStringsException(
       this.snapshotPosition(),
-      "Lexer configuration does not permit newlines (U+000A or U+000D) in "
-        + "quoted strings");
+      "Lexer configuration does not permit newlines (U+000A or U+000D) in quoted strings");
   }
 
   private JSXLexerNotHexCharException errorNotHexChar(
