@@ -17,7 +17,6 @@
 package com.io7m.jsx.parser;
 
 import com.io7m.jlexing.core.LexicalPositionType;
-import com.io7m.jnull.NullCheck;
 import com.io7m.jnull.Nullable;
 import com.io7m.jsx.SExpressionListType;
 import com.io7m.jsx.SExpressionMatcherType;
@@ -26,6 +25,7 @@ import com.io7m.jsx.SExpressionType;
 import java.nio.file.Path;
 import java.util.AbstractList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 final class PList extends AbstractList<SExpressionType>
@@ -40,8 +40,8 @@ final class PList extends AbstractList<SExpressionType>
     final Optional<LexicalPositionType<Path>> in_lex,
     final boolean in_square)
   {
-    this.data = NullCheck.notNull(d, "List");
-    this.lex = NullCheck.notNull(in_lex, "Lexical information");
+    this.data = Objects.requireNonNull(d, "List");
+    this.lex = Objects.requireNonNull(in_lex, "Lexical information");
     this.square = in_square;
   }
 
@@ -50,14 +50,14 @@ final class PList extends AbstractList<SExpressionType>
     final int index,
     final @Nullable SExpressionType element)
   {
-    this.data.add(index, NullCheck.notNull(element, "Element"));
+    this.data.add(index, Objects.requireNonNull(element, "Element"));
   }
 
   @Override
   public SExpressionType get(
     final int index)
   {
-    return NullCheck.notNull(this.data.get(index), "Expression");
+    return Objects.requireNonNull(this.data.get(index), "Expression");
   }
 
   @Override
@@ -84,7 +84,7 @@ final class PList extends AbstractList<SExpressionType>
   public SExpressionType remove(
     final int index)
   {
-    return NullCheck.notNull(this.data.remove(index), "Expression");
+    return Objects.requireNonNull(this.data.remove(index), "Expression");
   }
 
   @Override
@@ -92,8 +92,10 @@ final class PList extends AbstractList<SExpressionType>
     final int index,
     final @Nullable SExpressionType element)
   {
-    return NullCheck.notNull(
-      this.data.set(index, NullCheck.notNull(element, "Element")),
+    return Objects.requireNonNull(
+      this.data.set(
+        index,
+        Objects.requireNonNull(element, "Element")),
       "Expression");
   }
 

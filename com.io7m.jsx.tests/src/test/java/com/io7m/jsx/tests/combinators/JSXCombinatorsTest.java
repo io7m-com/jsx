@@ -21,8 +21,8 @@ import com.io7m.jsx.SExpressionType;
 import com.io7m.jsx.combinators.JSXCombinators;
 import com.io7m.jsx.combinators.JSXValidationError;
 import com.io7m.jsx.combinators.JSXValidationErrorType;
-import javaslang.collection.List;
-import javaslang.control.Validation;
+import io.vavr.collection.List;
+import io.vavr.control.Validation;
 import org.junit.Assert;
 import org.junit.Test;
 

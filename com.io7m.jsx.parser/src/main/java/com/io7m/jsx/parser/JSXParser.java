@@ -17,7 +17,7 @@
 package com.io7m.jsx.parser;
 
 import com.io7m.jlexing.core.LexicalPositionType;
-import com.io7m.jnull.NullCheck;
+import java.util.Objects;
 import com.io7m.jsx.SExpressionQuotedStringType;
 import com.io7m.jsx.SExpressionType;
 import com.io7m.jsx.api.lexer.JSXLexerException;
@@ -27,6 +27,7 @@ import com.io7m.jsx.api.parser.JSXParserException;
 import com.io7m.jsx.api.parser.JSXParserGrammarException;
 import com.io7m.jsx.api.parser.JSXParserLexicalException;
 import com.io7m.jsx.api.parser.JSXParserType;
+import com.io7m.jsx.api.tokens.TokenComment;
 import com.io7m.jsx.api.tokens.TokenEOF;
 import com.io7m.jsx.api.tokens.TokenLeftParenthesis;
 import com.io7m.jsx.api.tokens.TokenLeftSquare;
@@ -56,8 +57,8 @@ public final class JSXParser implements JSXParserType
     final JSXParserConfigurationType in_config,
     final JSXLexerType in_lexer)
   {
-    this.config = NullCheck.notNull(in_config, "Configuration");
-    this.lexer = NullCheck.notNull(in_lexer, "Lexer");
+    this.config = Objects.requireNonNull(in_config, "Configuration");
+    this.lexer = Objects.requireNonNull(in_lexer, "Lexer");
   }
 
   private static SExpressionQuotedStringType completeQuotedString(
@@ -109,8 +110,7 @@ public final class JSXParser implements JSXParserType
   {
     return new JSXParserGrammarException(
       t.lexical(),
-      "Attempted to end a list started with '[' with ')' - unbalanced "
-        + "round/square brackets");
+      "Attempted to end a list started with '[' with ')' - unbalanced round/square brackets");
   }
 
   private static JSXParserGrammarException errorUnexpectedRightSquare(
@@ -126,8 +126,7 @@ public final class JSXParser implements JSXParserType
   {
     return new JSXParserGrammarException(
       t.lexical(),
-      "Attempted to end a list started with '(' with ']' - unbalanced "
-        + "round/square brackets");
+      "Attempted to end a list started with '(' with ']' - unbalanced round/square brackets");
   }
 
   /**
@@ -191,6 +190,9 @@ public final class JSXParser implements JSXParserType
       if (t instanceof TokenEOF) {
         throw errorUnexpectedEOF((TokenEOF) t);
       }
+      if (t instanceof TokenComment) {
+        continue;
+      }
       if (t instanceof TokenRightParenthesis) {
         return xs;
       }
@@ -215,6 +217,9 @@ public final class JSXParser implements JSXParserType
       final TokenType t = lexer.token();
       if (t instanceof TokenEOF) {
         throw errorUnexpectedEOF((TokenEOF) t);
+      }
+      if (t instanceof TokenComment) {
+        continue;
       }
       if (t instanceof TokenRightParenthesis) {
         throw errorUnexpectedRightParenWantedSquare(
@@ -244,13 +249,17 @@ public final class JSXParser implements JSXParserType
     throws JSXParserException, IOException
   {
     try {
-      final TokenType peek = this.lexer.token();
-      if (peek instanceof TokenEOF) {
-        return Optional.empty();
+      while (true) {
+        final TokenType peek = this.lexer.token();
+        if (peek instanceof TokenEOF) {
+          return Optional.empty();
+        }
+        if (peek instanceof TokenComment) {
+          continue;
+        }
+        return Optional.of(
+          parseExpressionPeeked(this.config, this.lexer, peek));
       }
-
-      return Optional.of(
-        parseExpressionPeeked(this.config, this.lexer, peek));
     } catch (final JSXLexerException e) {
       throw new JSXParserLexicalException(e);
     }
@@ -266,6 +275,9 @@ public final class JSXParser implements JSXParserType
         final TokenType peek = this.lexer.token();
         if (peek instanceof TokenEOF) {
           return xs;
+        }
+        if (peek instanceof TokenComment) {
+          continue;
         }
         xs.add(parseExpressionPeeked(this.config, this.lexer, peek));
       }

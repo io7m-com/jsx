@@ -14,9 +14,46 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+package com.io7m.jsx.api.lexer;
+
 /**
- * Serializer API.
+ * The available types of comments.
  */
 
-package com.io7m.jsx.api.serializer;
+public enum JSXLexerComment
+{
+  /**
+   * Comments start with {@code #}
+   */
 
+  COMMENT_HASH('#'),
+
+  /**
+   * Comments start with {@code %}
+   */
+
+  COMMENT_PERCENT('%'),
+
+  /**
+   * Comments start with {@code ;}
+   */
+
+  COMMENT_SEMICOLON(';');
+
+  private final int token;
+
+  /**
+   * @return The comment character codepoint
+   */
+
+  public int token()
+  {
+    return this.token;
+  }
+
+  JSXLexerComment(
+    final int in_token)
+  {
+    this.token = in_token;
+  }
+}

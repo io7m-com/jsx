@@ -23,9 +23,8 @@ import com.io7m.jsx.SExpressionQuotedStringType;
 import com.io7m.jsx.SExpressionSymbolType;
 import com.io7m.jsx.SExpressionType;
 import com.io7m.junreachable.UnreachableCodeException;
-import javaslang.Value;
-import javaslang.collection.List;
-import javaslang.control.Validation;
+import io.vavr.collection.List;
+import io.vavr.control.Validation;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -33,7 +32,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * Convenient combinators for validating and extracting data from S-expressions.
+ * Convenient combinators for validating and extracting data from
+ * S-expressions.
  */
 
 public final class JSXCombinators
@@ -513,6 +513,15 @@ public final class JSXCombinators
       xs = xs.append(receiver.apply(e.get(index)));
     }
 
-    return Validation.sequence(xs).map(Value::toList);
+    final List<JSXValidationErrorType> errors =
+      xs.filter(Validation::isInvalid)
+        .map(Validation::getError)
+        .fold(List.empty(), List::appendAll);
+
+    if (errors.isEmpty()) {
+      return Validation.valid(xs.map(Validation::get));
+    }
+
+    return Validation.invalid(errors);
   }
 }

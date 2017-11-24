@@ -1,121 +1,77 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<c:changelog xmlns:c="http://schemas.io7m.com/changelog/2.0.0">
-  <c:project>com.io7m.jsx</c:project>
-
-  <c:release c:ticket-system="com.github.io7m.jsx">
-    <c:date>2017-04-06</c:date>
-    <c:version>0.8.0</c:version>
-    <c:item>
-      <c:date>2016-11-10</c:date>
-      <c:type-code-new/>
-      <c:summary>Add combinators for validating S-expressions.</c:summary>
-    </c:item>
-    <c:item>
-      <c:date>2017-04-06</c:date>
-      <c:type-code-fix/>
-      <c:summary>Rename project. Use the new primogenitor POM and 2017 project conventions.</c:summary>
-    </c:item>
-    <c:item>
-      <c:date>2017-04-06</c:date>
-      <c:type-code-change/>
-      <c:summary>Use jlexing 0.2.1, numerous API changes for consistency (see japicmp report for details).</c:summary>
-    </c:item>
-  </c:release>
-
-  <c:release c:ticket-system="com.github.io7m.jsx">
-    <c:date>2016-10-04</c:date>
-    <c:version>0.7.0</c:version>
-    <c:item>
-      <c:date>2016-10-04</c:date>
-      <c:type-code-new/>
-      <c:summary>Add command line tool for formatting s-expressions.</c:summary>
-    </c:item>
-  </c:release>
-
-  <c:release c:ticket-system="com.github.io7m.jsx">
-    <c:date>2016-08-05</c:date>
-    <c:version>0.6.0</c:version>
-    <c:item>
-      <c:date>2016-08-05</c:date>
-      <c:type-code-fix/>
-      <c:summary>Update plugins and dependencies.</c:summary>
-    </c:item>
-    <c:item>
-      <c:date>2016-08-05</c:date>
-      <c:type-code-fix/>
-      <c:summary>The produced jars are now OSGi bundles.</c:summary>
-    </c:item>
-    <c:item>
-      <c:date>2016-08-05</c:date>
-      <c:type-code-change/>
-      <c:summary>Reorganize APIs and implementations into their own modules/bundles.</c:summary>
-    </c:item>
-    <c:item>
-      <c:date>2016-08-05</c:date>
-      <c:type-code-change/>
-      <c:summary>Use immutables.org to generate configuration types.</c:summary>
-    </c:item>
-  </c:release>
-
-  <c:release c:ticket-system="com.github.io7m.jsx">
-    <c:date>2016-05-31</c:date>
-    <c:version>0.5.1</c:version>
-    <c:item>
-      <c:date>2016-05-31</c:date>
-      <c:type-code-fix/>
-      <c:ticket>4</c:ticket>
-      <c:summary>Switch to an iterative implementation of the lexer that uses constant stack space</c:summary>
-    </c:item>
-  </c:release>
-
-  <c:release c:ticket-system="com.github.io7m.jsx">
-    <c:date>2016-05-29</c:date>
-    <c:version>0.5.0</c:version>
-    <c:item>
-      <c:date>2016-05-11</c:date>
-      <c:type-code-change/>
-      <c:ticket>3</c:ticket>
-      <c:summary>Remove list extension from the SExpressionListType</c:summary>
-    </c:item>
-    <c:item>
-      <c:date>2016-05-11</c:date>
-      <c:type-code-new/>
-      <c:summary>Add pretty printers based on JPPLib</c:summary>
-    </c:item>
-  </c:release>
-
-  <c:release c:ticket-system="com.github.io7m.jsx">
-    <c:date>2015-11-12</c:date>
-    <c:version>0.4.1</c:version>
-    <c:item>
-      <c:date>2015-11-12</c:date>
-      <c:type-code-change/>
-      <c:summary>Make filenames part of the lexer configuration.</c:summary>
-    </c:item>
-  </c:release>
-
-  <c:release c:ticket-system="com.github.io7m.jsx">
-    <c:date>2015-10-20</c:date>
-    <c:version>0.4.0</c:version>
-    <c:item>
-      <c:date>2015-10-20</c:date>
-      <c:type-code-change/>
-      <c:summary>Rewrite to use Java 8 and rename all types.</c:summary>
-    </c:item>
-  </c:release>
-
-  <c:release c:ticket-system="com.github.io7m.jsx">
-    <c:date>2015-03-28</c:date>
-    <c:version>0.2.0</c:version>
-    <c:item>
-      <c:date>2015-03-28</c:date>
-      <c:type-code-new/>
-      <c:summary>Initial release.</c:summary>
-    </c:item>
-  </c:release>
-
-  <c:ticket-system xml:id="com.github.io7m.jsx">
-    <c:ticket-url>http://github.com/io7m/jsx/issues/</c:ticket-url>
-  </c:ticket-system>
-
+<?xml version="1.0" encoding="UTF-8"?><c:changelog xmlns:c="urn:com.io7m.changelog:4.0" project="com.io7m.jsx">
+  <c:releases>
+    <c:release date="2015-03-28T00:00:00+00:00" ticket-system="com.github.io7m.jsx" version="0.2.0">
+      <c:changes>
+        <c:change date="2015-03-28T00:00:00+00:00" summary="Initial release."/>
+      </c:changes>
+    </c:release>
+    <c:release date="2015-10-20T00:00:00+00:00" ticket-system="com.github.io7m.jsx" version="0.4.0">
+      <c:changes>
+        <c:change compatible="false" date="2015-10-20T00:00:00+00:00" summary="Rewrite to use Java 8 and rename all types."/>
+      </c:changes>
+    </c:release>
+    <c:release date="2015-11-12T00:00:00+00:00" ticket-system="com.github.io7m.jsx" version="0.4.1">
+      <c:changes>
+        <c:change compatible="false" date="2015-11-12T00:00:00+00:00" summary="Make filenames part of the lexer configuration."/>
+      </c:changes>
+    </c:release>
+    <c:release date="2016-05-29T00:00:00+00:00" ticket-system="com.github.io7m.jsx" version="0.5.0">
+      <c:changes>
+        <c:change compatible="false" date="2016-05-11T00:00:00+00:00" summary="Remove list extension from the SExpressionListType">
+          <c:tickets>
+            <c:ticket id="3"/>
+          </c:tickets>
+        </c:change>
+        <c:change date="2016-05-11T00:00:00+00:00" summary="Add pretty printers based on JPPLib"/>
+      </c:changes>
+    </c:release>
+    <c:release date="2016-05-31T00:00:00+00:00" ticket-system="com.github.io7m.jsx" version="0.5.1">
+      <c:changes>
+        <c:change date="2016-05-31T00:00:00+00:00" summary="Switch to an iterative implementation of the lexer that uses constant stack space">
+          <c:tickets>
+            <c:ticket id="4"/>
+          </c:tickets>
+        </c:change>
+      </c:changes>
+    </c:release>
+    <c:release date="2016-08-05T00:00:00+00:00" ticket-system="com.github.io7m.jsx" version="0.6.0">
+      <c:changes>
+        <c:change date="2016-08-05T00:00:00+00:00" summary="Update plugins and dependencies."/>
+        <c:change date="2016-08-05T00:00:00+00:00" summary="The produced jars are now OSGi bundles."/>
+        <c:change compatible="false" date="2016-08-05T00:00:00+00:00" summary="Reorganize APIs and implementations into their own modules/bundles."/>
+        <c:change compatible="false" date="2016-08-05T00:00:00+00:00" summary="Use immutables.org to generate configuration types."/>
+      </c:changes>
+    </c:release>
+    <c:release date="2016-10-04T00:00:00+00:00" ticket-system="com.github.io7m.jsx" version="0.7.0">
+      <c:changes>
+        <c:change date="2016-10-04T00:00:00+00:00" summary="Add command line tool for formatting s-expressions."/>
+      </c:changes>
+    </c:release>
+    <c:release date="2017-11-24T00:00:00+00:00" ticket-system="com.github.io7m.jsx" version="0.8.0">
+      <c:changes>
+        <c:change date="2016-11-10T00:00:00+00:00" summary="Add combinators for validating S-expressions."/>
+        <c:change date="2017-04-06T00:00:00+00:00" summary="Rename project. Use the new primogenitor POM and 2017 project conventions."/>
+        <c:change compatible="false" date="2017-04-06T00:00:00+00:00" summary="Use jlexing 0.2.1, numerous API changes for consistency (see japicmp report for details)."/>
+        <c:change compatible="false" date="2017-11-16T00:00:00+00:00" summary="All modules are now Java 9 modules. JDK 9 is now required."/>
+        <c:change compatible="false" date="2017-11-16T00:00:00+00:00" summary="Removed dependency on com.io7m.jnull."/>
+      </c:changes>
+    </c:release>
+    <c:release date="2017-11-24T14:51:40+00:00" ticket-system="com.github.io7m.jsx" version="0.9.0">
+      <c:changes>
+        <c:change date="2017-11-24T00:00:00+00:00" summary="Add configurable comment tokens">
+          <c:tickets>
+            <c:ticket id="1"/>
+          </c:tickets>
+        </c:change>
+        <c:change date="2017-11-24T14:51:40+00:00" summary="Optionally start lexical positions at a given line">
+          <c:tickets>
+            <c:ticket id="2"/>
+          </c:tickets>
+        </c:change>
+      </c:changes>
+    </c:release>
+  </c:releases>
+  <c:ticket-systems>
+    <c:ticket-system default="true" id="com.github.io7m.jsx" url="http://github.com/io7m/jsx/issues/"/>
+  </c:ticket-systems>
 </c:changelog>

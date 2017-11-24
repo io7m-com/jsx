@@ -17,7 +17,7 @@
 package com.io7m.jsx.tests.combinators;
 
 import com.io7m.jlexing.core.LexicalPositionType;
-import com.io7m.jnull.NullCheck;
+import java.util.Objects;
 import com.io7m.jnull.Nullable;
 import com.io7m.jsx.SExpressionListType;
 import com.io7m.jsx.SExpressionMatcherType;
@@ -40,8 +40,8 @@ final class PList extends AbstractList<SExpressionType>
     final Optional<LexicalPositionType<Path>> in_lex,
     final boolean in_square)
   {
-    this.data = NullCheck.notNull(d);
-    this.lex = NullCheck.notNull(in_lex);
+    this.data = Objects.requireNonNull(d);
+    this.lex = Objects.requireNonNull(in_lex);
     this.square = in_square;
   }
 
@@ -50,14 +50,14 @@ final class PList extends AbstractList<SExpressionType>
     final int index,
     final @Nullable SExpressionType element)
   {
-    this.data.add(index, NullCheck.notNull(element));
+    this.data.add(index, Objects.requireNonNull(element));
   }
 
   @Override
   public SExpressionType get(
     final int index)
   {
-    return NullCheck.notNull(this.data.get(index));
+    return Objects.requireNonNull(this.data.get(index));
   }
 
   @Override
@@ -84,7 +84,7 @@ final class PList extends AbstractList<SExpressionType>
   public SExpressionType remove(
     final int index)
   {
-    return NullCheck.notNull(this.data.remove(index));
+    return Objects.requireNonNull(this.data.remove(index));
   }
 
   @Override
@@ -92,7 +92,7 @@ final class PList extends AbstractList<SExpressionType>
     final int index,
     final @Nullable SExpressionType element)
   {
-    return NullCheck.notNull(this.data.set(index, NullCheck.notNull(element)));
+    return Objects.requireNonNull(this.data.set(index, Objects.requireNonNull(element)));
   }
 
   @Override

@@ -23,11 +23,12 @@ package com.io7m.jsx;
 public interface SExpressionListType extends SExpressionType
 {
   /**
-   * @param index The list index
+   * @param index The list index in the range {@code 0 <= index < {@link
+   *              #size()}}
    *
    * @return The expression at {@code index}
    *
-   * @throws IndexOutOfBoundsException Iff {@code index >= {@link #size()}}
+   * @throws IndexOutOfBoundsException Iff {@code index} is out of range
    */
 
   SExpressionType get(int index);

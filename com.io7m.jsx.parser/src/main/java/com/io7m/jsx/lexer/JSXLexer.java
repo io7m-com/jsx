@@ -19,8 +19,8 @@ package com.io7m.jsx.lexer;
 import com.io7m.jeucreader.UnicodeCharacterReaderPushBackType;
 import com.io7m.jlexing.core.LexicalPosition;
 import com.io7m.jlexing.core.LexicalPositionMutable;
-import com.io7m.jnull.NullCheck;
 import com.io7m.jsx.api.lexer.JSXLexerBareCarriageReturnException;
+import com.io7m.jsx.api.lexer.JSXLexerComment;
 import com.io7m.jsx.api.lexer.JSXLexerConfigurationType;
 import com.io7m.jsx.api.lexer.JSXLexerException;
 import com.io7m.jsx.api.lexer.JSXLexerInvalidCodePointException;
@@ -29,6 +29,7 @@ import com.io7m.jsx.api.lexer.JSXLexerNotHexCharException;
 import com.io7m.jsx.api.lexer.JSXLexerType;
 import com.io7m.jsx.api.lexer.JSXLexerUnexpectedEOFException;
 import com.io7m.jsx.api.lexer.JSXLexerUnknownEscapeCodeException;
+import com.io7m.jsx.api.tokens.TokenComment;
 import com.io7m.jsx.api.tokens.TokenEOF;
 import com.io7m.jsx.api.tokens.TokenLeftParenthesis;
 import com.io7m.jsx.api.tokens.TokenLeftSquare;
@@ -40,6 +41,7 @@ import com.io7m.jsx.api.tokens.TokenType;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -54,19 +56,22 @@ public final class JSXLexer implements JSXLexerType
   private final LexicalPositionMutable<Path> position;
   private final LexicalPositionMutable<Path> buffer_position;
   private State state;
+  private JSXLexerComment buffer_comment;
 
   private JSXLexer(
     final JSXLexerConfigurationType c,
     final UnicodeCharacterReaderPushBackType r)
   {
-    this.config = NullCheck.notNull(c, "Configuration");
-    this.reader = NullCheck.notNull(r, "Reader");
+    this.config = Objects.requireNonNull(c, "Configuration");
+    this.reader = Objects.requireNonNull(r, "Reader");
+
     this.state = State.STATE_INITIAL;
-    this.buffer = new StringBuilder(256);
+    this.buffer =
+      new StringBuilder(256);
     this.position =
-      LexicalPositionMutable.create(0, 0, Optional.empty());
+      LexicalPositionMutable.create(c.startAtLine(), 0, Optional.empty());
     this.buffer_position =
-      LexicalPositionMutable.create(0, 0, Optional.empty());
+      LexicalPositionMutable.create(c.startAtLine(), 0, Optional.empty());
 
     this.position.setFile(c.file());
     this.buffer_position.setFile(c.file());
@@ -98,7 +103,7 @@ public final class JSXLexer implements JSXLexerType
   private TokenType completeQuotedString()
   {
     this.state = State.STATE_INITIAL;
-    final String text = NullCheck.notNull(this.buffer.toString(), "Text");
+    final String text = Objects.requireNonNull(this.buffer.toString(), "Text");
     this.buffer.setLength(0);
     return new TokenQuotedString(this.buffer_position.toImmutable(), text);
   }
@@ -106,16 +111,25 @@ public final class JSXLexer implements JSXLexerType
   private TokenType completeSymbol()
   {
     this.state = State.STATE_INITIAL;
-    final String text = NullCheck.notNull(this.buffer.toString(), "Text");
+    final String text = Objects.requireNonNull(this.buffer.toString(), "Text");
     this.buffer.setLength(0);
     return new TokenSymbol(this.buffer_position.toImmutable(), text);
+  }
+
+  private TokenType completeComment()
+  {
+    this.state = State.STATE_INITIAL;
+    final String text = Objects.requireNonNull(this.buffer.toString(), "Text");
+    this.buffer.setLength(0);
+    return new TokenComment(
+      this.buffer_position.toImmutable(), this.buffer_comment, text);
   }
 
   private JSXLexerBareCarriageReturnException errorBareCarriageReturn()
   {
     final StringBuilder sb = new StringBuilder(32);
     sb.append("Bare carriage return (U+000D) in source");
-    final String s = NullCheck.notNull(sb.toString(), "Message");
+    final String s = Objects.requireNonNull(sb.toString(), "Message");
     return new JSXLexerBareCarriageReturnException(
       this.snapshotPosition(), s);
   }
@@ -127,7 +141,7 @@ public final class JSXLexer implements JSXLexerType
     sb.append("Invalid code point given in escape (U+");
     sb.append(Long.toUnsignedString(cp, 16));
     sb.append(")");
-    final String s = NullCheck.notNull(sb.toString(), "Message");
+    final String s = Objects.requireNonNull(sb.toString(), "Message");
     return new JSXLexerInvalidCodePointException(this.snapshotPosition(), s);
   }
 
@@ -135,8 +149,7 @@ public final class JSXLexer implements JSXLexerType
   {
     return new JSXLexerNewLinesInStringsException(
       this.snapshotPosition(),
-      "Lexer configuration does not permit newlines (U+000A or U+000D) in "
-        + "quoted strings");
+      "Lexer configuration does not permit newlines (U+000A or U+000D) in quoted strings");
   }
 
   private JSXLexerNotHexCharException errorNotHexChar(
@@ -146,7 +159,7 @@ public final class JSXLexer implements JSXLexerType
     sb.append("Expected a character [0123456789aAbBcCdDeEfF] (got ");
     sb.appendCodePoint(c);
     sb.append(")");
-    final String s = NullCheck.notNull(sb.toString(), "Message");
+    final String s = Objects.requireNonNull(sb.toString(), "Message");
     return new JSXLexerNotHexCharException(this.snapshotPosition(), s);
   }
 
@@ -154,7 +167,7 @@ public final class JSXLexer implements JSXLexerType
   {
     final StringBuilder sb = new StringBuilder(32);
     sb.append("Unexpected EOF");
-    final String s = NullCheck.notNull(sb.toString(), "Message");
+    final String s = Objects.requireNonNull(sb.toString(), "Message");
     return new JSXLexerUnexpectedEOFException(this.snapshotPosition(), s);
   }
 
@@ -165,7 +178,7 @@ public final class JSXLexer implements JSXLexerType
     sb.append("Unknown escape code (");
     sb.appendCodePoint(c);
     sb.append(")");
-    final String s = NullCheck.notNull(sb.toString(), "Message");
+    final String s = Objects.requireNonNull(sb.toString(), "Message");
     return new JSXLexerUnknownEscapeCodeException(
       this.snapshotPosition(), s);
   }
@@ -214,7 +227,7 @@ public final class JSXLexer implements JSXLexerType
     hexbuf.appendCodePoint(this.readHexCharNotEOF());
     hexbuf.appendCodePoint(this.readHexCharNotEOF());
     hexbuf.appendCodePoint(this.readHexCharNotEOF());
-    final String hex = NullCheck.notNull(hexbuf.toString(), "Hex code");
+    final String hex = Objects.requireNonNull(hexbuf.toString(), "Hex code");
     final int code = Integer.parseInt(hex, 16);
     this.buffer.appendCodePoint(code);
   }
@@ -231,7 +244,7 @@ public final class JSXLexer implements JSXLexerType
     hexbuf.appendCodePoint(this.readHexCharNotEOF());
     hexbuf.appendCodePoint(this.readHexCharNotEOF());
     hexbuf.appendCodePoint(this.readHexCharNotEOF());
-    final String hex = NullCheck.notNull(hexbuf.toString(), "Hex code");
+    final String hex = Objects.requireNonNull(hexbuf.toString(), "Hex code");
     final long code = Long.parseUnsignedLong(hex, 16);
     final int cp = (int) code;
 
@@ -298,6 +311,7 @@ public final class JSXLexer implements JSXLexerType
   private void startQuotedString()
   {
     this.state = State.STATE_IN_STRING_QUOTED;
+    this.buffer_comment = null;
     this.buffer_position.setColumn(this.position.column());
     this.buffer_position.setLine(this.position.line());
     this.buffer.setLength(0);
@@ -307,10 +321,21 @@ public final class JSXLexer implements JSXLexerType
     final int c)
   {
     this.state = State.STATE_IN_SYMBOL;
+    this.buffer_comment = null;
     this.buffer_position.setColumn(this.position.column());
     this.buffer_position.setLine(this.position.line());
     this.buffer.setLength(0);
     this.buffer.appendCodePoint(c);
+  }
+
+  private void startComment(
+    final JSXLexerComment comment)
+  {
+    this.state = State.STATE_IN_COMMENT;
+    this.buffer_comment = comment;
+    this.buffer_position.setColumn(this.position.column());
+    this.buffer_position.setLine(this.position.line());
+    this.buffer.setLength(0);
   }
 
   @Override
@@ -330,6 +355,25 @@ public final class JSXLexer implements JSXLexerType
   {
     while (true) {
       switch (this.state) {
+
+        case STATE_IN_COMMENT: {
+          final int c = this.readChar();
+          if (c == -1) {
+            return this.completeComment();
+          }
+          if (c == (int) '\n') {
+            this.completeNewline();
+            return this.completeComment();
+          }
+          if (c == (int) '\r') {
+            this.state = State.STATE_IN_CRLF;
+            return this.completeComment();
+          }
+
+          this.buffer.appendCodePoint(c);
+          continue;
+        }
+
         case STATE_INITIAL: {
           final int c = this.readChar();
           if (c == -1) {
@@ -348,6 +392,11 @@ public final class JSXLexer implements JSXLexerType
             this.startQuotedString();
             continue;
           }
+
+          if (this.appearsToBeComment(c)) {
+            continue;
+          }
+
           if (c == (int) '(') {
             return new TokenLeftParenthesis(this.snapshotPosition());
           }
@@ -452,6 +501,18 @@ public final class JSXLexer implements JSXLexerType
     }
   }
 
+  private boolean appearsToBeComment(
+    final int c)
+  {
+    for (final JSXLexerComment comment : this.config.comments()) {
+      if (comment.token() == c) {
+        this.startComment(comment);
+        return true;
+      }
+    }
+    return false;
+  }
+
   private LexicalPosition<Path> snapshotPosition()
   {
     return this.position.toImmutable();
@@ -462,6 +523,7 @@ public final class JSXLexer implements JSXLexerType
     STATE_IN_CRLF,
     STATE_IN_STRING_QUOTED,
     STATE_IN_SYMBOL,
+    STATE_IN_COMMENT,
     STATE_INITIAL
   }
 }

@@ -17,7 +17,7 @@
 package com.io7m.jsx.api.lexer;
 
 import com.io7m.jlexing.core.LexicalPosition;
-import com.io7m.jnull.NullCheck;
+import java.util.Objects;
 import com.io7m.jsx.JSXException;
 
 import java.nio.file.Path;
@@ -42,8 +42,8 @@ public abstract class JSXLexerException extends JSXException
     final LexicalPosition<Path> in_lex,
     final String in_message)
   {
-    super(NullCheck.notNull(in_message, "Message"));
-    this.lex = NullCheck.notNull(in_lex, "Lexical information");
+    super(Objects.requireNonNull(in_message, "Message"));
+    this.lex = Objects.requireNonNull(in_lex, "Lexical information");
   }
 
   /**

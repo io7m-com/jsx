@@ -17,6 +17,7 @@
 package com.io7m.jsx.parser;
 
 import com.io7m.jsx.SExpressionType;
+import com.io7m.jsx.api.lexer.JSXLexerComment;
 import com.io7m.jsx.api.lexer.JSXLexerConfiguration;
 import com.io7m.jsx.api.lexer.JSXLexerSupplierType;
 import com.io7m.jsx.api.parser.JSXParserConfiguration;
@@ -29,6 +30,7 @@ import com.io7m.jsx.serializer.JSXSerializerTrivial;
 import com.io7m.junreachable.UnreachableCodeException;
 
 import java.io.IOException;
+import java.util.EnumSet;
 import java.util.Optional;
 
 /**
@@ -56,7 +58,10 @@ public final class JSXParserDemoMain
   {
     final JSXLexerConfiguration.Builder lexer_config_builder =
       JSXLexerConfiguration.builder();
-    lexer_config_builder.setNewlinesInQuotedStrings(false);
+    lexer_config_builder.setNewlinesInQuotedStrings(true);
+    lexer_config_builder.setComments(EnumSet.allOf(JSXLexerComment.class));
+    lexer_config_builder.setSquareBrackets(true);
+
     final JSXLexerConfiguration lexer_config =
       lexer_config_builder.build();
 
@@ -81,6 +86,7 @@ public final class JSXParserDemoMain
         if (e_opt.isPresent()) {
           final SExpressionType e = e_opt.get();
           serializer.serialize(e, System.out);
+          System.out.println();
         } else {
           break;
         }

@@ -46,6 +46,6 @@ public interface SExpressionType
    */
 
   <A, E extends Exception> A matchExpression(
-    final SExpressionMatcherType<A, E> m)
+    SExpressionMatcherType<A, E> m)
     throws E;
 }

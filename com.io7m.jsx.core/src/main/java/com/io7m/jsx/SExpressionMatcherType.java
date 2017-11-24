@@ -36,7 +36,7 @@ public interface SExpressionMatcherType<A, E extends Exception>
    */
 
   A list(
-    final SExpressionListType e)
+    SExpressionListType e)
     throws E;
 
   /**
@@ -50,7 +50,7 @@ public interface SExpressionMatcherType<A, E extends Exception>
    */
 
   A quotedString(
-    final SExpressionQuotedStringType e)
+    SExpressionQuotedStringType e)
     throws E;
 
   /**
@@ -64,6 +64,6 @@ public interface SExpressionMatcherType<A, E extends Exception>
    */
 
   A symbol(
-    final SExpressionSymbolType e)
+    SExpressionSymbolType e)
     throws E;
 }

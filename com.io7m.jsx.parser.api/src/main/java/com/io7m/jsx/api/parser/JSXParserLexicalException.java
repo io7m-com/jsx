@@ -16,7 +16,7 @@
 
 package com.io7m.jsx.api.parser;
 
-import com.io7m.jnull.NullCheck;
+import java.util.Objects;
 import com.io7m.jsx.api.lexer.JSXLexerException;
 
 /**
@@ -38,7 +38,7 @@ public final class JSXParserLexicalException extends JSXParserException
   {
     super(
       in_cause.lexicalInformation(),
-      NullCheck.notNull(in_cause.getMessage(), "Message"),
+      Objects.requireNonNull(in_cause.getMessage(), "Message"),
       in_cause);
   }
 }
