@@ -16,7 +16,7 @@
 
 package com.io7m.jsx.parser;
 
-import com.io7m.jlexing.core.LexicalPositionType;
+import com.io7m.jlexing.core.LexicalPosition;
 import com.io7m.jnull.Nullable;
 import com.io7m.jsx.SExpressionListType;
 import com.io7m.jsx.SExpressionMatcherType;
@@ -33,11 +33,11 @@ final class PList extends AbstractList<SExpressionType>
 {
   private final List<SExpressionType> data;
   private final boolean square;
-  private final Optional<LexicalPositionType<URI>> lex;
+  private final Optional<LexicalPosition<URI>> lex;
 
   PList(
     final List<SExpressionType> d,
-    final Optional<LexicalPositionType<URI>> in_lex,
+    final Optional<LexicalPosition<URI>> in_lex,
     final boolean in_square)
   {
     this.data = Objects.requireNonNull(d, "List");
@@ -67,7 +67,7 @@ final class PList extends AbstractList<SExpressionType>
   }
 
   @Override
-  public Optional<LexicalPositionType<URI>> lexical()
+  public Optional<LexicalPosition<URI>> lexical()
   {
     return this.lex;
   }

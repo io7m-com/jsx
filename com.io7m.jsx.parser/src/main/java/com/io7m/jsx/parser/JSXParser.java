@@ -16,7 +16,7 @@
 
 package com.io7m.jsx.parser;
 
-import com.io7m.jlexing.core.LexicalPositionType;
+import com.io7m.jlexing.core.LexicalPosition;
 import com.io7m.jsx.SExpressionQuotedStringType;
 import com.io7m.jsx.SExpressionType;
 import com.io7m.jsx.api.lexer.JSXLexerException;
@@ -72,15 +72,15 @@ public final class JSXParser implements JSXParserType
     final JSXParserConfigurationType c,
     final TokenSymbol t)
   {
-    final Optional<LexicalPositionType<URI>> lex = getTokenLexical(c, t);
+    final Optional<LexicalPosition<URI>> lex = getTokenLexical(c, t);
     return new PSymbol(t.text(), lex);
   }
 
-  private static Optional<LexicalPositionType<URI>> getTokenLexical(
+  private static Optional<LexicalPosition<URI>> getTokenLexical(
     final JSXParserConfigurationType c,
     final TokenType t)
   {
-    final Optional<LexicalPositionType<URI>> lex;
+    final Optional<LexicalPosition<URI>> lex;
     if (!c.preserveLexical()) {
       lex = Optional.empty();
     } else {

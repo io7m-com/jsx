@@ -70,9 +70,10 @@
         </c:change>
       </c:changes>
     </c:release>
-    <c:release date="2017-11-26T13:05:25+00:00" ticket-system="com.github.io7m.jsx" version="0.10.0">
+    <c:release date="2017-11-26T14:30:01+00:00" ticket-system="com.github.io7m.jsx" version="0.10.0">
       <c:changes>
-        <c:change compatible="false" date="2017-11-26T13:05:25+00:00" summary="Use URIs instead of Paths in lexical information"/>
+        <c:change compatible="false" date="2017-11-26T00:00:00+00:00" summary="Use URIs instead of Paths in lexical information"/>
+        <c:change compatible="false" date="2017-11-26T14:30:01+00:00" summary="Use immutable value types in the definitions of SExpressionType"/>
       </c:changes>
     </c:release>
   </c:releases>

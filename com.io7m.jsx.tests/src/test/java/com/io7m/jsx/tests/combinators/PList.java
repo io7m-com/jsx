@@ -16,18 +16,16 @@
 
 package com.io7m.jsx.tests.combinators;
 
-import com.io7m.jlexing.core.LexicalPositionType;
-
-import java.net.URI;
-import java.util.Objects;
+import com.io7m.jlexing.core.LexicalPosition;
 import com.io7m.jnull.Nullable;
 import com.io7m.jsx.SExpressionListType;
 import com.io7m.jsx.SExpressionMatcherType;
 import com.io7m.jsx.SExpressionType;
 
-import java.nio.file.Path;
+import java.net.URI;
 import java.util.AbstractList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 final class PList extends AbstractList<SExpressionType>
@@ -35,11 +33,11 @@ final class PList extends AbstractList<SExpressionType>
 {
   private final List<SExpressionType> data;
   private final boolean square;
-  private final Optional<LexicalPositionType<URI>> lex;
+  private final Optional<LexicalPosition<URI>> lex;
 
   PList(
     final List<SExpressionType> d,
-    final Optional<LexicalPositionType<URI>> in_lex,
+    final Optional<LexicalPosition<URI>> in_lex,
     final boolean in_square)
   {
     this.data = Objects.requireNonNull(d);
@@ -69,7 +67,7 @@ final class PList extends AbstractList<SExpressionType>
   }
 
   @Override
-  public Optional<LexicalPositionType<URI>> lexical()
+  public Optional<LexicalPosition<URI>> lexical()
   {
     return this.lex;
   }
@@ -94,7 +92,9 @@ final class PList extends AbstractList<SExpressionType>
     final int index,
     final @Nullable SExpressionType element)
   {
-    return Objects.requireNonNull(this.data.set(index, Objects.requireNonNull(element)));
+    return Objects.requireNonNull(this.data.set(
+      index,
+      Objects.requireNonNull(element)));
   }
 
   @Override

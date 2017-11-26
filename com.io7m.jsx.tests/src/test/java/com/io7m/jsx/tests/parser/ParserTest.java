@@ -19,7 +19,7 @@ package com.io7m.jsx.tests.parser;
 import com.io7m.jeucreader.UnicodeCharacterReader;
 import com.io7m.jeucreader.UnicodeCharacterReaderPushBackType;
 import com.io7m.jlexing.core.LexicalPosition;
-import com.io7m.jlexing.core.LexicalPositionType;
+import com.io7m.jlexing.core.LexicalPosition;
 import com.io7m.jsx.SExpressionListType;
 import com.io7m.jsx.SExpressionQuotedStringType;
 import com.io7m.jsx.SExpressionSymbolType;
@@ -176,7 +176,7 @@ public final class ParserTest
     final JSXParserType p = JSXParser.newParser(pc, lex);
 
     final SExpressionListType s = (SExpressionListType) p.parseExpression();
-    final LexicalPositionType<URI> sl0 = s.lexical().get();
+    final LexicalPosition<URI> sl0 = s.lexical().get();
     Assert.assertEquals(0L, (long) sl0.line());
     Assert.assertEquals(1L, (long) sl0.column());
     Assert.assertEquals(3L, (long) s.size());
@@ -185,21 +185,21 @@ public final class ParserTest
     {
       final SExpressionSymbolType ss = (SExpressionSymbolType) s.get(0);
       Assert.assertEquals("a", ss.text());
-      final LexicalPositionType<URI> sl = ss.lexical().get();
+      final LexicalPosition<URI> sl = ss.lexical().get();
       Assert.assertEquals(Optional.empty(), sl.file());
     }
 
     {
       final SExpressionSymbolType ss = (SExpressionSymbolType) s.get(1);
       Assert.assertEquals("b", ss.text());
-      final LexicalPositionType<URI> sl = ss.lexical().get();
+      final LexicalPosition<URI> sl = ss.lexical().get();
       Assert.assertEquals(Optional.empty(), sl.file());
     }
 
     {
       final SExpressionSymbolType ss = (SExpressionSymbolType) s.get(2);
       Assert.assertEquals("c", ss.text());
-      final LexicalPositionType<URI> sl = ss.lexical().get();
+      final LexicalPosition<URI> sl = ss.lexical().get();
       Assert.assertEquals(Optional.empty(), sl.file());
     }
   }
@@ -293,7 +293,7 @@ public final class ParserTest
     final JSXParserType p = JSXParser.newParser(pc, lex);
 
     final SExpressionListType s = (SExpressionListType) p.parseExpression();
-    final LexicalPositionType<URI> sl0 = s.lexical().get();
+    final LexicalPosition<URI> sl0 = s.lexical().get();
     Assert.assertEquals(0L, (long) sl0.line());
     Assert.assertEquals(1L, (long) sl0.column());
     Assert.assertEquals(3L, (long) s.size());
@@ -302,21 +302,21 @@ public final class ParserTest
     {
       final SExpressionSymbolType ss = (SExpressionSymbolType) s.get(0);
       Assert.assertEquals("a", ss.text());
-      final LexicalPositionType<URI> sl = ss.lexical().get();
+      final LexicalPosition<URI> sl = ss.lexical().get();
       Assert.assertEquals(Optional.empty(), sl.file());
     }
 
     {
       final SExpressionSymbolType ss = (SExpressionSymbolType) s.get(1);
       Assert.assertEquals("b", ss.text());
-      final LexicalPositionType<URI> sl = ss.lexical().get();
+      final LexicalPosition<URI> sl = ss.lexical().get();
       Assert.assertEquals(Optional.empty(), sl.file());
     }
 
     {
       final SExpressionSymbolType ss = (SExpressionSymbolType) s.get(2);
       Assert.assertEquals("c", ss.text());
-      final LexicalPositionType<URI> sl = ss.lexical().get();
+      final LexicalPosition<URI> sl = ss.lexical().get();
       Assert.assertEquals(Optional.empty(), sl.file());
     }
   }
@@ -332,7 +332,7 @@ public final class ParserTest
     final JSXParserType p = JSXParser.newParser(pc, lex);
 
     final SExpressionSymbolType s = (SExpressionSymbolType) p.parseExpression();
-    final LexicalPositionType<URI> sl = s.lexical().get();
+    final LexicalPosition<URI> sl = s.lexical().get();
     Assert.assertEquals(0L, (long) sl.line());
     Assert.assertEquals(1L, (long) sl.column());
     Assert.assertEquals("a", s.text());
@@ -353,7 +353,7 @@ public final class ParserTest
     final JSXParserType p = JSXParser.newParser(pc, lex);
 
     final SExpressionSymbolType s = (SExpressionSymbolType) p.parseExpression();
-    final Optional<LexicalPositionType<URI>> lex_opt =
+    final Optional<LexicalPosition<URI>> lex_opt =
       s.lexical();
     Assert.assertFalse(lex_opt.isPresent());
     Assert.assertEquals("a", s.text());
@@ -376,7 +376,7 @@ public final class ParserTest
 
     final SExpressionQuotedStringType s =
       (SExpressionQuotedStringType) p.parseExpression();
-    final LexicalPositionType<URI> sl = s.lexical().get();
+    final LexicalPosition<URI> sl = s.lexical().get();
     Assert.assertEquals(0L, (long) sl.line());
     Assert.assertEquals(1L, (long) sl.column());
     Assert.assertEquals("a", s.text());
@@ -404,7 +404,7 @@ public final class ParserTest
 
     final SExpressionQuotedStringType s =
       (SExpressionQuotedStringType) p.parseExpression();
-    final Optional<LexicalPositionType<URI>> lex_opt =
+    final Optional<LexicalPosition<URI>> lex_opt =
       s.lexical();
     Assert.assertFalse(lex_opt.isPresent());
     Assert.assertEquals("a", s.text());
