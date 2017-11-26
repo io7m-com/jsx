@@ -16,8 +16,9 @@
 
 package com.io7m.jsx.api.parser;
 
-import java.util.Objects;
 import com.io7m.jsx.api.lexer.JSXLexerException;
+
+import java.util.Objects;
 
 /**
  * The type of parser errors caused by {@link JSXLexerException} throws.

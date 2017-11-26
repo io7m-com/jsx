@@ -22,7 +22,7 @@ import com.io7m.jsx.SExpressionListType;
 import com.io7m.jsx.SExpressionMatcherType;
 import com.io7m.jsx.SExpressionType;
 
-import java.nio.file.Path;
+import java.net.URI;
 import java.util.AbstractList;
 import java.util.List;
 import java.util.Objects;
@@ -33,11 +33,11 @@ final class PList extends AbstractList<SExpressionType>
 {
   private final List<SExpressionType> data;
   private final boolean square;
-  private final Optional<LexicalPositionType<Path>> lex;
+  private final Optional<LexicalPositionType<URI>> lex;
 
   PList(
     final List<SExpressionType> d,
-    final Optional<LexicalPositionType<Path>> in_lex,
+    final Optional<LexicalPositionType<URI>> in_lex,
     final boolean in_square)
   {
     this.data = Objects.requireNonNull(d, "List");
@@ -67,7 +67,7 @@ final class PList extends AbstractList<SExpressionType>
   }
 
   @Override
-  public Optional<LexicalPositionType<Path>> lexical()
+  public Optional<LexicalPositionType<URI>> lexical()
   {
     return this.lex;
   }

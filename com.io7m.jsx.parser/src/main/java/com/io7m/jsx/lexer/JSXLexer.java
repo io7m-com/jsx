@@ -40,7 +40,7 @@ import com.io7m.jsx.api.tokens.TokenSymbol;
 import com.io7m.jsx.api.tokens.TokenType;
 
 import java.io.IOException;
-import java.nio.file.Path;
+import java.net.URI;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -53,8 +53,8 @@ public final class JSXLexer implements JSXLexerType
   private final StringBuilder buffer;
   private final JSXLexerConfigurationType config;
   private final UnicodeCharacterReaderPushBackType reader;
-  private final LexicalPositionMutable<Path> position;
-  private final LexicalPositionMutable<Path> buffer_position;
+  private final LexicalPositionMutable<URI> position;
+  private final LexicalPositionMutable<URI> buffer_position;
   private State state;
   private JSXLexerComment buffer_comment;
 
@@ -513,7 +513,7 @@ public final class JSXLexer implements JSXLexerType
     return false;
   }
 
-  private LexicalPosition<Path> snapshotPosition()
+  private LexicalPosition<URI> snapshotPosition()
   {
     return this.position.toImmutable();
   }

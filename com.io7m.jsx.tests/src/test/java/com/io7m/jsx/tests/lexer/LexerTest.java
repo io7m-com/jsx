@@ -45,6 +45,7 @@ import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
+import java.net.URI;
 import java.nio.file.Paths;
 import java.util.EnumSet;
 import java.util.Optional;
@@ -72,7 +73,7 @@ public final class LexerTest
   {
     final JSXLexerConfiguration.Builder cb =
       JSXLexerConfiguration.builder();
-    cb.setFile(Optional.of(Paths.get("file.txt")));
+    cb.setFile(Optional.of(URI.create("file.txt")));
     cb.setNewlinesInQuotedStrings(true);
     cb.setSquareBrackets(true);
     final JSXLexerConfiguration c = cb.build();
@@ -106,7 +107,7 @@ public final class LexerTest
   {
     final JSXLexerConfiguration.Builder cb =
       JSXLexerConfiguration.builder();
-    cb.setFile(Optional.of(Paths.get("file.txt")));
+    cb.setFile(Optional.of(URI.create("file.txt")));
     final JSXLexerConfiguration c = cb.build();
 
     final JSXLexerType lex = JSXLexer.newLexer(c, LexerTest.stringReader("("));
@@ -114,7 +115,7 @@ public final class LexerTest
     System.out.println(t);
 
     Assert.assertEquals(
-      Optional.of(Paths.get("file.txt")), t.lexical().file());
+      Optional.of(URI.create("file.txt")), t.lexical().file());
     Assert.assertEquals(0L, (long) t.lexical().line());
     Assert.assertEquals(1L, (long) t.lexical().column());
   }
@@ -836,7 +837,7 @@ public final class LexerTest
   {
     final JSXLexerConfiguration.Builder cb =
       JSXLexerConfiguration.builder();
-    cb.setFile(Optional.of(Paths.get("file.txt")));
+    cb.setFile(Optional.of(URI.create("file.txt")));
     cb.setNewlinesInQuotedStrings(true);
     cb.setSquareBrackets(true);
     cb.setComments(EnumSet.allOf(JSXLexerComment.class));
@@ -872,7 +873,7 @@ public final class LexerTest
   {
     final JSXLexerConfiguration.Builder cb =
       JSXLexerConfiguration.builder();
-    cb.setFile(Optional.of(Paths.get("file.txt")));
+    cb.setFile(Optional.of(URI.create("file.txt")));
     cb.setStartAtLine(0);
 
     final JSXLexerConfiguration c = cb.build();
@@ -882,7 +883,7 @@ public final class LexerTest
     System.out.println(t);
 
     Assert.assertEquals(
-      Optional.of(Paths.get("file.txt")), t.lexical().file());
+      Optional.of(URI.create("file.txt")), t.lexical().file());
     Assert.assertEquals(0L, (long) t.lexical().line());
     Assert.assertEquals(1L, (long) t.lexical().column());
   }
@@ -893,7 +894,7 @@ public final class LexerTest
   {
     final JSXLexerConfiguration.Builder cb =
       JSXLexerConfiguration.builder();
-    cb.setFile(Optional.of(Paths.get("file.txt")));
+    cb.setFile(Optional.of(URI.create("file.txt")));
     cb.setStartAtLine(1);
 
     final JSXLexerConfiguration c = cb.build();
@@ -903,7 +904,7 @@ public final class LexerTest
     System.out.println(t);
 
     Assert.assertEquals(
-      Optional.of(Paths.get("file.txt")), t.lexical().file());
+      Optional.of(URI.create("file.txt")), t.lexical().file());
     Assert.assertEquals(1L, (long) t.lexical().line());
     Assert.assertEquals(1L, (long) t.lexical().column());
   }
@@ -914,7 +915,7 @@ public final class LexerTest
   {
     final JSXLexerConfiguration.Builder cb =
       JSXLexerConfiguration.builder();
-    cb.setFile(Optional.of(Paths.get("file.txt")));
+    cb.setFile(Optional.of(URI.create("file.txt")));
     cb.setStartAtLine(100);
 
     final JSXLexerConfiguration c = cb.build();
@@ -924,7 +925,7 @@ public final class LexerTest
     System.out.println(t);
 
     Assert.assertEquals(
-      Optional.of(Paths.get("file.txt")), t.lexical().file());
+      Optional.of(URI.create("file.txt")), t.lexical().file());
     Assert.assertEquals(100L, (long) t.lexical().line());
     Assert.assertEquals(1L, (long) t.lexical().column());
   }

@@ -19,7 +19,7 @@ package com.io7m.jsx.api.tokens;
 import com.io7m.jlexing.core.LexicalPosition;
 import com.io7m.jsx.api.lexer.JSXLexerComment;
 
-import java.nio.file.Path;
+import java.net.URI;
 import java.util.Objects;
 
 /**
@@ -28,7 +28,7 @@ import java.util.Objects;
 
 public final class TokenComment implements TokenType
 {
-  private final LexicalPosition<Path> lex;
+  private final LexicalPosition<URI> lex;
   private final String text;
   private final JSXLexerComment comment;
 
@@ -39,7 +39,7 @@ public final class TokenComment implements TokenType
    */
 
   public TokenComment(
-    final LexicalPosition<Path> in_lex,
+    final LexicalPosition<URI> in_lex,
     final JSXLexerComment in_comment,
     final String in_text)
   {
@@ -58,7 +58,7 @@ public final class TokenComment implements TokenType
   }
 
   @Override
-  public LexicalPosition<Path> lexical()
+  public LexicalPosition<URI> lexical()
   {
     return this.lex;
   }

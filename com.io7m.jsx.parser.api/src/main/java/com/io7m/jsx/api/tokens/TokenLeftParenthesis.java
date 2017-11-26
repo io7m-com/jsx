@@ -18,7 +18,7 @@ package com.io7m.jsx.api.tokens;
 
 import com.io7m.jlexing.core.LexicalPosition;
 
-import java.nio.file.Path;
+import java.net.URI;
 import java.util.Objects;
 
 /**
@@ -27,20 +27,20 @@ import java.util.Objects;
 
 public final class TokenLeftParenthesis implements TokenType
 {
-  private final LexicalPosition<Path> lex;
+  private final LexicalPosition<URI> lex;
 
   /**
    * @param in_lex The lexical information
    */
 
   public TokenLeftParenthesis(
-    final LexicalPosition<Path> in_lex)
+    final LexicalPosition<URI> in_lex)
   {
     this.lex = Objects.requireNonNull(in_lex, "Lexical");
   }
 
   @Override
-  public LexicalPosition<Path> lexical()
+  public LexicalPosition<URI> lexical()
   {
     return this.lex;
   }

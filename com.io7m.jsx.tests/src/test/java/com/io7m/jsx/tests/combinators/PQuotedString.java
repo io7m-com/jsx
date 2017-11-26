@@ -17,6 +17,8 @@
 package com.io7m.jsx.tests.combinators;
 
 import com.io7m.jlexing.core.LexicalPositionType;
+
+import java.net.URI;
 import java.util.Objects;
 import com.io7m.jsx.SExpressionMatcherType;
 import com.io7m.jsx.SExpressionQuotedStringType;
@@ -27,18 +29,18 @@ import java.util.Optional;
 final class PQuotedString implements SExpressionQuotedStringType
 {
   private final String text;
-  private final Optional<LexicalPositionType<Path>> lex;
+  private final Optional<LexicalPositionType<URI>> lex;
 
   PQuotedString(
     final String t,
-    final Optional<LexicalPositionType<Path>> in_lex)
+    final Optional<LexicalPositionType<URI>> in_lex)
   {
     this.text = Objects.requireNonNull(t);
     this.lex = Objects.requireNonNull(in_lex);
   }
 
   @Override
-  public Optional<LexicalPositionType<Path>> lexical()
+  public Optional<LexicalPositionType<URI>> lexical()
   {
     return this.lex;
   }

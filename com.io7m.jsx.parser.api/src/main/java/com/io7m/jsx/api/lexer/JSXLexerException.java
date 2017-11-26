@@ -17,10 +17,10 @@
 package com.io7m.jsx.api.lexer;
 
 import com.io7m.jlexing.core.LexicalPosition;
-import java.util.Objects;
 import com.io7m.jsx.JSXException;
 
-import java.nio.file.Path;
+import java.net.URI;
+import java.util.Objects;
 
 /**
  * The type of exceptions raised by the lexer.
@@ -29,7 +29,7 @@ import java.nio.file.Path;
 public abstract class JSXLexerException extends JSXException
 {
   private static final long serialVersionUID = -5821503109066196034L;
-  private final LexicalPosition<Path> lex;
+  private final LexicalPosition<URI> lex;
 
   /**
    * Construct an exception.
@@ -39,7 +39,7 @@ public abstract class JSXLexerException extends JSXException
    */
 
   public JSXLexerException(
-    final LexicalPosition<Path> in_lex,
+    final LexicalPosition<URI> in_lex,
     final String in_message)
   {
     super(Objects.requireNonNull(in_message, "Message"));
@@ -50,7 +50,7 @@ public abstract class JSXLexerException extends JSXException
    * @return The lexical information for the exception
    */
 
-  public final LexicalPosition<Path> lexicalInformation()
+  public final LexicalPosition<URI> lexicalInformation()
   {
     return this.lex;
   }

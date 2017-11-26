@@ -18,7 +18,7 @@ package com.io7m.jsx.api.parser;
 
 import com.io7m.jlexing.core.LexicalPosition;
 
-import java.nio.file.Path;
+import java.net.URI;
 
 /**
  * An exception type indicating that the input did not conform to the
@@ -37,7 +37,7 @@ public final class JSXParserGrammarException extends JSXParserException
    */
 
   public JSXParserGrammarException(
-    final LexicalPosition<Path> in_lex,
+    final LexicalPosition<URI> in_lex,
     final String in_message)
   {
     super(in_lex, in_message);

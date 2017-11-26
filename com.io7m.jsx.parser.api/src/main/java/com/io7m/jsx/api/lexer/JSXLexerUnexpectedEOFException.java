@@ -18,7 +18,7 @@ package com.io7m.jsx.api.lexer;
 
 import com.io7m.jlexing.core.LexicalPosition;
 
-import java.nio.file.Path;
+import java.net.URI;
 
 /**
  * The type of exceptions indicating that EOF was reached unexpectedly.
@@ -35,7 +35,7 @@ public final class JSXLexerUnexpectedEOFException extends JSXLexerException
    * @param in_message The exception message
    */
   public JSXLexerUnexpectedEOFException(
-    final LexicalPosition<Path> in_lex,
+    final LexicalPosition<URI> in_lex,
     final String in_message)
   {
     super(in_lex, in_message);

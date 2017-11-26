@@ -20,7 +20,7 @@ import com.io7m.jlexing.core.LexicalPositionType;
 import com.io7m.jsx.JSXImmutableStyleType;
 import org.immutables.value.Value;
 
-import java.nio.file.Path;
+import java.net.URI;
 
 /**
  * An error produced during validation of an S-expression.
@@ -35,7 +35,7 @@ public interface JSXValidationErrorType
    */
 
   @Value.Parameter
-  LexicalPositionType<Path> lex();
+  LexicalPositionType<URI> lex();
 
   /**
    * @return The error message

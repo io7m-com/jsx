@@ -17,10 +17,10 @@
 package com.io7m.jsx.api.parser;
 
 import com.io7m.jlexing.core.LexicalPosition;
-import java.util.Objects;
 import com.io7m.jsx.JSXException;
 
-import java.nio.file.Path;
+import java.net.URI;
+import java.util.Objects;
 
 /**
  * The type of exceptions raised by the parser.
@@ -29,7 +29,7 @@ import java.nio.file.Path;
 public abstract class JSXParserException extends JSXException
 {
   private static final long serialVersionUID = -5821503109066196034L;
-  private final LexicalPosition<Path> lex;
+  private final LexicalPosition<URI> lex;
 
   /**
    * Construct an exception.
@@ -39,7 +39,7 @@ public abstract class JSXParserException extends JSXException
    */
 
   public JSXParserException(
-    final LexicalPosition<Path> in_lex,
+    final LexicalPosition<URI> in_lex,
     final String in_message)
   {
     super(Objects.requireNonNull(in_message, "Message"));
@@ -55,7 +55,7 @@ public abstract class JSXParserException extends JSXException
    */
 
   public JSXParserException(
-    final LexicalPosition<Path> in_lex,
+    final LexicalPosition<URI> in_lex,
     final String in_message,
     final Throwable in_cause)
   {
@@ -69,7 +69,7 @@ public abstract class JSXParserException extends JSXException
    * @return The lexical information for the exception
    */
 
-  public final LexicalPosition<Path> getLexicalInformation()
+  public final LexicalPosition<URI> getLexicalInformation()
   {
     return this.lex;
   }

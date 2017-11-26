@@ -19,7 +19,7 @@ package com.io7m.jsx.api.lexer;
 import com.io7m.jsx.JSXImmutableStyleType;
 import org.immutables.value.Value;
 
-import java.nio.file.Path;
+import java.net.URI;
 import java.util.EnumSet;
 import java.util.Optional;
 
@@ -54,11 +54,11 @@ public interface JSXLexerConfigurationType
   }
 
   /**
-   * @return The file name that will be used in lexical information, if any
+   * @return The URI that will be used in lexical information, if any
    */
 
   @Value.Parameter(order = 2)
-  Optional<Path> file();
+  Optional<URI> file();
 
   /**
    * @return The string(s) used to start line comments

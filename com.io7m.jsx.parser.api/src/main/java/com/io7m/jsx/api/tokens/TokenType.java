@@ -18,7 +18,7 @@ package com.io7m.jsx.api.tokens;
 
 import com.io7m.jlexing.core.LexicalPosition;
 
-import java.nio.file.Path;
+import java.net.URI;
 
 /**
  * The type of tokens.
@@ -30,7 +30,7 @@ public interface TokenType
    * @return The lexical information for the token
    */
 
-  LexicalPosition<Path> lexical();
+  LexicalPosition<URI> lexical();
 
   /**
    * Match a token.

@@ -17,6 +17,8 @@
 package com.io7m.jsx.tests.combinators;
 
 import com.io7m.jlexing.core.LexicalPositionType;
+
+import java.net.URI;
 import java.util.Objects;
 import com.io7m.jnull.Nullable;
 import com.io7m.jsx.SExpressionListType;
@@ -33,11 +35,11 @@ final class PList extends AbstractList<SExpressionType>
 {
   private final List<SExpressionType> data;
   private final boolean square;
-  private final Optional<LexicalPositionType<Path>> lex;
+  private final Optional<LexicalPositionType<URI>> lex;
 
   PList(
     final List<SExpressionType> d,
-    final Optional<LexicalPositionType<Path>> in_lex,
+    final Optional<LexicalPositionType<URI>> in_lex,
     final boolean in_square)
   {
     this.data = Objects.requireNonNull(d);
@@ -67,7 +69,7 @@ final class PList extends AbstractList<SExpressionType>
   }
 
   @Override
-  public Optional<LexicalPositionType<Path>> lexical()
+  public Optional<LexicalPositionType<URI>> lexical()
   {
     return this.lex;
   }
