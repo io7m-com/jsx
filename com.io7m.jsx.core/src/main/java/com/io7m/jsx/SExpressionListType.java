@@ -20,7 +20,8 @@ package com.io7m.jsx;
  * The type of lists.
  */
 
-public interface SExpressionListType extends SExpressionType
+public interface SExpressionListType
+  extends SExpressionType, Iterable<SExpressionType>
 {
   /**
    * @param index The list index in the range {@code 0 <= index < {@link
