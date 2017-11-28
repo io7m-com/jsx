@@ -30,18 +30,18 @@ import java.util.Optional;
 final class PQuotedString implements SExpressionQuotedStringType
 {
   private final String text;
-  private final Optional<LexicalPosition<URI>> lex;
+  private final LexicalPosition<URI> lex;
 
   PQuotedString(
     final String t,
-    final Optional<LexicalPosition<URI>> in_lex)
+    final LexicalPosition<URI> in_lex)
   {
     this.text = Objects.requireNonNull(t);
     this.lex = Objects.requireNonNull(in_lex);
   }
 
   @Override
-  public Optional<LexicalPosition<URI>> lexical()
+  public LexicalPosition<URI> lexical()
   {
     return this.lex;
   }

@@ -18,6 +18,5 @@
  * Pretty printer unit tests.
  */
 
-@com.io7m.jnull.NonNullByDefault
 package com.io7m.jsx.tests.parser;
 

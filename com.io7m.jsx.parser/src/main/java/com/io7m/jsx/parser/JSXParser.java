@@ -50,6 +50,9 @@ import java.util.Optional;
 
 public final class JSXParser implements JSXParserType
 {
+  private static final LexicalPosition<URI> LEX_DEFAULT =
+    LexicalPosition.of(1, 0, Optional.empty());
+
   private final JSXParserConfigurationType config;
   private final JSXLexerType lexer;
 
@@ -72,19 +75,18 @@ public final class JSXParser implements JSXParserType
     final JSXParserConfigurationType c,
     final TokenSymbol t)
   {
-    final Optional<LexicalPosition<URI>> lex = getTokenLexical(c, t);
-    return new PSymbol(t.text(), lex);
+    return new PSymbol(t.text(), getTokenLexical(c, t));
   }
 
-  private static Optional<LexicalPosition<URI>> getTokenLexical(
+  private static LexicalPosition<URI> getTokenLexical(
     final JSXParserConfigurationType c,
     final TokenType t)
   {
-    final Optional<LexicalPosition<URI>> lex;
+    final LexicalPosition<URI> lex;
     if (!c.preserveLexical()) {
-      lex = Optional.empty();
+      lex = LEX_DEFAULT;
     } else {
-      lex = Optional.of(t.lexical());
+      lex = t.lexical();
     }
     return lex;
   }
