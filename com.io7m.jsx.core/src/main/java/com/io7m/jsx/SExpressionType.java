@@ -16,11 +16,9 @@
 
 package com.io7m.jsx;
 
-import com.io7m.jlexing.core.LexicalPosition;
 import com.io7m.jlexing.core.LexicalType;
 
 import java.net.URI;
-import java.util.Optional;
 
 /**
  * The type of S-expressions.

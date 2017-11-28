@@ -22,7 +22,6 @@ import com.io7m.jsx.SExpressionSymbolType;
 
 import java.net.URI;
 import java.util.Objects;
-import java.util.Optional;
 
 final class PSymbol implements SExpressionSymbolType
 {

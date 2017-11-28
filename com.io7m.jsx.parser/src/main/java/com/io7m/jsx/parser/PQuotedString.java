@@ -22,7 +22,6 @@ import com.io7m.jsx.SExpressionQuotedStringType;
 
 import java.net.URI;
 import java.util.Objects;
-import java.util.Optional;
 
 final class PQuotedString implements SExpressionQuotedStringType
 {
