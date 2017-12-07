@@ -8,7 +8,7 @@
   <parent>
     <groupId>com.io7m.jsx</groupId>
     <artifactId>com.io7m.jsx</artifactId>
-    <version>0.10.0-SNAPSHOT</version>
+    <version>1.0.0</version>
   </parent>
   <artifactId>com.io7m.jsx.prettyprint</artifactId>
 
@@ -26,7 +26,7 @@
 
     <dependency>
       <groupId>com.io7m.jpplib</groupId>
-      <artifactId>io7m-jpplib-core</artifactId>
+      <artifactId>com.io7m.jpplib.core</artifactId>
     </dependency>
   </dependencies>
 

@@ -13,7 +13,7 @@
 
   <groupId>com.io7m.jsx</groupId>
   <artifactId>com.io7m.jsx</artifactId>
-  <version>0.10.0-SNAPSHOT</version>
+  <version>1.0.0</version>
 
   <packaging>pom</packaging>
   <name>com.io7m.jsx</name>
@@ -51,6 +51,8 @@
     <connection>scm:git:https://github.com/io7m/jsx</connection>
     <developerConnection>scm:git:https://github.com/io7m/jsx</developerConnection>
   </scm>
+
+  <inceptionYear>2016</inceptionYear>
 
   <developers>
     <developer>
@@ -92,7 +94,7 @@
       <dependency>
         <groupId>com.io7m.junreachable</groupId>
         <artifactId>com.io7m.junreachable.core</artifactId>
-        <version>2.0.0-beta0004</version>
+        <version>2.0.0</version>
       </dependency>
       <dependency>
         <groupId>com.io7m.jeucreader</groupId>
@@ -102,18 +104,18 @@
       <dependency>
         <groupId>com.io7m.jlexing</groupId>
         <artifactId>com.io7m.jlexing.core</artifactId>
-        <version>2.0.0-SNAPSHOT</version>
+        <version>2.0.0</version>
       </dependency>
       <dependency>
         <groupId>com.io7m.jpplib</groupId>
-        <artifactId>io7m-jpplib-core</artifactId>
-        <version>0.7.4</version>
+        <artifactId>com.io7m.jpplib.core</artifactId>
+        <version>0.8.0</version>
       </dependency>
 
       <dependency>
         <groupId>io.vavr</groupId>
         <artifactId>vavr</artifactId>
-        <version>0.9.1</version>
+        <version>0.9.2</version>
       </dependency>
       <dependency>
         <groupId>org.immutables</groupId>
@@ -188,6 +190,15 @@
         </plugin>
       </plugins>
     </pluginManagement>
+
+    <plugins>
+      <!-- Generate a site -->
+      <plugin>
+        <groupId>com.io7m.minisite</groupId>
+        <artifactId>com.io7m.minisite.maven_plugin</artifactId>
+        <inherited>false</inherited>
+      </plugin>
+    </plugins>
   </build>
 
 </project>
