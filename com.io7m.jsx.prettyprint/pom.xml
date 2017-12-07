@@ -26,7 +26,7 @@
 
     <dependency>
       <groupId>com.io7m.jpplib</groupId>
-      <artifactId>io7m-jpplib-core</artifactId>
+      <artifactId>com.io7m.jpplib.core</artifactId>
     </dependency>
   </dependencies>
 
