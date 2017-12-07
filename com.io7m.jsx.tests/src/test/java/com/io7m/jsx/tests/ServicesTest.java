@@ -14,41 +14,36 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.io7m.jsx.serializer;
+package com.io7m.jsx.tests;
 
+import com.io7m.jsx.api.lexer.JSXLexerSupplierType;
+import com.io7m.jsx.api.parser.JSXParserSupplierType;
 import com.io7m.jsx.api.serializer.JSXSerializerSupplierType;
-import com.io7m.jsx.api.serializer.JSXSerializerType;
-import org.osgi.service.component.annotations.Component;
+import org.junit.Assert;
+import org.junit.Test;
 
-/**
- * A supplier that supplies trivial serializers.
- */
+import java.util.ServiceLoader;
 
-@Component
-public final class JSXSerializerTrivialSupplier
-  implements JSXSerializerSupplierType
+public final class ServicesTest
 {
-  /**
-   * Instantiate a supplier.
-   */
-
-  public JSXSerializerTrivialSupplier()
+  @Test
+  public void testLexer()
   {
-
+    Assert.assertTrue(ServiceLoader.load(JSXLexerSupplierType.class)
+                        .findFirst().isPresent());
   }
 
-  /**
-   * @return A new serializer supplier
-   */
-
-  public static JSXSerializerSupplierType createSupplier()
+  @Test
+  public void testParser()
   {
-    return new JSXSerializerTrivialSupplier();
+    Assert.assertTrue(ServiceLoader.load(JSXParserSupplierType.class)
+                        .findFirst().isPresent());
   }
 
-  @Override
-  public JSXSerializerType create()
+  @Test
+  public void testSerializerTrivial()
   {
-    return JSXSerializerTrivial.newSerializer();
+    Assert.assertTrue(ServiceLoader.load(JSXSerializerSupplierType.class)
+                        .findFirst().isPresent());
   }
 }
