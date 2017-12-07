@@ -6,7 +6,13 @@
   </a:author>
   <a:id>http://io7m.github.io/jsx//releases.atom</a:id>
   <a:title>com.io7m.jsx Releases</a:title>
-  <a:updated>2017-12-07T15:55:38+00:00</a:updated>
+  <a:updated>2017-12-07T21:24:39+00:00</a:updated>
+  <a:entry>
+    <a:id>2.0.0</a:id>
+    <a:updated>2017-12-07T00:00:00+00:00</a:updated>
+    <a:title>com.io7m.jsx 2.0.0 released</a:title>
+    <a:content type="text">com.io7m.jsx 2.0.0 released</a:content>
+  </a:entry>
   <a:entry>
     <a:id>1.0.0</a:id>
     <a:updated>2017-11-28T00:00:00+00:00</a:updated>
