@@ -305,8 +305,7 @@ public final class Main implements Runnable
     {
       if (!errors.isEmpty()) {
         for (final JSXParserException e : errors) {
-          final LexicalPosition<URI> lex =
-            e.getLexicalInformation();
+          final LexicalPosition<URI> lex = e.lexical();
           LOG.error(
             "parse error: {}:{}:{}: {}",
             lex.file().orElse(URI.create("urn:unknown")),

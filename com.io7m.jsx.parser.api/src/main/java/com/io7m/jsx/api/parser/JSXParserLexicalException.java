@@ -38,7 +38,7 @@ public final class JSXParserLexicalException extends JSXParserException
     final JSXLexerException in_cause)
   {
     super(
-      in_cause.lexicalInformation(),
+      in_cause.lexical(),
       Objects.requireNonNull(in_cause.getMessage(), "Message"),
       in_cause);
   }

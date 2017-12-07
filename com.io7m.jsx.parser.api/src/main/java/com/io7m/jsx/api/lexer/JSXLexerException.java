@@ -17,6 +17,7 @@
 package com.io7m.jsx.api.lexer;
 
 import com.io7m.jlexing.core.LexicalPosition;
+import com.io7m.jlexing.core.LexicalType;
 import com.io7m.jsx.JSXException;
 
 import java.net.URI;
@@ -26,7 +27,8 @@ import java.util.Objects;
  * The type of exceptions raised by the lexer.
  */
 
-public abstract class JSXLexerException extends JSXException
+public abstract class JSXLexerException
+  extends JSXException implements LexicalType<URI>
 {
   private static final long serialVersionUID = -5821503109066196034L;
   private final LexicalPosition<URI> lex;
@@ -46,11 +48,8 @@ public abstract class JSXLexerException extends JSXException
     this.lex = Objects.requireNonNull(in_lex, "Lexical information");
   }
 
-  /**
-   * @return The lexical information for the exception
-   */
-
-  public final LexicalPosition<URI> lexicalInformation()
+  @Override
+  public final LexicalPosition<URI> lexical()
   {
     return this.lex;
   }

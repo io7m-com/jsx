@@ -70,12 +70,21 @@
         </c:change>
       </c:changes>
     </c:release>
-    <c:release date="2017-11-28T12:16:00+00:00" ticket-system="com.github.io7m.jsx" version="1.0.0">
+    <c:release date="2017-11-28T00:00:00+00:00" ticket-system="com.github.io7m.jsx" version="1.0.0">
       <c:changes>
         <c:change compatible="false" date="2017-11-26T00:00:00+00:00" summary="Use URIs instead of Paths in lexical information"/>
         <c:change compatible="false" date="2017-11-26T00:00:00+00:00" summary="Use immutable value types in the definitions of SExpressionType"/>
         <c:change compatible="false" date="2017-11-26T00:00:00+00:00" summary="SExpressionListType is now Iterable"/>
-        <c:change compatible="false" date="2017-11-28T12:16:00+00:00" summary="Lexical information for SExpressionType is no longer Optional"/>
+        <c:change compatible="false" date="2017-11-28T00:00:00+00:00" summary="Lexical information for SExpressionType is no longer Optional"/>
+      </c:changes>
+    </c:release>
+    <c:release date="2017-12-07T21:05:33+00:00" ticket-system="com.github.io7m.jsx" version="2.0.0">
+      <c:changes>
+        <c:change compatible="false" date="2017-12-07T21:05:33+00:00" summary="Make exceptions implement LexicalType">
+          <c:tickets>
+            <c:ticket id="7"/>
+          </c:tickets>
+        </c:change>
       </c:changes>
     </c:release>
   </c:releases>
