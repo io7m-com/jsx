@@ -1,3 +1,0 @@
-(: map (→ (→ a b) (→ (list a) (list b))))
-
-(: map (→ [→ a b] [→ (list a) (list b)]))
