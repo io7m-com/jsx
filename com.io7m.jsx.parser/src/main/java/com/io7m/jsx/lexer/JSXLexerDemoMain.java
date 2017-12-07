@@ -71,7 +71,7 @@ public final class JSXLexerDemoMain
     } catch (final JSXLexerException e) {
       System.err.println(
         "error: lexical error: "
-          + e.lexicalInformation()
+          + e.lexical()
           + ": "
           + e.getMessage());
     }

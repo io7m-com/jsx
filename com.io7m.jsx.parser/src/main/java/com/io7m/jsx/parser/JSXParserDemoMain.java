@@ -93,7 +93,7 @@ public final class JSXParserDemoMain
       } catch (final JSXParserException x) {
         System.err.println(
           "error: parse error: "
-            + x.getLexicalInformation()
+            + x.lexical()
             + ": "
             + x.getMessage());
       }

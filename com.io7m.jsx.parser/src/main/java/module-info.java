@@ -31,4 +31,11 @@ module com.io7m.jsx.parser
   exports com.io7m.jsx.parser;
   exports com.io7m.jsx.serializer;
   exports com.io7m.jsx.lexer;
+
+  provides com.io7m.jsx.api.lexer.JSXLexerSupplierType
+    with com.io7m.jsx.lexer.JSXLexerSupplier;
+  provides com.io7m.jsx.api.parser.JSXParserSupplierType
+    with com.io7m.jsx.parser.JSXParserSupplier;
+  provides com.io7m.jsx.api.serializer.JSXSerializerSupplierType
+    with com.io7m.jsx.serializer.JSXSerializerTrivialSupplier;
 }

@@ -14,32 +14,36 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.io7m.jsx.api.parser;
+package com.io7m.jsx.tests;
 
-import com.io7m.jsx.api.lexer.JSXLexerException;
+import com.io7m.jsx.api.lexer.JSXLexerSupplierType;
+import com.io7m.jsx.api.parser.JSXParserSupplierType;
+import com.io7m.jsx.api.serializer.JSXSerializerSupplierType;
+import org.junit.Assert;
+import org.junit.Test;
 
-import java.util.Objects;
+import java.util.ServiceLoader;
 
-/**
- * The type of parser errors caused by {@link JSXLexerException} throws.
- */
-
-public final class JSXParserLexicalException extends JSXParserException
+public final class ServicesTest
 {
-  private static final long serialVersionUID = 7904039867120509695L;
-
-  /**
-   * Construct an exception.
-   *
-   * @param in_cause The cause
-   */
-
-  public JSXParserLexicalException(
-    final JSXLexerException in_cause)
+  @Test
+  public void testLexer()
   {
-    super(
-      in_cause.lexical(),
-      Objects.requireNonNull(in_cause.getMessage(), "Message"),
-      in_cause);
+    Assert.assertTrue(ServiceLoader.load(JSXLexerSupplierType.class)
+                        .findFirst().isPresent());
+  }
+
+  @Test
+  public void testParser()
+  {
+    Assert.assertTrue(ServiceLoader.load(JSXParserSupplierType.class)
+                        .findFirst().isPresent());
+  }
+
+  @Test
+  public void testSerializerTrivial()
+  {
+    Assert.assertTrue(ServiceLoader.load(JSXSerializerSupplierType.class)
+                        .findFirst().isPresent());
   }
 }

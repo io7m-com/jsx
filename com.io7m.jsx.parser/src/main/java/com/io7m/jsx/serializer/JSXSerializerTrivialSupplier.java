@@ -18,15 +18,21 @@ package com.io7m.jsx.serializer;
 
 import com.io7m.jsx.api.serializer.JSXSerializerSupplierType;
 import com.io7m.jsx.api.serializer.JSXSerializerType;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * A supplier that supplies trivial serializers.
  */
 
-public final class JSXSerializerTrivialSupplier implements
-  JSXSerializerSupplierType
+@Component
+public final class JSXSerializerTrivialSupplier
+  implements JSXSerializerSupplierType
 {
-  private JSXSerializerTrivialSupplier()
+  /**
+   * Instantiate a supplier.
+   */
+
+  public JSXSerializerTrivialSupplier()
   {
 
   }
