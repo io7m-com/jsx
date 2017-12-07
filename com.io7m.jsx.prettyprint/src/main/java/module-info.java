@@ -14,33 +14,14 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.io7m.jsx.combinators;
-
-import com.io7m.jlexing.core.LexicalPositionType;
-import com.io7m.jsx.JSXImmutableStyleType;
-import org.immutables.value.Value;
-
-import java.net.URI;
-
 /**
- * An error produced during validation of an S-expression.
+ * S-expression parsing (Pretty printer)
  */
 
-@Value.Immutable
-@JSXImmutableStyleType
-public interface JSXValidationErrorType
+module com.io7m.jsx.prettyprint
 {
-  /**
-   * @return The lexical information
-   */
+  requires com.io7m.jpplib.core;
+  requires com.io7m.jsx.core;
 
-  @Value.Parameter
-  LexicalPositionType<URI> lex();
-
-  /**
-   * @return The error message
-   */
-
-  @Value.Parameter
-  String message();
+  exports com.io7m.jsx.prettyprint;
 }

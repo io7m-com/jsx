@@ -16,23 +16,16 @@
 
 package com.io7m.jsx;
 
-import com.io7m.jlexing.core.LexicalPositionType;
+import com.io7m.jlexing.core.LexicalType;
 
-import java.nio.file.Path;
-import java.util.Optional;
+import java.net.URI;
 
 /**
  * The type of S-expressions.
  */
 
-public interface SExpressionType
+public interface SExpressionType extends LexicalType<URI>
 {
-  /**
-   * @return The lexical information for the expression, if any
-   */
-
-  Optional<LexicalPositionType<Path>> lexical();
-
   /**
    * Match an expression.
    *

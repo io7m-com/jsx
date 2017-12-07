@@ -18,7 +18,6 @@ package com.io7m.jsx.api.lexer;
 
 import com.io7m.jeucreader.UnicodeCharacterReader;
 import com.io7m.jeucreader.UnicodeCharacterReaderPushBackType;
-import java.util.Objects;
 import org.osgi.annotation.versioning.ProviderType;
 
 import java.io.InputStream;
@@ -26,6 +25,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 /**
  * The type of lexer suppliers.

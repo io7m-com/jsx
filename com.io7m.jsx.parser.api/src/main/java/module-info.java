@@ -14,33 +14,21 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.io7m.jsx.combinators;
-
-import com.io7m.jlexing.core.LexicalPositionType;
-import com.io7m.jsx.JSXImmutableStyleType;
-import org.immutables.value.Value;
-
-import java.net.URI;
-
 /**
- * An error produced during validation of an S-expression.
+ * S-expression parsing (Parser API)
  */
 
-@Value.Immutable
-@JSXImmutableStyleType
-public interface JSXValidationErrorType
+module com.io7m.jsx.parser.api
 {
-  /**
-   * @return The lexical information
-   */
+  requires static org.immutables.value;
+  requires static org.osgi.annotation;
 
-  @Value.Parameter
-  LexicalPositionType<URI> lex();
+  requires com.io7m.jlexing.core;
+  requires com.io7m.jsx.core;
+  requires com.io7m.jeucreader.core;
 
-  /**
-   * @return The error message
-   */
-
-  @Value.Parameter
-  String message();
+  exports com.io7m.jsx.api.parser;
+  exports com.io7m.jsx.api.lexer;
+  exports com.io7m.jsx.api.serializer;
+  exports com.io7m.jsx.api.tokens;
 }

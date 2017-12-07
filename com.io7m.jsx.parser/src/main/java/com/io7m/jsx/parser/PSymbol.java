@@ -16,29 +16,28 @@
 
 package com.io7m.jsx.parser;
 
-import com.io7m.jlexing.core.LexicalPositionType;
-import java.util.Objects;
+import com.io7m.jlexing.core.LexicalPosition;
 import com.io7m.jsx.SExpressionMatcherType;
 import com.io7m.jsx.SExpressionSymbolType;
 
-import java.nio.file.Path;
-import java.util.Optional;
+import java.net.URI;
+import java.util.Objects;
 
 final class PSymbol implements SExpressionSymbolType
 {
-  private final Optional<LexicalPositionType<Path>> lex;
+  private final LexicalPosition<URI> lex;
   private final String text;
 
   PSymbol(
     final String t,
-    final Optional<LexicalPositionType<Path>> in_lex)
+    final LexicalPosition<URI> in_lex)
   {
     this.text = Objects.requireNonNull(t, "Text");
     this.lex = Objects.requireNonNull(in_lex, "Lexical information");
   }
 
   @Override
-  public Optional<LexicalPositionType<Path>> lexical()
+  public LexicalPosition<URI> lexical()
   {
     return this.lex;
   }

@@ -16,7 +16,6 @@
 
 package com.io7m.jsx.combinators;
 
-import com.io7m.jlexing.core.LexicalPosition;
 import com.io7m.jsx.SExpressionListType;
 import com.io7m.jsx.SExpressionMatcherType;
 import com.io7m.jsx.SExpressionQuotedStringType;
@@ -27,7 +26,6 @@ import io.vavr.collection.List;
 import io.vavr.control.Validation;
 
 import java.util.Objects;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -80,10 +78,8 @@ public final class JSXCombinators
     sb.append(e);
     sb.append(System.lineSeparator());
 
-    return Validation.invalid(List.of(JSXValidationError.of(
-      e.lexical().orElse(
-        LexicalPosition.of(0, 0, Optional.empty())),
-      sb.toString())));
+    return Validation.invalid(List.of(
+      JSXValidationError.of(e.lexical(), sb.toString())));
   }
 
   /**
@@ -124,10 +120,8 @@ public final class JSXCombinators
       sb.append("'");
       sb.append(System.lineSeparator());
 
-      return Validation.invalid(List.of(JSXValidationError.of(
-        s.lexical().orElse(
-          LexicalPosition.of(0, 0, Optional.empty())),
-        sb.toString())));
+      return Validation.invalid(List.of(
+        JSXValidationError.of(s.lexical(), sb.toString())));
     });
   }
 
@@ -171,10 +165,8 @@ public final class JSXCombinators
       sb.append("'");
       sb.append(System.lineSeparator());
 
-      return Validation.invalid(List.of(JSXValidationError.of(
-        s.lexical().orElse(
-          LexicalPosition.of(0, 0, Optional.empty())),
-        sb.toString())));
+      return Validation.invalid(List.of(
+        JSXValidationError.of(s.lexical(), sb.toString())));
     });
   }
 
@@ -216,10 +208,8 @@ public final class JSXCombinators
       sb.append("\"");
       sb.append(System.lineSeparator());
 
-      return Validation.invalid(List.of(JSXValidationError.of(
-        s.lexical().orElse(
-          LexicalPosition.of(0, 0, Optional.empty())),
-        sb.toString())));
+      return Validation.invalid(List.of(
+        JSXValidationError.of(s.lexical(), sb.toString())));
     });
   }
 
@@ -265,10 +255,8 @@ public final class JSXCombinators
       sb.append("'");
       sb.append(System.lineSeparator());
 
-      return Validation.invalid(List.of(JSXValidationError.of(
-        s.lexical().orElse(
-          LexicalPosition.of(0, 0, Optional.empty())),
-        sb.toString())));
+      return Validation.invalid(List.of(
+        JSXValidationError.of(s.lexical(), sb.toString())));
     });
   }
 
@@ -307,8 +295,7 @@ public final class JSXCombinators
           sb.append(System.lineSeparator());
 
           return Validation.invalid(List.of(JSXValidationError.of(
-            ex.lexical().orElse(
-              LexicalPosition.of(0, 0, Optional.empty())),
+            ex.lexical(),
             sb.toString())));
         }
 
@@ -329,10 +316,8 @@ public final class JSXCombinators
           sb.append("\"");
           sb.append(System.lineSeparator());
 
-          return Validation.invalid(List.of(JSXValidationError.of(
-            ex.lexical().orElse(
-              LexicalPosition.of(0, 0, Optional.empty())),
-            sb.toString())));
+          return Validation.invalid(
+            List.of(JSXValidationError.of(ex.lexical(), sb.toString())));
         }
 
         @Override
@@ -387,10 +372,8 @@ public final class JSXCombinators
           sb.append("\"");
           sb.append(System.lineSeparator());
 
-          return Validation.invalid(List.of(JSXValidationError.of(
-            ex.lexical().orElse(
-              LexicalPosition.of(0, 0, Optional.empty())),
-            sb.toString())));
+          return Validation.invalid(List.of(
+            JSXValidationError.of(ex.lexical(), sb.toString())));
         }
 
         @Override
@@ -410,10 +393,8 @@ public final class JSXCombinators
           sb.append("'");
           sb.append(System.lineSeparator());
 
-          return Validation.invalid(List.of(JSXValidationError.of(
-            ex.lexical().orElse(
-              LexicalPosition.of(0, 0, Optional.empty())),
-            sb.toString())));
+          return Validation.invalid(List.of(
+            JSXValidationError.of(ex.lexical(), sb.toString())));
         }
       });
   }
@@ -453,10 +434,8 @@ public final class JSXCombinators
           sb.append("'");
           sb.append(System.lineSeparator());
 
-          return Validation.invalid(List.of(JSXValidationError.of(
-            ex.lexical().orElse(
-              LexicalPosition.of(0, 0, Optional.empty())),
-            sb.toString())));
+          return Validation.invalid(List.of(
+            JSXValidationError.of(ex.lexical(), sb.toString())));
         }
 
         @Override
@@ -484,10 +463,8 @@ public final class JSXCombinators
           sb.append("'");
           sb.append(System.lineSeparator());
 
-          return Validation.invalid(List.of(JSXValidationError.of(
-            ex.lexical().orElse(
-              LexicalPosition.of(0, 0, Optional.empty())),
-            sb.toString())));
+          return Validation.invalid(List.of(
+            JSXValidationError.of(ex.lexical(), sb.toString())));
         }
       });
   }

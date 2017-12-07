@@ -5,15 +5,43 @@
 
 <module name="Checker">
   <property name="severity" value="error"/>
+
+  <!-- Exclude module-info.java files from processing -->
+  <module name="BeforeExecutionExclusionFileFilter">
+    <property name="fileNamePattern" value="module\-info\.java$"/>
+  </module>
+
   <module name="TreeWalker">
+
+    <!-- Allow control of Javadoc checks with CHECKSTYLE_JAVADOC:ON and CHECKSTYLE_JAVADOC:OFF -->
+    <module name="SuppressionCommentFilter">
+      <property name="onCommentFormat" value="CHECKSTYLE_JAVADOC:ON"/>
+      <property name="offCommentFormat" value="CHECKSTYLE_JAVADOC:OFF"/>
+      <property name="checkFormat" value="Javadoc.*"/>
+    </module>
+
+    <!-- Allow control of spacing checks with CHECKSTYLE_SPACE:ON and CHECKSTYLE_SPACE:OFF -->
+    <module name="SuppressionCommentFilter">
+      <property name="onCommentFormat" value="CHECKSTYLE_SPACE:ON"/>
+      <property name="offCommentFormat" value="CHECKSTYLE_SPACE:OFF"/>
+      <property name="checkFormat" value="NoWhitespaceAfter"/>
+    </module>
+
+    <!-- Allow control of all checks with CHECKSTYLE:ON and CHECKSTYLE:OFF -->
+    <module name="SuppressionCommentFilter">
+      <property name="onCommentFormat" value="CHECKSTYLE:ON"/>
+      <property name="offCommentFormat" value="CHECKSTYLE:OFF"/>
+      <property name="checkFormat" value=".*"/>
+    </module>
+
     <!--
     <module name="AbstractClassName"/>
     <module name="AnnotationUseStyle"/>
     -->
 
-    <!-- Require that anonymous inner classes are less than 100 lines. -->
+    <!-- Require that anonymous inner classes are less than 150 lines. -->
     <module name="AnonInnerLength">
-      <property name="max" value="100"/>
+      <property name="max" value="150"/>
     </module>
 
     <module name="ArrayTrailingComma"/>
@@ -26,18 +54,16 @@
     <module name="AvoidStaticImport"/>
     <module name="BooleanExpressionComplexity"/>
     <module name="ClassDataAbstractionCoupling">
-      <property name="max" value="20"/>
+      <property name="max" value="35"/>
     </module>
     <module name="ClassFanOutComplexity">
-      <property name="max" value="85"/>
+      <property name="max" value="125"/>
     </module>
-    <module name="ClassTypeParameterName">
-      <property name="format" value="^[A-Z][A-Z0-9]*$"/>
-    </module>
+    <module name="ClassTypeParameterName"/>
     <module name="ConstantName"/>
     <module name="CovariantEquals"/>
     <module name="CyclomaticComplexity">
-      <property name="max" value="40"/>
+      <property name="max" value="70"/>
     </module>
     <!--
     <module name="DeclarationOrder"/>
@@ -58,7 +84,7 @@
     <module name="EqualsAvoidNull"/>
     <module name="EqualsHashCode"/>
     <module name="ExecutableStatementCount">
-      <property name="max" value="210"/>
+      <property name="max" value="200"/>
     </module>
     <module name="ExplicitInitialization"/>
     <module name="FallThrough"/>
@@ -76,7 +102,7 @@
       <property name="tokens" value="POST_INC,POST_DEC"/>
     </module>
     <module name="IllegalTokenText"/>
-    <module name="IllegalType"/>
+    <!-- <module name="IllegalType"/> -->
     <!-- <module name="ImportControl"/> -->
     <!-- <module name="ImportOrder"/> -->
     <!-- <module name="Indentation"/> -->
@@ -84,7 +110,7 @@
     <!-- <module name="InnerTypeLast"/> -->
     <module name="InterfaceIsType"/>
     <module name="JavaNCSS">
-      <property name="methodMaximum" value="200"/>
+      <property name="methodMaximum" value="270"/>
     </module>
     <module name="JavadocMethod">
       <property name="scope" value="public"/>
@@ -110,11 +136,12 @@
       <property name="format" value="^[a-z][a-z0-9_]*$"/>
     </module>
     <module name="MethodCount">
-      <property name="maxTotal" value="150"/>
-      <property name="maxPackage" value="150"/>
+      <property name="maxPublic" value="250"/>
+      <property name="maxTotal" value="250"/>
+      <property name="maxPackage" value="250"/>
     </module>
     <module name="MethodName">
-      <property name="format" value="^[a-z][A-Za-z0-9]*$"/>
+      <property name="format" value="^[a-z][A-Za-z0-9_]*$"/>
     </module>
     <module name="MethodParamPad"/>
     <module name="MethodTypeParameterName">
@@ -129,7 +156,9 @@
     <!-- <module name="MultipleStringLiterals"/> -->
     <module name="MultipleVariableDeclarations"/>
     <module name="MutableException"/>
-    <!-- <module name="NPathComplexity"/> -->
+    <!--
+    <module name="NPathComplexity"/>
+    -->
     <module name="NeedBraces"/>
     <module name="NestedForDepth">
       <property name="max" value="2"/>
@@ -138,13 +167,14 @@
       <property name="max" value="2"/>
     </module>
     <module name="NestedTryDepth">
-      <property name="max" value="2"/>
+      <property name="max" value="3"/>
     </module>
     <module name="NoClone"/>
     <module name="NoFinalizer"/>
     <module name="NoWhitespaceAfter"/>
     <module name="NoWhitespaceBefore"/>
     <module name="OneStatementPerLine"/>
+    <module name="OperatorWrap"/>
     <module name="OuterTypeFilename"/>
     <module name="OuterTypeNumber"/>
     <module name="PackageAnnotation"/>
@@ -155,20 +185,19 @@
       <property name="format" value="^([a-z][a-z0-9_]*|_)$"/>
     </module>
     <module name="ParameterNumber">
-      <property name="max" value="12"/>
+      <property name="max" value="10"/>
     </module>
     <module name="ParenPad"/>
     <module name="RedundantImport"/>
     <module name="RedundantModifier"/>
-    <!-- <module name="RedundantThrows"/> -->
     <module name="RequireThis"/>
-    <!-- <module name="SimplifyBooleanExpression"/> -->
+    <module name="SimplifyBooleanExpression"/>
     <module name="SimplifyBooleanReturn"/>
     <module name="StaticVariableName">
-      <property name="format" value="^[A-Z][A-Z0-9]*$"/>
+      <property name="format" value="^[A-Z][_A-Z0-9]*$"/>
     </module>
     <module name="StringLiteralEquality"/>
-    <!-- <module name="TrailingComment"/> -->
+    <module name="TrailingComment"/>
 
     <!-- Restrict class names -->
     <module name="TypeName">
@@ -178,7 +207,7 @@
 
     <!-- Restrict interface type names -->
     <module name="TypeName">
-      <property name="format" value="^[A-Z][a-zA-Z0-9_]*Type$"/>
+      <property name="format" value="^[A-Z][a-zA-Z0-9_]*(Kind|Type)$"/>
       <property name="tokens" value="INTERFACE_DEF"/>
     </module>
 
@@ -196,18 +225,10 @@
   </module>
 
   <module name="FileLength">
-    <property name="max" value="3500"/>
+    <property name="max" value="1000"/>
   </module>
 
   <module name="FileTabCharacter"/>
-
-  <!-- Check license headers of all Java files -->
-  <module name="Header">
-    <property name="header"
-              value="/*\n * Copyright © 2016 &lt;code@io7m.com&gt; http://io7m.com\n"/>
-    <property name="charset" value="UTF-8"/>
-  </module>
-
   <module name="JavadocPackage"/>
   <module name="NewlineAtEndOfFile"/>
   <!-- <module name="StrictDuplicateCode"/> -->

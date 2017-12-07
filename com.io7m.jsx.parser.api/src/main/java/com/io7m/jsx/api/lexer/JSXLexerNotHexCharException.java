@@ -18,7 +18,7 @@ package com.io7m.jsx.api.lexer;
 
 import com.io7m.jlexing.core.LexicalPosition;
 
-import java.nio.file.Path;
+import java.net.URI;
 
 /**
  * An exception indicating that a hexadecimal character was expected, but
@@ -36,7 +36,7 @@ public final class JSXLexerNotHexCharException extends JSXLexerException
    * @param in_message The exception message
    */
   public JSXLexerNotHexCharException(
-    final LexicalPosition<Path> in_lex,
+    final LexicalPosition<URI> in_lex,
     final String in_message)
   {
     super(in_lex, in_message);

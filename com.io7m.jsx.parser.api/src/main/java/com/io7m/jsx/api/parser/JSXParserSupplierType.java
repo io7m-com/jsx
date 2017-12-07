@@ -17,7 +17,6 @@
 package com.io7m.jsx.api.parser;
 
 import com.io7m.jeucreader.UnicodeCharacterReaderPushBackType;
-import java.util.Objects;
 import com.io7m.jsx.api.lexer.JSXLexerConfigurationType;
 import com.io7m.jsx.api.lexer.JSXLexerSupplierType;
 import com.io7m.jsx.api.lexer.JSXLexerType;
@@ -25,6 +24,7 @@ import org.osgi.annotation.versioning.ProviderType;
 
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.util.Objects;
 
 /**
  * The type of parser suppliers.

@@ -26,6 +26,7 @@ import io.vavr.control.Validation;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -33,19 +34,22 @@ import java.util.function.Function;
 
 public final class JSXCombinatorsTest
 {
+  private static final LexicalPosition<URI> DEFAULT_LEX =
+    LexicalPosition.of(1, 0, Optional.empty());
+
   @Test
   public void testAnySymbol()
   {
     Assert.assertTrue(
-      JSXCombinators.anySymbol(new PSymbol("x", Optional.empty())).isValid());
+      JSXCombinators.anySymbol(new PSymbol("x", DEFAULT_LEX)).isValid());
 
     Assert.assertFalse(
       JSXCombinators.anySymbol(
-        new PList(new ArrayList<>(1), Optional.empty(), false)).isValid());
+        new PList(new ArrayList<>(1), DEFAULT_LEX, false)).isValid());
 
     Assert.assertFalse(
       JSXCombinators.anySymbol(
-        new PQuotedString("xyz", Optional.empty())).isValid());
+        new PQuotedString("xyz", DEFAULT_LEX)).isValid());
   }
 
   @Test
@@ -53,20 +57,20 @@ public final class JSXCombinatorsTest
   {
     Assert.assertTrue(
       JSXCombinators.anyOfSymbol(
-        new PSymbol("x", Optional.empty()), List.of("x")).isValid());
+        new PSymbol("x", DEFAULT_LEX), List.of("x")).isValid());
 
     Assert.assertFalse(
       JSXCombinators.anyOfSymbol(
-        new PSymbol("x", Optional.empty()), List.of("y")).isValid());
+        new PSymbol("x", DEFAULT_LEX), List.of("y")).isValid());
 
     Assert.assertFalse(
       JSXCombinators.anyOfSymbol(
-        new PList(new ArrayList<>(1), Optional.empty(), false),
+        new PList(new ArrayList<>(1), DEFAULT_LEX, false),
         List.of("x")).isValid());
 
     Assert.assertFalse(
       JSXCombinators.anyOfSymbol(
-        new PQuotedString("xyz", Optional.empty()),
+        new PQuotedString("xyz", DEFAULT_LEX),
         List.of("x")).isValid());
   }
 
@@ -74,15 +78,15 @@ public final class JSXCombinatorsTest
   public void testAnyList()
   {
     Assert.assertFalse(
-      JSXCombinators.anyList(new PSymbol("x", Optional.empty())).isValid());
+      JSXCombinators.anyList(new PSymbol("x", DEFAULT_LEX)).isValid());
 
     Assert.assertTrue(
       JSXCombinators.anyList(
-        new PList(new ArrayList<>(1), Optional.empty(), false)).isValid());
+        new PList(new ArrayList<>(1), DEFAULT_LEX, false)).isValid());
 
     Assert.assertFalse(
       JSXCombinators.anyList(
-        new PQuotedString("xyz", Optional.empty())).isValid());
+        new PQuotedString("xyz", DEFAULT_LEX)).isValid());
   }
 
   @Test
@@ -91,15 +95,15 @@ public final class JSXCombinatorsTest
     Assert.assertFalse(
       JSXCombinators.anyQuotedString(new PSymbol(
         "x",
-        Optional.empty())).isValid());
+        DEFAULT_LEX)).isValid());
 
     Assert.assertFalse(
       JSXCombinators.anyQuotedString(
-        new PList(new ArrayList<>(1), Optional.empty(), false)).isValid());
+        new PList(new ArrayList<>(1), DEFAULT_LEX, false)).isValid());
 
     Assert.assertTrue(
       JSXCombinators.anyQuotedString(
-        new PQuotedString("xyz", Optional.empty())).isValid());
+        new PQuotedString("xyz", DEFAULT_LEX)).isValid());
   }
 
   @Test
@@ -107,27 +111,27 @@ public final class JSXCombinatorsTest
   {
     Assert.assertTrue(
       JSXCombinators.anyOfQuotedString(
-        new PQuotedString("x", Optional.empty()), List.of("x")).isValid());
+        new PQuotedString("x", DEFAULT_LEX), List.of("x")).isValid());
 
     Assert.assertFalse(
       JSXCombinators.anyOfQuotedString(
-        new PQuotedString("x", Optional.empty()), List.of("y")).isValid());
+        new PQuotedString("x", DEFAULT_LEX), List.of("y")).isValid());
 
     Assert.assertFalse(
       JSXCombinators.anyOfQuotedString(
-        new PList(new ArrayList<>(1), Optional.empty(), false),
+        new PList(new ArrayList<>(1), DEFAULT_LEX, false),
         List.of("x")).isValid());
 
     Assert.assertFalse(
       JSXCombinators.anyOfQuotedString(
-        new PSymbol("xyz", Optional.empty()),
+        new PSymbol("xyz", DEFAULT_LEX),
         List.of("x")).isValid());
   }
 
   @Test
   public void testListAtEmpty()
   {
-    final PList list = new PList(new ArrayList<>(1), Optional.empty(), false);
+    final PList list = new PList(new ArrayList<>(1), DEFAULT_LEX, false);
 
     final Function<SExpressionType, Validation<List<JSXValidationErrorType>, Integer>> receiver =
       e -> Validation.valid(Integer.valueOf(23));
@@ -143,8 +147,8 @@ public final class JSXCombinatorsTest
   @Test
   public void testListAtOK()
   {
-    final PList list = new PList(new ArrayList<>(1), Optional.empty(), false);
-    list.add(new PSymbol("23", Optional.empty()));
+    final PList list = new PList(new ArrayList<>(1), DEFAULT_LEX, false);
+    list.add(new PSymbol("23", DEFAULT_LEX));
 
     final AtomicInteger calls = new AtomicInteger(0);
     final Function<SExpressionType, Validation<List<JSXValidationErrorType>, Integer>> receiver =
@@ -168,22 +172,22 @@ public final class JSXCombinatorsTest
   {
     Assert.assertTrue(
       JSXCombinators.exactSymbol(
-        new PSymbol("x", Optional.empty()),
+        new PSymbol("x", DEFAULT_LEX),
         "x").isValid());
 
     Assert.assertFalse(
       JSXCombinators.exactSymbol(
-        new PSymbol("y", Optional.empty()),
+        new PSymbol("y", DEFAULT_LEX),
         "x").isValid());
 
     Assert.assertFalse(
       JSXCombinators.exactSymbol(
-        new PList(new ArrayList<>(1), Optional.empty(), false),
+        new PList(new ArrayList<>(1), DEFAULT_LEX, false),
         "x").isValid());
 
     Assert.assertFalse(
       JSXCombinators.exactSymbol(
-        new PQuotedString("xyz", Optional.empty()),
+        new PQuotedString("xyz", DEFAULT_LEX),
         "x").isValid());
   }
 
@@ -192,22 +196,22 @@ public final class JSXCombinatorsTest
   {
     Assert.assertTrue(
       JSXCombinators.exactQuotedString(
-        new PQuotedString("x", Optional.empty()),
+        new PQuotedString("x", DEFAULT_LEX),
         "x").isValid());
 
     Assert.assertFalse(
       JSXCombinators.exactQuotedString(
-        new PQuotedString("y", Optional.empty()),
+        new PQuotedString("y", DEFAULT_LEX),
         "x").isValid());
 
     Assert.assertFalse(
       JSXCombinators.exactQuotedString(
-        new PList(new ArrayList<>(1), Optional.empty(), false),
+        new PList(new ArrayList<>(1), DEFAULT_LEX, false),
         "x").isValid());
 
     Assert.assertFalse(
       JSXCombinators.exactQuotedString(
-        new PSymbol("x", Optional.empty()),
+        new PSymbol("x", DEFAULT_LEX),
         "x").isValid());
   }
 
@@ -215,26 +219,25 @@ public final class JSXCombinatorsTest
   public void testListMap()
   {
     final ArrayList<SExpressionType> xs = new ArrayList<>(3);
-    xs.add(new PSymbol("x", Optional.empty()));
-    xs.add(new PSymbol("y", Optional.empty()));
-    xs.add(new PSymbol("z", Optional.empty()));
+    xs.add(new PSymbol("x", DEFAULT_LEX));
+    xs.add(new PSymbol("y", DEFAULT_LEX));
+    xs.add(new PSymbol("z", DEFAULT_LEX));
 
     Assert.assertTrue(
       JSXCombinators.listMap(
-        new PList(xs, Optional.empty(), false),
+        new PList(xs, DEFAULT_LEX, false),
         x -> Validation.valid(Integer.valueOf(23))).isValid());
 
     final Function<SExpressionType, Validation<List<JSXValidationErrorType>, Integer>> fail =
       e -> {
-        final JSXValidationError err = JSXValidationError.of(
-          LexicalPosition.of(0, 0, Optional.empty()),
-          "Error");
+        final JSXValidationError err =
+          JSXValidationError.of(DEFAULT_LEX, "Error");
         return Validation.invalid(List.of(err));
       };
 
     Assert.assertFalse(
       JSXCombinators.listMap(
-        new PList(xs, Optional.empty(), false),
+        new PList(xs, DEFAULT_LEX, false),
         fail).isValid());
   }
 }

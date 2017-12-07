@@ -8,7 +8,7 @@
   <parent>
     <groupId>com.io7m.jsx</groupId>
     <artifactId>com.io7m.jsx</artifactId>
-    <version>0.9.0</version>
+    <version>1.0.0</version>
   </parent>
   <artifactId>com.io7m.jsx.documentation</artifactId>
 
@@ -22,11 +22,6 @@
   </properties>
 
   <dependencies>
-    <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>com.io7m.jsx.cmdline</artifactId>
-      <version>${project.version}</version>
-    </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>com.io7m.jsx.combinators</artifactId>

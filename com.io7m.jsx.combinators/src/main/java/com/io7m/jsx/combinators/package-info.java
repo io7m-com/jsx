@@ -18,6 +18,5 @@
  * Combinators for validating and extracting data from S-expressions.
  */
 
-@com.io7m.jnull.NonNullByDefault
 package com.io7m.jsx.combinators;
 

@@ -23,6 +23,8 @@ import com.beust.jcommander.Parameters;
 import com.io7m.jeucreader.UnicodeCharacterReader;
 import com.io7m.jeucreader.UnicodeCharacterReaderPushBackType;
 import com.io7m.jlexing.core.LexicalPosition;
+
+import java.net.URI;
 import java.util.Objects;
 import com.io7m.jsx.SExpressionType;
 import com.io7m.jsx.api.lexer.JSXLexerConfiguration;
@@ -226,7 +228,7 @@ public final class Main implements Runnable
           final JSXLexerConfiguration.Builder lexer_config_builder =
             JSXLexerConfiguration.builder();
 
-          lexer_config_builder.setFile(path);
+          lexer_config_builder.setFile(path.toUri());
           lexer_config_builder.setNewlinesInQuotedStrings(
             this.lex_newlines_quoted);
           lexer_config_builder.setSquareBrackets(
@@ -303,11 +305,11 @@ public final class Main implements Runnable
     {
       if (!errors.isEmpty()) {
         for (final JSXParserException e : errors) {
-          final LexicalPosition<Path> lex =
+          final LexicalPosition<URI> lex =
             e.getLexicalInformation();
           LOG.error(
             "parse error: {}:{}:{}: {}",
-            lex.file().orElse(Paths.get("")),
+            lex.file().orElse(URI.create("urn:unknown")),
             Integer.valueOf(lex.line()),
             Integer.valueOf(lex.column()),
             e.getMessage());

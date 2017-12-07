@@ -16,7 +16,6 @@
 
 package com.io7m.jsx;
 
-
 /**
  * The type of quoted strings.
  */

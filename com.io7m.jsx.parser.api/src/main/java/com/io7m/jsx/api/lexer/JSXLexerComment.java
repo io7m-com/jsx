@@ -42,6 +42,12 @@ public enum JSXLexerComment
 
   private final int token;
 
+  JSXLexerComment(
+    final int in_token)
+  {
+    this.token = in_token;
+  }
+
   /**
    * @return The comment character codepoint
    */
@@ -49,11 +55,5 @@ public enum JSXLexerComment
   public int token()
   {
     return this.token;
-  }
-
-  JSXLexerComment(
-    final int in_token)
-  {
-    this.token = in_token;
   }
 }

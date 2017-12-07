@@ -16,8 +16,7 @@
 
 package com.io7m.jsx.parser;
 
-import com.io7m.jlexing.core.LexicalPositionType;
-import java.util.Objects;
+import com.io7m.jlexing.core.LexicalPosition;
 import com.io7m.jsx.SExpressionQuotedStringType;
 import com.io7m.jsx.SExpressionType;
 import com.io7m.jsx.api.lexer.JSXLexerException;
@@ -39,9 +38,10 @@ import com.io7m.jsx.api.tokens.TokenType;
 import com.io7m.junreachable.UnreachableCodeException;
 
 import java.io.IOException;
-import java.nio.file.Path;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -50,6 +50,9 @@ import java.util.Optional;
 
 public final class JSXParser implements JSXParserType
 {
+  private static final LexicalPosition<URI> LEX_DEFAULT =
+    LexicalPosition.of(1, 0, Optional.empty());
+
   private final JSXParserConfigurationType config;
   private final JSXLexerType lexer;
 
@@ -72,20 +75,18 @@ public final class JSXParser implements JSXParserType
     final JSXParserConfigurationType c,
     final TokenSymbol t)
   {
-    final Optional<LexicalPositionType<Path>> lex =
-      getTokenLexical(c, t);
-    return new PSymbol(t.text(), lex);
+    return new PSymbol(t.text(), getTokenLexical(c, t));
   }
 
-  private static Optional<LexicalPositionType<Path>> getTokenLexical(
+  private static LexicalPosition<URI> getTokenLexical(
     final JSXParserConfigurationType c,
     final TokenType t)
   {
-    final Optional<LexicalPositionType<Path>> lex;
+    final LexicalPosition<URI> lex;
     if (!c.preserveLexical()) {
-      lex = Optional.empty();
+      lex = LEX_DEFAULT;
     } else {
-      lex = Optional.of(t.lexical());
+      lex = t.lexical();
     }
     return lex;
   }

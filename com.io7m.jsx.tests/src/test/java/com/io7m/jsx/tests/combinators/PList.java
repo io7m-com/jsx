@@ -16,28 +16,26 @@
 
 package com.io7m.jsx.tests.combinators;
 
-import com.io7m.jlexing.core.LexicalPositionType;
-import java.util.Objects;
-import com.io7m.jnull.Nullable;
+import com.io7m.jlexing.core.LexicalPosition;
 import com.io7m.jsx.SExpressionListType;
 import com.io7m.jsx.SExpressionMatcherType;
 import com.io7m.jsx.SExpressionType;
 
-import java.nio.file.Path;
+import java.net.URI;
 import java.util.AbstractList;
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 
 final class PList extends AbstractList<SExpressionType>
   implements SExpressionListType
 {
   private final List<SExpressionType> data;
   private final boolean square;
-  private final Optional<LexicalPositionType<Path>> lex;
+  private final LexicalPosition<URI> lex;
 
   PList(
     final List<SExpressionType> d,
-    final Optional<LexicalPositionType<Path>> in_lex,
+    final LexicalPosition<URI> in_lex,
     final boolean in_square)
   {
     this.data = Objects.requireNonNull(d);
@@ -48,7 +46,7 @@ final class PList extends AbstractList<SExpressionType>
   @Override
   public void add(
     final int index,
-    final @Nullable SExpressionType element)
+    final SExpressionType element)
   {
     this.data.add(index, Objects.requireNonNull(element));
   }
@@ -67,7 +65,7 @@ final class PList extends AbstractList<SExpressionType>
   }
 
   @Override
-  public Optional<LexicalPositionType<Path>> lexical()
+  public LexicalPosition<URI> lexical()
   {
     return this.lex;
   }
@@ -90,9 +88,11 @@ final class PList extends AbstractList<SExpressionType>
   @Override
   public SExpressionType set(
     final int index,
-    final @Nullable SExpressionType element)
+    final SExpressionType element)
   {
-    return Objects.requireNonNull(this.data.set(index, Objects.requireNonNull(element)));
+    return Objects.requireNonNull(this.data.set(
+      index,
+      Objects.requireNonNull(element)));
   }
 
   @Override

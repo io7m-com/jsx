@@ -18,6 +18,5 @@
  * Command line parsing and formatting utility.
  */
 
-@com.io7m.jnull.NonNullByDefault
 package com.io7m.jsx.cmdline;
 
