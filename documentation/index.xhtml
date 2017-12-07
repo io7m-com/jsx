@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>com.io7m.jsx 1.0.0 Documentation</title><link rel="stylesheet" type="text/css" href="jstructural-2.0.0-layout.css"/><link rel="stylesheet" type="text/css" href="jstructural-2.0.0-colour.css"/><link rel="stylesheet" type="text/css" href="documentation.css"/></head><body><div class="st200_body"><div class="brand">
+  <div class="brand_left">
+    <a href="http://io7m.com/">io7m</a>
+  </div>
+  <div class="brand_right">
+    <a href="http://io7m.github.io/jsx/">com.io7m.jsx</a> 1.0.0
+  </div>
+</div><div class="st200_document_title">com.io7m.jsx 1.0.0 Documentation</div><ul class="st200_contents st200_document_contents"><li class="st200_contents_item st200_contents_item1 st200_contents_item_part"><a href="#st200_p1">1. Package Information</a><ul class="st200_contents st200_part_contents"><li class="st200_contents_item st200_contents_item2 st200_contents_item_section"><a href="#st200_p1s1">1.1. Orientation</a></li><li class="st200_contents_item st200_contents_item2 st200_contents_item_section"><a href="#st200_p1s2">1.2. Installation</a></li><li class="st200_contents_item st200_contents_item2 st200_contents_item_section"><a href="#st200_p1s3">1.3. Platform Specific Issues</a></li><li class="st200_contents_item st200_contents_item2 st200_contents_item_section"><a href="#st200_p1s4">1.4. License</a></li></ul></li><li class="st200_contents_item st200_contents_item1 st200_contents_item_part"><a href="#st200_p2">2. Expression Language</a><ul class="st200_contents st200_part_contents"><li class="st200_contents_item st200_contents_item2 st200_contents_item_section"><a href="#st200_p2s1">2.1. Notational Conventions</a></li><li class="st200_contents_item st200_contents_item2 st200_contents_item_section"><a href="#st200_p2s2">2.2. Language</a></li></ul></li><li class="st200_contents_item st200_contents_item1 st200_contents_item_part"><a href="#st200_p3">3. API Reference</a><ul class="st200_contents st200_part_contents"><li class="st200_contents_item st200_contents_item2 st200_contents_item_section"><a href="#st200_p3s1">3.1. Javadoc</a></li></ul></li></ul><div class="st200_part_container"><div class="st200_part_title_number"><a id="st200_p1" href="#st200_p1">1</a></div><div class="st200_part_title">Package Information</div><ul class="st200_contents st200_part_contents_outer st200_part_contents"><li class="st200_contents_item st200_contents_item1 st200_contents_item_section"><a href="#st200_p1s1">1.1. Orientation</a><ul class="st200_contents st200_section_contents"><li class="st200_contents_item st200_contents_item2 st200_contents_item_subsection"><a href="#st200_p1s1ss1">1.1.1. Overview</a></li></ul></li><li class="st200_contents_item st200_contents_item1 st200_contents_item_section"><a href="#st200_p1s2">1.2. Installation</a><ul class="st200_contents st200_section_contents"><li class="st200_contents_item st200_contents_item2 st200_contents_item_subsection"><a href="#st200_p1s2ss1">1.2.1. Source compilation</a></li><li class="st200_contents_item st200_contents_item2 st200_contents_item_subsection"><a href="#st200_p1s2ss2">1.2.2. Maven</a></li></ul></li><li class="st200_contents_item st200_contents_item1 st200_contents_item_section"><a href="#st200_p1s3">1.3. Platform Specific Issues</a></li><li class="st200_contents_item st200_contents_item1 st200_contents_item_section"><a href="#st200_p1s4">1.4. License</a></li></ul><div class="st200_section_container"><div class="st200_section_title_number"><a id="st200_p1s1" href="#st200_p1s1">1.1</a></div><div class="st200_section_title">Orientation</div><div class="st200_subsection_container"><div class="st200_subsection_title_number"><a id="st200_p1s1ss1" href="#st200_p1s1ss1">1.1.1</a></div><div class="st200_subsection_title">Overview</div><div class="st200_paragraph_container"><div class="st200_paragraph_number"><a id="st200_p1s1ss1pg1" href="#st200_p1s1ss1pg1">1</a></div><div class="st200_paragraph">
+        The <span class="st200_term package">com.io7m.jsx</span> package
+        implements an S-expression parser.
+      </div></div></div></div><div class="st200_section_container"><div class="st200_section_title_number"><a id="st200_p1s2" href="#st200_p1s2">1.2</a></div><div class="st200_section_title">Installation</div><div class="st200_subsection_container"><div class="st200_subsection_title_number"><a id="st200_p1s2ss1" href="#st200_p1s2ss1">1.2.1</a></div><div class="st200_subsection_title">Source compilation</div><div class="st200_paragraph_container"><div class="st200_paragraph_number"><a id="st200_p1s2ss1pg1" href="#st200_p1s2ss1pg1">1</a></div><div class="st200_paragraph">
+        The project can be compiled and installed with
+        <a class="st200_link_external" href="http://maven.apache.org">Maven</a>:
+      </div></div><div class="st200_paragraph_container"><div class="st200_paragraph_number"><a id="st200_p1s2ss1pg2" href="#st200_p1s2ss1pg2">2</a></div><div class="st200_paragraph">
+        <pre class="st200_verbatim example">$ mvn -C clean install</pre>
+      </div></div></div><div class="st200_subsection_container"><div class="st200_subsection_title_number"><a id="st200_p1s2ss2" href="#st200_p1s2ss2">1.2.2</a></div><div class="st200_subsection_title">Maven</div><div class="st200_paragraph_container"><div class="st200_paragraph_number"><a id="st200_p1s2ss2pg1" href="#st200_p1s2ss2pg1">1</a></div><div class="st200_paragraph">
+        Regular releases are made to the
+        <a class="st200_link_external" href="http://search.maven.org/#search%7Cga%7C1%7Ccom.io7m.jsx">Central Repository</a>,
+        so it's possible to use the <span class="st200_term package">com.io7m.jsx</span>
+        package in your projects with the following Maven dependency:
+      </div></div><div class="st200_paragraph_container"><div class="st200_paragraph_number"><a id="st200_p1s2ss2pg2" href="#st200_p1s2ss2pg2">2</a></div><div class="st200_paragraph">
+        <pre class="st200_verbatim example">&lt;dependency&gt;
+  &lt;groupId&gt;com.io7m.jsx&lt;/groupId&gt;
+  &lt;artifactId&gt;com.io7m.jsx-core&lt;/artifactId&gt;
+  &lt;version&gt;1.0.0&lt;/version&gt;
+&lt;/dependency&gt;</pre>
+      </div></div><div class="st200_paragraph_container"><div class="st200_paragraph_number"><a id="st200_p1s2ss2pg3" href="#st200_p1s2ss2pg3">3</a></div><div class="st200_paragraph">
+        All <a class="st200_link_external" href="http://io7m.com">io7m.com</a>
+        packages use Semantic Versioning
+        <span class="st200_footnote_reference"><a id="st200_fn_0_ref" href="#st200_fn_0">[0]</a></span>, which implies that it is always safe to use version ranges
+        with an exclusive upper bound equal to the next major version - the API of
+        the package will not change in a backwards-incompatible manner before the
+        next major version.
+      </div></div></div></div><div class="st200_section_container"><div class="st200_section_title_number"><a id="st200_p1s3" href="#st200_p1s3">1.3</a></div><div class="st200_section_title">Platform Specific Issues</div><div class="st200_paragraph_container"><div class="st200_paragraph_number"><a id="st200_p1s3pg1" href="#st200_p1s3pg1">1</a></div><div class="st200_paragraph">
+      There are currently no known platform-specific issues.
+    </div></div></div><div class="st200_section_container"><div class="st200_section_title_number"><a id="st200_p1s4" href="#st200_p1s4">1.4</a></div><div class="st200_section_title">License</div><div class="st200_paragraph_container"><div class="st200_paragraph_number"><a id="st200_p1s4pg1" href="#st200_p1s4pg1">1</a></div><div class="st200_paragraph">
+      All files distributed with the <span class="st200_term package">com.io7m.jsx</span>
+      package are placed under the following license:
+      <pre class="st200_verbatim license">Copyright © 2015 &lt;code@io7m.com&gt; http://io7m.com
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+      </pre>
+    </div></div></div></div><div class="st200_part_container"><div class="st200_part_title_number"><a id="st200_p2" href="#st200_p2">2</a></div><div class="st200_part_title">Expression Language</div><ul class="st200_contents st200_part_contents_outer st200_part_contents"><li class="st200_contents_item st200_contents_item1 st200_contents_item_section"><a href="#st200_p2s1">2.1. Notational Conventions</a><ul class="st200_contents st200_section_contents"><li class="st200_contents_item st200_contents_item2 st200_contents_item_subsection"><a href="#st200_p2s1ss1">2.1.1. Unicode</a></li><li class="st200_contents_item st200_contents_item2 st200_contents_item_subsection"><a href="#st200_p2s1ss2">2.1.2. EBNF</a></li></ul></li><li class="st200_contents_item st200_contents_item1 st200_contents_item_section"><a href="#st200_p2s2">2.2. Language</a></li></ul><div class="st200_section_container"><div class="st200_section_title_number"><a id="st200_p2s1" href="#st200_p2s1">2.1</a></div><div class="st200_section_title">Notational Conventions</div><ul class="st200_contents st200_section_contents_outer st200_section_contents"><li class="st200_contents_item st200_contents_item1 st200_contents_item_subsection"><a href="#st200_p2s1ss1">2.1.1. Unicode</a></li><li class="st200_contents_item st200_contents_item1 st200_contents_item_subsection"><a href="#st200_p2s1ss2">2.1.2. EBNF</a></li></ul><div class="st200_subsection_container"><div class="st200_subsection_title_number"><a id="st200_p2s1ss1" href="#st200_p2s1ss1">2.1.1</a></div><div class="st200_subsection_title">Unicode</div><div class="st200_paragraph_container"><div class="st200_paragraph_number"><a id="st200_p2s1ss1pg1" href="#st200_p2s1ss1pg1">1</a></div><div class="st200_paragraph">
+        The specification makes reference to the
+        <a class="st200_link_external" href="http://unicode.org">Unicode</a>
+        character set which, at the time of writing, is at version
+        <span class="st200_term constant">6.2.0</span>. The specification
+        often references specific Unicode characters, and does so using
+        the standard notation <span class="st200_term expression">U+NNNN</span>,
+        where <span class="st200_term variable">N</span> represents a hexadecimal
+        digit. For example, <span class="st200_term constant">U+03BB</span>
+        corresponds to the lowercase lambda symbol <span class="st200_term constant">λ</span>.
+      </div></div></div><div class="st200_subsection_container"><div class="st200_subsection_title_number"><a id="st200_p2s1ss2" href="#st200_p2s1ss2">2.1.2</a></div><div class="st200_subsection_title">EBNF</div><div class="st200_paragraph_container"><div class="st200_paragraph_number"><a id="st200_p2s1ss2pg1" href="#st200_p2s1ss2pg1">1</a></div><div class="st200_paragraph">
+        The specification gives grammar definitions in
+        <span class="st200_term package">ISO/IEC 14977:1996</span> Extended Backus-Naur
+        form.
+      </div></div></div></div><div class="st200_section_container"><div class="st200_section_title_number"><a id="st200_p2s2" href="#st200_p2s2">2.2</a></div><div class="st200_section_title">Language</div><div class="st200_paragraph_container"><div class="st200_paragraph_number"><a id="st200_p2s2pg1" href="#st200_p2s2pg1">1</a></div><div class="st200_paragraph">
+      The language understood by the <span class="st200_term package">com.io7m.jsx</span>
+      package can be defined by the following grammar:
+    </div></div><div class="st200_formal_item"><div class="st200_formal_item_title"><a id="st200_p2s2fo1" href="#st200_p2s2fo1">2.2.1. Grammar (non-terminals)</a></div><pre class="st200_verbatim">expression =
+    symbol
+  | quoted_string
+  | "(" , { expression } , ")" ;
+
+expression_squares =
+    symbol
+  | quoted_string
+  | "[" , { expression_squares } , "]"
+  | "(" , { expression_squares } , ")" ;</pre></div><div class="st200_paragraph_container"><div class="st200_paragraph_number"><a id="st200_p2s2pg2" href="#st200_p2s2pg2">2</a></div><div class="st200_paragraph">
+      The <span class="st200_term package">com.io7m.jsx</span> lexer
+      recognizes the sequences <span class="st200_term constant">U+000D U+000A</span>
+      and <span class="st200_term constant">U+000A</span> as line terminators for the
+      purposes of tracking line and column numbers for diagnostic messages. The
+      lexer does not permit bare <span class="st200_term constant">U+000D</span>
+      characters to appear outside of 
+      <a class="st200_link" href="#st200_p2s2pg10">quoted strings</a>.
+    </div></div><div class="st200_paragraph_container"><div class="st200_paragraph_number"><a id="st200_p2s2pg3" href="#st200_p2s2pg3">3</a></div><div class="st200_paragraph">
+      Many systems that parse S-expressions allow for the use of square
+      brackets to increase readability. For example:
+    </div></div><div class="st200_formal_item"><div class="st200_formal_item_title"><a id="st200_p2s2fo2" href="#st200_p2s2fo2">2.2.2. Square brackets</a></div><pre class="st200_verbatim">(: map (→ (→ a b) (→ (list a) (list b))))
+
+(: map (→ [→ a b] [→ (list a) (list b)]))</pre></div><div class="st200_paragraph_container"><div class="st200_paragraph_number"><a id="st200_p2s2pg4" href="#st200_p2s2pg4">4</a></div><div class="st200_paragraph">
+      Note that the second version that uses square brackets is slightly
+      easier to understand due to the square brackets more clearly indicating
+      which of the nested lists are being terminated. The 
+      <span class="st200_term package">com.io7m.jsx</span> lexer can 
+      optionally treat <span class="st200_term constant">U+005B [</span> and
+      <span class="st200_term constant">U+005D ]</span> as tokens, and the parser
+      ensures that the use of the brackets is balanced with respect to
+      ordinary parentheses as part of the grammar above. If square brackets
+      are enabled, the language understood by the 
+      <span class="st200_term package">com.io7m.jsx</span> package is
+      defined by <span class="st200_term constant">expression_squares</span>.
+      Otherwise, the language is defined by
+      <span class="st200_term constant">expression</span>.
+    </div></div><div class="st200_paragraph_container"><div class="st200_paragraph_number"><a id="st200_p2s2pg5" href="#st200_p2s2pg5">5</a></div><div class="st200_paragraph">
+      The terminals of the language are given by:
+    </div></div><div class="st200_formal_item"><div class="st200_formal_item_title"><a id="st200_p2s2fo3" href="#st200_p2s2fo3">2.2.3. Grammar (terminals)</a></div><pre class="st200_verbatim">symbol_character =
+  ? not (")" | "(" | U+0022 | WHITESPACE) ? ;
+
+symbol_character_squares =
+  ? not (")" | "(" | "[" | "]" | U+0022 | WHITESPACE) ? ;
+
+symbol =
+  symbol_character , { symbol_character } ;
+
+quoted_character =
+  ? not U+0022 ? ;
+
+quoted_string =
+  (quoted_character | escape) , { (quoted_character | escape) } ;
+
+escape =
+    escape_carriage
+  | escape_newline
+  | escape_tab
+  | escape_quote
+  | escape_unicode4
+  | escape_unicode8 ;
+
+escape_carriage =
+  "\r" ;
+
+escape_newline =
+  "\n" ;
+
+escape_quote =
+  "\" , U+0022 ;
+
+escape_tab =
+  "\t" ;
+
+escape_unicode4 =
+  "\u" ,
+  hex_digit , hex_digit , hex_digit , hex_digit ;
+  
+escape_unicode8 =
+  "\u" ,
+  hex_digit , hex_digit , hex_digit , hex_digit ,
+  hex_digit , hex_digit , hex_digit , hex_digit ;
+
+hex_digit =
+  "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "0" |
+  "a" | "A" | "b" | "B" | "c" | "C" | "d" | "D" | "e" | "E" | "f" | "F" ;
+</pre></div><div class="st200_paragraph_container"><div class="st200_paragraph_number"><a id="st200_p2s2pg6" href="#st200_p2s2pg6">6</a></div><div class="st200_paragraph">
+      Due to limitations in the
+      <a class="st200_link_external" href="https://en.wikipedia.org/wiki/Extended_Backus–Naur_Form">EBNF</a>
+      format, the definitions for <span class="st200_term symbol">symbol_character</span>
+      and <span class="st200_term symbol">quoted_character</span> cannot be expressed
+      directly.
+    </div></div><div class="st200_paragraph_container"><div class="st200_paragraph_number"><a id="st200_p2s2pg7" href="#st200_p2s2pg7">7</a></div><div class="st200_paragraph">
+      Informally, the <span class="st200_term symbol">symbol_character</span>
+      rule should be understood to specify any Unicode character that is not
+      <a class="st200_link_external" href="https://en.wikipedia.org/wiki/Whitespace_character">whitespace</a>,
+      is not <span class="st200_term constant">U+0028 (</span>,  
+      is not <span class="st200_term constant">U+0029 )</span>,
+      and is not <span class="st200_term constant">U+0022 "</span>.
+    </div></div><div class="st200_paragraph_container"><div class="st200_paragraph_number"><a id="st200_p2s2pg8" href="#st200_p2s2pg8">8</a></div><div class="st200_paragraph">
+      If <a class="st200_link" href="#st200_p2s2pg3">square brackets</a> are enabled, 
+      the <span class="st200_term symbol">symbol_character_squares</span>
+      rule should be understood to replace the <span class="st200_term symbol">symbol_character</span>
+      rule.
+    </div></div><div class="st200_paragraph_container"><div class="st200_paragraph_number"><a id="st200_p2s2pg9" href="#st200_p2s2pg9">9</a></div><div class="st200_paragraph">
+      The <span class="st200_term symbol">quoted_character</span> rule should
+      be understood to specify any character that is not
+      not <span class="st200_term constant">U+0022 "</span>.
+    </div></div><div class="st200_paragraph_container"><div class="st200_paragraph_number"><a id="st200_p2s2pg10" href="#st200_p2s2pg10">10</a></div><div class="st200_paragraph">
+      Quoted strings may contain <span class="st200_term term">escape codes</span>
+      that are transformed to specific characters during lexing.
+    </div></div><div class="st200_formal_item"><div class="st200_formal_item_title"><a id="st200_p2s2fo4" href="#st200_p2s2fo4">2.2.4. Escape Codes</a></div><table class="st200_table" summary="Escape codes"><thead class="st200_table_head"><tr><th class="st200_table_column_name">Code</th><th class="st200_table_column_name">Resulting Character</th><th class="st200_table_column_name">Comment</th></tr></thead><tbody class="st200_table_body"><tr class="st200_table_row"><td class="st200_table_cell"><span class="st200_term constant">\"</span></td><td class="st200_table_cell"><span class="st200_term constant">U+0022</span></td><td class="st200_table_cell">Double quote</td></tr><tr class="st200_table_row"><td class="st200_table_cell"><span class="st200_term constant">\\</span></td><td class="st200_table_cell"><span class="st200_term constant">U+005C</span></td><td class="st200_table_cell">Backslash</td></tr><tr class="st200_table_row"><td class="st200_table_cell"><span class="st200_term constant">\r</span></td><td class="st200_table_cell"><span class="st200_term constant">U+000D</span></td><td class="st200_table_cell">Carriage return</td></tr><tr class="st200_table_row"><td class="st200_table_cell"><span class="st200_term constant">\n</span></td><td class="st200_table_cell"><span class="st200_term constant">U+000A</span></td><td class="st200_table_cell">Line feed</td></tr><tr class="st200_table_row"><td class="st200_table_cell"><span class="st200_term constant">\t</span></td><td class="st200_table_cell"><span class="st200_term constant">U+0009</span></td><td class="st200_table_cell">Horizontal tab</td></tr><tr class="st200_table_row"><td class="st200_table_cell"><span class="st200_term constant">\uNNNN</span></td><td class="st200_table_cell"><span class="st200_term constant">U+NNNN</span></td><td class="st200_table_cell">Unicode character NNNN (where N is a hexadecimal digit)</td></tr><tr class="st200_table_row"><td class="st200_table_cell"><span class="st200_term constant">\UNNNNNNNN</span></td><td class="st200_table_cell"><span class="st200_term constant">U+NNNNNNNN</span></td><td class="st200_table_cell">Unicode character NNNNNNNN (where N is a hexadecimal digit)</td></tr></tbody></table></div></div></div><div class="st200_part_container"><div class="st200_part_title_number"><a id="st200_p3" href="#st200_p3">3</a></div><div class="st200_part_title">API Reference</div><ul class="st200_contents st200_part_contents_outer st200_part_contents"><li class="st200_contents_item st200_contents_item1 st200_contents_item_section"><a href="#st200_p3s1">3.1. Javadoc</a></li></ul><div class="st200_section_container"><div class="st200_section_title_number"><a id="st200_p3s1" href="#st200_p3s1">3.1</a></div><div class="st200_section_title">Javadoc</div><div class="st200_paragraph_container"><div class="st200_paragraph_number"><a id="st200_p3s1pg1" href="#st200_p3s1pg1">1</a></div><div class="st200_paragraph">
+      API documentation for the package is provided via the
+      included <a class="st200_link_external" href="apidocs">Javadoc</a>.
+    </div></div></div></div><div class="st200_footnotes"><hr/><div class="st200_footnote_container"><div class="st200_footnote_number">[<a id="st200_fn_0" href="#st200_fn_0_ref">0</a>]</div><div class="st200_footnote_body">
+          <a class="st200_link_external" href="http://semver.org">http://semver.org</a>
+        </div></div></div></div></body></html>

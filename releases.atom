@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:feed xmlns:a="http://www.w3.org/2005/Atom">
+  <a:author>
+    <a:name>minisite</a:name>
+    <a:email>contact@io7m.com</a:email>
+  </a:author>
+  <a:id>http://io7m.github.io/jsx//releases.atom</a:id>
+  <a:title>com.io7m.jsx Releases</a:title>
+  <a:updated>2017-12-07T15:55:38+00:00</a:updated>
+  <a:entry>
+    <a:id>1.0.0</a:id>
+    <a:updated>2017-11-28T00:00:00+00:00</a:updated>
+    <a:title>com.io7m.jsx 1.0.0 released</a:title>
+    <a:content type="text">com.io7m.jsx 1.0.0 released</a:content>
+  </a:entry>
+  <a:entry>
+    <a:id>0.9.0</a:id>
+    <a:updated>2017-11-24T00:00:00+00:00</a:updated>
+    <a:title>com.io7m.jsx 0.9.0 released</a:title>
+    <a:content type="text">com.io7m.jsx 0.9.0 released</a:content>
+  </a:entry>
+  <a:entry>
+    <a:id>0.8.0</a:id>
+    <a:updated>2017-11-24T00:00:00+00:00</a:updated>
+    <a:title>com.io7m.jsx 0.8.0 released</a:title>
+    <a:content type="text">com.io7m.jsx 0.8.0 released</a:content>
+  </a:entry>
+  <a:entry>
+    <a:id>0.7.0</a:id>
+    <a:updated>2016-10-04T00:00:00+00:00</a:updated>
+    <a:title>com.io7m.jsx 0.7.0 released</a:title>
+    <a:content type="text">com.io7m.jsx 0.7.0 released</a:content>
+  </a:entry>
+  <a:entry>
+    <a:id>0.6.0</a:id>
+    <a:updated>2016-08-05T00:00:00+00:00</a:updated>
+    <a:title>com.io7m.jsx 0.6.0 released</a:title>
+    <a:content type="text">com.io7m.jsx 0.6.0 released</a:content>
+  </a:entry>
+  <a:entry>
+    <a:id>0.5.1</a:id>
+    <a:updated>2016-05-31T00:00:00+00:00</a:updated>
+    <a:title>com.io7m.jsx 0.5.1 released</a:title>
+    <a:content type="text">com.io7m.jsx 0.5.1 released</a:content>
+  </a:entry>
+  <a:entry>
+    <a:id>0.5.0</a:id>
+    <a:updated>2016-05-29T00:00:00+00:00</a:updated>
+    <a:title>com.io7m.jsx 0.5.0 released</a:title>
+    <a:content type="text">com.io7m.jsx 0.5.0 released</a:content>
+  </a:entry>
+  <a:entry>
+    <a:id>0.4.1</a:id>
+    <a:updated>2015-11-12T00:00:00+00:00</a:updated>
+    <a:title>com.io7m.jsx 0.4.1 released</a:title>
+    <a:content type="text">com.io7m.jsx 0.4.1 released</a:content>
+  </a:entry>
+  <a:entry>
+    <a:id>0.4.0</a:id>
+    <a:updated>2015-10-20T00:00:00+00:00</a:updated>
+    <a:title>com.io7m.jsx 0.4.0 released</a:title>
+    <a:content type="text">com.io7m.jsx 0.4.0 released</a:content>
+  </a:entry>
+  <a:entry>
+    <a:id>0.2.0</a:id>
+    <a:updated>2015-03-28T00:00:00+00:00</a:updated>
+    <a:title>com.io7m.jsx 0.2.0 released</a:title>
+    <a:content type="text">com.io7m.jsx 0.2.0 released</a:content>
+  </a:entry>
+</a:feed>

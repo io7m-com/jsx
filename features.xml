@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<div xmlns="http://www.w3.org/1999/xhtml">
+  <ul>
+    <li>Hand-coded lexer and parser with full support for tokens using characters outside of the Unicode BMP</li>
+    <li>Optional square brackets <pre>[f (g [x y])]</pre></li>
+    <li>Optional multi-line strings</li>
+    <li>Fully documented (Javadoc) and expression language specification.</li>
+    <li><a href="https://www.osgi.org/">OSGi</a>-ready.</li>
+    <li><a href="https://en.wikipedia.org/wiki/Java_Platform_Module_System">JPMS</a>-ready</li>
+    <li>ISC license.</li>
+  </ul>
+</div>

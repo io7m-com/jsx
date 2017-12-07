@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta content="https://www.github.com/io7m/minisite; 0.0.9" name="generator"/>
+        <meta content="application/xhtml+xml; charset=UTF-8" http-equiv="Content-Type"/>
+        <style type="text/css">body {
+  margin: 2em;
+  padding: 0px;
+  font-family: sans-serif;
+}
+
+div#main {
+  max-width: 50em;
+}
+
+p {
+  text-align: justify;
+}
+
+.changelog {
+  font-family: monospace;
+}
+.changelog td {
+  vertical-align: text-top;
+  padding-right: 2em;
+}
+.changelog td:nth-child(1) {
+  width: 10em;
+}
+
+.overview_content_area {
+
+}
+
+.overview_title_area {
+
+}
+
+.overview_title_area::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.icon {
+  float: left;
+  margin-right: 1em;
+}
+</style>
+        <title>com.io7m.jsx</title>
+    </head>
+    <body>
+        <div id="main">
+            <div id="overview">
+                <div class="overview_title_area">
+                    <img alt="Project icon" class="icon" height="64"
+                        src="icon.png" width="64"/>
+                    <h1>com.io7m.jsx</h1>
+                </div>
+                <div class="overview_content_area">
+                    <div>
+                        <p>
+                            <a href="https://travis-ci.org/io7m/jsx">
+                                <img alt="Build status" src="https://img.shields.io/travis/io7m/jsx.png?style=flat-square"/>
+                            </a>
+                            <a href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.io7m.jsx%22">
+                                <img alt="Maven Central" src="https://img.shields.io/maven-central/v/com.io7m.jsx/com.io7m.jsx.png?style=flat-square"/>
+                            </a>
+                            <a href="https://www.codacy.com/app/github_79/jsx">
+                                <img alt="Codacy" src="https://img.shields.io/codacy/grade/f1f96b15af7049eba148aeb6abf04995.png?style=flat-square"/>
+                            </a>
+                            <a href="https://codecov.io/gh/io7m/jsx">
+                                <img alt="Codecov" src="https://img.shields.io/codecov/c/github/io7m/jsx.png?style=flat-square"/>
+                            </a>
+                        </p>
+                        <p>
+    The <var>jsx</var> package implements a configurable S-expression parser.
+  </p>
+                        <pre>(f (g (x y)))</pre>
+                        <p>
+    The parser can be configured to optionally accept/reject
+    various syntactic features such as multi-line strings and
+    square brackets.
+  </p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h2>Contents</h2>
+                <ul>
+                    <li>
+                        <a href="#features">Features</a>
+                    </li>
+                    <li>
+                        <a href="#releases">Releases</a>
+                    </li>
+                    <li>
+                        <a href="#documentation">Documentation</a>
+                    </li>
+                    <li>
+                        <a href="#maven">Maven</a>
+                    </li>
+                    <li>
+                        <a href="#changes">Changes</a>
+                    </li>
+                    <li>
+                        <a href="#sources">Sources</a>
+                    </li>
+                    <li>
+                        <a href="#license">License</a>
+                    </li>
+                    <li>
+                        <a href="#bug-tracker">Bug Tracker</a>
+                    </li>
+                </ul>
+            </div>
+            <div id="features">
+                <h2>Features</h2>
+                <div>
+                    <ul>
+                        <li>Hand-coded lexer and parser with full support for tokens using characters outside of the Unicode BMP</li>
+                        <li>Optional square brackets <pre>[f (g [x y])]</pre>
+                        </li>
+                        <li>Optional multi-line strings</li>
+                        <li>Fully documented (Javadoc) and expression language specification.</li>
+                        <li>
+                            <a href="https://www.osgi.org/">OSGi</a>-ready.</li>
+                        <li>
+                            <a href="https://en.wikipedia.org/wiki/Java_Platform_Module_System">JPMS</a>-ready</li>
+                        <li>ISC license.</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="releases">
+                <h2>Releases</h2>
+                <p>The current release is <tt>1.0.0</tt>.</p>
+                <p>Source code and binaries are available from the <a href="https://repo1.maven.org/maven2/com/io7m/jsx">repository</a>.</p>
+            </div>
+            <div id="documentation">
+                <h2>Documentation</h2>
+                <p>Documentation for the <tt>1.0.0</tt> release is available for reading online.</p>
+
+                <p>Documentation for current and older releases is archived in the <a href="https://repo1.maven.org/maven2/com/io7m/jsx">repository</a>.</p>
+                <div>
+                    <h3>User documentation</h3>
+                    <ul>
+                        <li>
+                            <a href="documentation/index-m.xhtml">XHTML - one page per section</a>
+                        </li>
+                        <li>
+                            <a href="documentation/index.xhtml">XHTML - single page</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="maven">
+                <h2>Maven</h2>
+                <p>The following is a complete list of the project's modules expressed as Maven dependencies: </p>
+                <pre>&lt;dependency&gt;
+  &lt;groupId&gt;<a
+                        href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.io7m.jsx%22">com.io7m.jsx</a>&lt;/groupId&gt;
+  &lt;artifactId&gt;<a
+                        href="http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22com.io7m.jsx%22">com.io7m.jsx</a>&lt;/artifactId&gt;
+  &lt;version&gt;<a
+                        href="http://search.maven.org/#artifactdetails%7Ccom.io7m.jsx%7Ccom.io7m.jsx%7C1.0.0%7Cjar">1.0.0</a>&lt;/version&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+  &lt;groupId&gt;<a
+                        href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.io7m.jsx%22">com.io7m.jsx</a>&lt;/groupId&gt;
+  &lt;artifactId&gt;<a
+                        href="http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22com.io7m.jsx.checkstyle%22">com.io7m.jsx.checkstyle</a>&lt;/artifactId&gt;
+  &lt;version&gt;<a
+                        href="http://search.maven.org/#artifactdetails%7Ccom.io7m.jsx%7Ccom.io7m.jsx.checkstyle%7C1.0.0%7Cjar">1.0.0</a>&lt;/version&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+  &lt;groupId&gt;<a
+                        href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.io7m.jsx%22">com.io7m.jsx</a>&lt;/groupId&gt;
+  &lt;artifactId&gt;<a
+                        href="http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22com.io7m.jsx.cmdline%22">com.io7m.jsx.cmdline</a>&lt;/artifactId&gt;
+  &lt;version&gt;<a
+                        href="http://search.maven.org/#artifactdetails%7Ccom.io7m.jsx%7Ccom.io7m.jsx.cmdline%7C1.0.0%7Cjar">1.0.0</a>&lt;/version&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+  &lt;groupId&gt;<a
+                        href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.io7m.jsx%22">com.io7m.jsx</a>&lt;/groupId&gt;
+  &lt;artifactId&gt;<a
+                        href="http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22com.io7m.jsx.combinators%22">com.io7m.jsx.combinators</a>&lt;/artifactId&gt;
+  &lt;version&gt;<a
+                        href="http://search.maven.org/#artifactdetails%7Ccom.io7m.jsx%7Ccom.io7m.jsx.combinators%7C1.0.0%7Cjar">1.0.0</a>&lt;/version&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+  &lt;groupId&gt;<a
+                        href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.io7m.jsx%22">com.io7m.jsx</a>&lt;/groupId&gt;
+  &lt;artifactId&gt;<a
+                        href="http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22com.io7m.jsx.core%22">com.io7m.jsx.core</a>&lt;/artifactId&gt;
+  &lt;version&gt;<a
+                        href="http://search.maven.org/#artifactdetails%7Ccom.io7m.jsx%7Ccom.io7m.jsx.core%7C1.0.0%7Cjar">1.0.0</a>&lt;/version&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+  &lt;groupId&gt;<a
+                        href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.io7m.jsx%22">com.io7m.jsx</a>&lt;/groupId&gt;
+  &lt;artifactId&gt;<a
+                        href="http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22com.io7m.jsx.documentation%22">com.io7m.jsx.documentation</a>&lt;/artifactId&gt;
+  &lt;version&gt;<a
+                        href="http://search.maven.org/#artifactdetails%7Ccom.io7m.jsx%7Ccom.io7m.jsx.documentation%7C1.0.0%7Cjar">1.0.0</a>&lt;/version&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+  &lt;groupId&gt;<a
+                        href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.io7m.jsx%22">com.io7m.jsx</a>&lt;/groupId&gt;
+  &lt;artifactId&gt;<a
+                        href="http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22com.io7m.jsx.parser.api%22">com.io7m.jsx.parser.api</a>&lt;/artifactId&gt;
+  &lt;version&gt;<a
+                        href="http://search.maven.org/#artifactdetails%7Ccom.io7m.jsx%7Ccom.io7m.jsx.parser.api%7C1.0.0%7Cjar">1.0.0</a>&lt;/version&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+  &lt;groupId&gt;<a
+                        href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.io7m.jsx%22">com.io7m.jsx</a>&lt;/groupId&gt;
+  &lt;artifactId&gt;<a
+                        href="http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22com.io7m.jsx.parser%22">com.io7m.jsx.parser</a>&lt;/artifactId&gt;
+  &lt;version&gt;<a
+                        href="http://search.maven.org/#artifactdetails%7Ccom.io7m.jsx%7Ccom.io7m.jsx.parser%7C1.0.0%7Cjar">1.0.0</a>&lt;/version&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+  &lt;groupId&gt;<a
+                        href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.io7m.jsx%22">com.io7m.jsx</a>&lt;/groupId&gt;
+  &lt;artifactId&gt;<a
+                        href="http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22com.io7m.jsx.prettyprint%22">com.io7m.jsx.prettyprint</a>&lt;/artifactId&gt;
+  &lt;version&gt;<a
+                        href="http://search.maven.org/#artifactdetails%7Ccom.io7m.jsx%7Ccom.io7m.jsx.prettyprint%7C1.0.0%7Cjar">1.0.0</a>&lt;/version&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+  &lt;groupId&gt;<a
+                        href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.io7m.jsx%22">com.io7m.jsx</a>&lt;/groupId&gt;
+  &lt;artifactId&gt;<a
+                        href="http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22com.io7m.jsx.tests%22">com.io7m.jsx.tests</a>&lt;/artifactId&gt;
+  &lt;version&gt;<a href="http://search.maven.org/#artifactdetails%7Ccom.io7m.jsx%7Ccom.io7m.jsx.tests%7C1.0.0%7Cjar">1.0.0</a>&lt;/version&gt;
+&lt;/dependency&gt;
+
+</pre>
+                <p>Each release of the project is made available on <a href="http://search.maven.org">Maven Central</a> within ten minutes of the release announcement.</p>
+            </div>
+            <div id="changes">
+                <h2>Changes</h2>
+                <p>Subscribe to the releases <a href="releases.atom">atom feed</a>.</p>
+                <table class="changelog" summary="Changes for project com.io7m.jsx">
+                    <tr>
+                        <td>2017-11-28</td>
+                        <td>Release: com.io7m.jsx 1.0.0</td>
+                    </tr>
+                    <tr>
+                        <td>2017-11-26</td>
+                        <td>Change: (Backwards incompatible) Use URIs instead of Paths in lexical information</td>
+                    </tr>
+                    <tr>
+                        <td>2017-11-26</td>
+                        <td>Change: (Backwards incompatible) Use immutable value types in the definitions of SExpressionType</td>
+                    </tr>
+                    <tr>
+                        <td>2017-11-26</td>
+                        <td>Change: (Backwards incompatible) SExpressionListType is now Iterable</td>
+                    </tr>
+                    <tr>
+                        <td>2017-11-28</td>
+                        <td>Change: (Backwards incompatible) Lexical information for SExpressionType is no longer Optional</td>
+                    </tr>
+                    <tr>
+                        <td>2017-11-24</td>
+                        <td>Release: com.io7m.jsx 0.9.0</td>
+                    </tr>
+                    <tr>
+                        <td>2017-11-24</td>
+
+                        <td>Change: Add configurable comment tokens (tickets: <a href="http://github.com/io7m/jsx/issues/1">1</a>)</td>
+                    </tr>
+                    <tr>
+                        <td>2017-11-24</td>
+
+                        <td>Change: Optionally start lexical positions at a given line (tickets: <a href="http://github.com/io7m/jsx/issues/2">2</a>)</td>
+                    </tr>
+                    <tr>
+                        <td>2017-11-24</td>
+                        <td>Release: com.io7m.jsx 0.8.0</td>
+                    </tr>
+                    <tr>
+                        <td>2016-11-10</td>
+                        <td>Change: Add combinators for validating S-expressions.</td>
+                    </tr>
+                    <tr>
+                        <td>2017-04-06</td>
+                        <td>Change: Rename project. Use the new primogenitor POM and 2017 project conventions.</td>
+                    </tr>
+                    <tr>
+                        <td>2017-04-06</td>
+                        <td>Change: (Backwards incompatible) Use jlexing 0.2.1, numerous API changes for consistency (see japicmp report for details).</td>
+                    </tr>
+                    <tr>
+                        <td>2017-11-16</td>
+                        <td>Change: (Backwards incompatible) All modules are now Java 9 modules. JDK 9 is now required.</td>
+                    </tr>
+                    <tr>
+                        <td>2017-11-16</td>
+                        <td>Change: (Backwards incompatible) Removed dependency on com.io7m.jnull.</td>
+                    </tr>
+                    <tr>
+                        <td>2016-10-04</td>
+                        <td>Release: com.io7m.jsx 0.7.0</td>
+                    </tr>
+                    <tr>
+                        <td>2016-10-04</td>
+                        <td>Change: Add command line tool for formatting s-expressions.</td>
+                    </tr>
+                    <tr>
+                        <td>2016-08-05</td>
+                        <td>Release: com.io7m.jsx 0.6.0</td>
+                    </tr>
+                    <tr>
+                        <td>2016-08-05</td>
+                        <td>Change: Update plugins and dependencies.</td>
+                    </tr>
+                    <tr>
+                        <td>2016-08-05</td>
+                        <td>Change: The produced jars are now OSGi bundles.</td>
+                    </tr>
+                    <tr>
+                        <td>2016-08-05</td>
+                        <td>Change: (Backwards incompatible) Reorganize APIs and implementations into their own modules/bundles.</td>
+                    </tr>
+                    <tr>
+                        <td>2016-08-05</td>
+                        <td>Change: (Backwards incompatible) Use immutables.org to generate configuration types.</td>
+                    </tr>
+                    <tr>
+                        <td>2016-05-31</td>
+                        <td>Release: com.io7m.jsx 0.5.1</td>
+                    </tr>
+                    <tr>
+                        <td>2016-05-31</td>
+
+                        <td>Change: Switch to an iterative implementation of the lexer that uses constant stack space (tickets: <a href="http://github.com/io7m/jsx/issues/4">4</a>)</td>
+                    </tr>
+                    <tr>
+                        <td>2016-05-29</td>
+                        <td>Release: com.io7m.jsx 0.5.0</td>
+                    </tr>
+                    <tr>
+                        <td>2016-05-11</td>
+
+                        <td>Change: (Backwards incompatible) Remove list extension from the SExpressionListType (tickets: <a href="http://github.com/io7m/jsx/issues/3">3</a>)</td>
+                    </tr>
+                    <tr>
+                        <td>2016-05-11</td>
+                        <td>Change: Add pretty printers based on JPPLib</td>
+                    </tr>
+                    <tr>
+                        <td>2015-11-12</td>
+                        <td>Release: com.io7m.jsx 0.4.1</td>
+                    </tr>
+                    <tr>
+                        <td>2015-11-12</td>
+                        <td>Change: (Backwards incompatible) Make filenames part of the lexer configuration.</td>
+                    </tr>
+                    <tr>
+                        <td>2015-10-20</td>
+                        <td>Release: com.io7m.jsx 0.4.0</td>
+                    </tr>
+                    <tr>
+                        <td>2015-10-20</td>
+                        <td>Change: (Backwards incompatible) Rewrite to use Java 8 and rename all types.</td>
+                    </tr>
+                    <tr>
+                        <td>2015-03-28</td>
+                        <td>Release: com.io7m.jsx 0.2.0</td>
+                    </tr>
+                    <tr>
+                        <td>2015-03-28</td>
+                        <td>Change: Initial release.</td>
+                    </tr>
+                </table>
+            </div>
+            <div id="Sources">
+                <h2>Sources</h2>
+                <p>This project uses <a href="http://www.git-scm.com">Git</a> to manage source code.</p>
+                <p>Repository: <a href="https://github.com/io7m/jsx">https://github.com/io7m/jsx</a>
+                </p>
+                <pre>$ git clone https://github.com/io7m/jsx</pre>
+            </div>
+            <div id="license">
+                <h2>License</h2>
+                <pre>Copyright ⓒ 2017 Mark Raynsford &lt;code@io7m.com&gt; http://io7m.com
+
+Permission to use, copy, modify, and/or distribute this software for
+any purpose with or without fee is hereby granted, provided that the
+above copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL
+WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR
+BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES
+OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
+WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,
+ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
+SOFTWARE.
+</pre>
+            </div>
+            <div id="bug-tracker">
+                <h2>Bug Tracker</h2>
+                <p>The project uses <a href="http://github.com/io7m/jsx/issues">GitHub Issues</a> to track issues.</p>
+            </div>
+        </div>
+    </body>
+</html>
