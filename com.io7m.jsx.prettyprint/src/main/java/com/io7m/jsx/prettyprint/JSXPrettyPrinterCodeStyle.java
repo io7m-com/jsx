@@ -36,7 +36,6 @@ import java.util.Objects;
 public final class JSXPrettyPrinterCodeStyle implements JSXPrettyPrinterType
 {
   private final WriterBackend backend;
-  private final Layouter<IOException> layout;
   private final SExpressionMatcherType<Void, IOException> matcher;
 
   private JSXPrettyPrinterCodeStyle(
@@ -46,64 +45,8 @@ public final class JSXPrettyPrinterCodeStyle implements JSXPrettyPrinterType
   {
     final Writer out = Objects.requireNonNull(in_out, "Writer");
     this.backend = new WriterBackend(out, width);
-    this.layout = new Layouter<>(this.backend, indent);
-    this.matcher = new SExpressionMatcherType<Void, IOException>()
-    {
-      @Override
-      public Void list(final SExpressionListType e)
-        throws IOException
-      {
-        final Layouter<IOException> x = JSXPrettyPrinterCodeStyle.this.layout;
-
-        x.begin(
-          Layouter.BreakConsistency.CONSISTENT,
-          Layouter.IndentationBase.FROM_POS,
-          0);
-
-        if (e.isSquare()) {
-          x.print("[");
-        } else {
-          x.print("(");
-        }
-
-        final int size = e.size();
-        if (size > 0) {
-          for (int index = 0; index < size; ++index) {
-            final SExpressionType current = e.get(index);
-            current.matchExpression(this);
-            if (index + 1 < size) {
-              x.brk(1, indent);
-            }
-          }
-        }
-
-        if (e.isSquare()) {
-          x.print("]");
-        } else {
-          x.print(")");
-        }
-
-        x.end();
-        return null;
-      }
-
-      @Override
-      public Void quotedString(final SExpressionQuotedStringType e)
-        throws IOException
-      {
-        JSXPrettyPrinterCodeStyle.this.layout.print(
-          String.format("\"%s\"", e.text()));
-        return null;
-      }
-
-      @Override
-      public Void symbol(final SExpressionSymbolType e)
-        throws IOException
-      {
-        JSXPrettyPrinterCodeStyle.this.layout.print(e.text());
-        return null;
-      }
-    };
+    final Layouter<IOException> layout = new Layouter<>(this.backend, indent);
+    this.matcher = new PrinterMatcher(layout, indent);
   }
 
   /**
@@ -137,5 +80,74 @@ public final class JSXPrettyPrinterCodeStyle implements JSXPrettyPrinterType
     throws IOException
   {
     this.backend.flush();
+  }
+
+  private static final class PrinterMatcher
+    implements SExpressionMatcherType<Void, IOException>
+  {
+    private final int indent;
+    private final Layouter<IOException> layout;
+
+    PrinterMatcher(
+      final Layouter<IOException> in_layout,
+      final int in_indent)
+    {
+      this.layout = Objects.requireNonNull(in_layout, "Layout");
+      this.indent = in_indent;
+    }
+
+    @Override
+    public Void list(final SExpressionListType e)
+      throws IOException
+    {
+      final Layouter<IOException> x = this.layout;
+
+      x.begin(
+        Layouter.BreakConsistency.CONSISTENT,
+        Layouter.IndentationBase.FROM_POS,
+        0);
+
+      if (e.isSquare()) {
+        x.print("[");
+      } else {
+        x.print("(");
+      }
+
+      final int size = e.size();
+      if (size > 0) {
+        for (int index = 0; index < size; ++index) {
+          final SExpressionType current = e.get(index);
+          current.matchExpression(this);
+          if (index + 1 < size) {
+            x.brk(1, this.indent);
+          }
+        }
+      }
+
+      if (e.isSquare()) {
+        x.print("]");
+      } else {
+        x.print(")");
+      }
+
+      x.end();
+      return null;
+    }
+
+    @Override
+    public Void quotedString(final SExpressionQuotedStringType e)
+      throws IOException
+    {
+      this.layout.print(String.format("\"%s\"", e.text()));
+      return null;
+    }
+
+    @Override
+    public Void symbol(final SExpressionSymbolType e)
+      throws IOException
+    {
+      this.layout.print(e.text());
+      return null;
+    }
   }
 }

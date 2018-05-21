@@ -8,11 +8,11 @@
   <parent>
     <groupId>com.io7m.jsx</groupId>
     <artifactId>com.io7m.jsx</artifactId>
-    <version>2.0.0</version>
+    <version>2.1.0-SNAPSHOT</version>
   </parent>
   <artifactId>com.io7m.jsx.parser</artifactId>
 
-  <packaging>bundle</packaging>
+  <packaging>jar</packaging>
   <description>S-expression parsing (Parser)</description>
   <url>http://io7m.github.io/jsx</url>
   <name>${project.artifactId}</name>
@@ -51,24 +51,32 @@
 
   <build>
     <plugins>
+      <!-- Check style -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
       </plugin>
 
-      <!-- Produce OSGi bundle -->
+      <!-- Analyze semantic versioning -->
       <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <extensions>true</extensions>
+        <groupId>biz.aQute.bnd</groupId>
+        <artifactId>bnd-baseline-maven-plugin</artifactId>
+      </plugin>
+
+      <!-- Spot bugs -->
+      <plugin>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+      </plugin>
+
+      <!-- Produce OSGi manifest -->
+      <plugin>
+        <groupId>biz.aQute.bnd</groupId>
+        <artifactId>bnd-maven-plugin</artifactId>
         <configuration>
-          <instructions>
-            <Export-Package>
-              com.io7m.jsx.lexer,
-              com.io7m.jsx.parser,
-              com.io7m.jsx.serializer
-            </Export-Package>
-          </instructions>
+          <bnd><![CDATA[
+            Export-Package: com.io7m.jsx.lexer, com.io7m.jsx.parser, com.io7m.jsx.serializer
+]]></bnd>
         </configuration>
       </plugin>
     </plugins>

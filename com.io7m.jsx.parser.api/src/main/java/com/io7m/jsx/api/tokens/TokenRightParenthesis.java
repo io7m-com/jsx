@@ -59,7 +59,7 @@ public final class TokenRightParenthesis implements TokenType
     final StringBuilder builder = new StringBuilder(64);
     builder.append("[TokenRightParenthesis ");
     builder.append(this.lex);
-    builder.append("]");
+    builder.append(']');
     return Objects.requireNonNull(builder.toString(), "Result string");
   }
 }

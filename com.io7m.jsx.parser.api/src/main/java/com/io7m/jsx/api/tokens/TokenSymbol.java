@@ -74,7 +74,7 @@ public final class TokenSymbol implements TokenType
     builder.append(this.lex);
     builder.append(": ");
     builder.append(this.text);
-    builder.append("]");
+    builder.append(']');
     return Objects.requireNonNull(builder.toString(), "Result string");
   }
 }

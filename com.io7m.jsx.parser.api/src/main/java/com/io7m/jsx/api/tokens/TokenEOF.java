@@ -59,7 +59,7 @@ public final class TokenEOF implements TokenType
     final StringBuilder builder = new StringBuilder(64);
     builder.append("[TokenEOF ");
     builder.append(this.lex);
-    builder.append("]");
+    builder.append(']');
     return Objects.requireNonNull(builder.toString(), "Result string");
   }
 }

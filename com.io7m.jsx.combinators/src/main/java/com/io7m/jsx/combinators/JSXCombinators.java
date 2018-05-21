@@ -36,6 +36,8 @@ import java.util.stream.Collectors;
 
 public final class JSXCombinators
 {
+  private static final String SEPARATOR = System.lineSeparator();
+
   private JSXCombinators()
   {
     throw new UnreachableCodeException();
@@ -67,16 +69,16 @@ public final class JSXCombinators
 
     final StringBuilder sb = new StringBuilder(128);
     sb.append("List has fewer than the required number of elements.");
-    sb.append(System.lineSeparator());
+    sb.append(SEPARATOR);
 
     sb.append("  Expected: A list with at least ");
     sb.append(index + 1);
     sb.append(" elements");
-    sb.append(System.lineSeparator());
+    sb.append(SEPARATOR);
 
     sb.append("  Received: A list ");
     sb.append(e);
-    sb.append(System.lineSeparator());
+    sb.append(SEPARATOR);
 
     return Validation.invalid(List.of(
       JSXValidationError.of(e.lexical(), sb.toString())));
@@ -107,18 +109,18 @@ public final class JSXCombinators
       sb.append(name);
       sb.append("' but received a symbol '");
       sb.append(s.text());
-      sb.append("'");
-      sb.append(System.lineSeparator());
+      sb.append('\'');
+      sb.append(SEPARATOR);
 
       sb.append("  Expected: A symbol '");
       sb.append(name);
-      sb.append("'");
-      sb.append(System.lineSeparator());
+      sb.append('\'');
+      sb.append(SEPARATOR);
 
       sb.append("  Received: A symbol '");
       sb.append(s.text());
-      sb.append("'");
-      sb.append(System.lineSeparator());
+      sb.append('\'');
+      sb.append(SEPARATOR);
 
       return Validation.invalid(List.of(
         JSXValidationError.of(s.lexical(), sb.toString())));
@@ -153,17 +155,17 @@ public final class JSXCombinators
       sb.append(options);
       sb.append(" but received a symbol '");
       sb.append(s.text());
-      sb.append("'");
-      sb.append(System.lineSeparator());
+      sb.append('\'');
+      sb.append(SEPARATOR);
 
       sb.append("  Expected: ");
       sb.append(options);
-      sb.append(System.lineSeparator());
+      sb.append(SEPARATOR);
 
       sb.append("  Received: A symbol '");
       sb.append(s.text());
-      sb.append("'");
-      sb.append(System.lineSeparator());
+      sb.append('\'');
+      sb.append(SEPARATOR);
 
       return Validation.invalid(List.of(
         JSXValidationError.of(s.lexical(), sb.toString())));
@@ -195,18 +197,18 @@ public final class JSXCombinators
       sb.append(name);
       sb.append("\" but received a quoted string \"");
       sb.append(s.text());
-      sb.append("\"");
-      sb.append(System.lineSeparator());
+      sb.append('"');
+      sb.append(SEPARATOR);
 
       sb.append("  Expected: A quoted string \"");
       sb.append(name);
-      sb.append("\"");
-      sb.append(System.lineSeparator());
+      sb.append('"');
+      sb.append(SEPARATOR);
 
       sb.append("  Received: A quoted string \"");
       sb.append(s.text());
-      sb.append("\"");
-      sb.append(System.lineSeparator());
+      sb.append('"');
+      sb.append(SEPARATOR);
 
       return Validation.invalid(List.of(
         JSXValidationError.of(s.lexical(), sb.toString())));
@@ -235,7 +237,7 @@ public final class JSXCombinators
 
       final String options =
         texts.toJavaStream()
-          .map(str -> "\"" + str + "\"")
+          .map(str -> '"' + str + '"')
           .collect(Collectors.joining("|"));
 
       final StringBuilder sb = new StringBuilder(128);
@@ -243,17 +245,17 @@ public final class JSXCombinators
       sb.append(options);
       sb.append(" but received a quoted string \"");
       sb.append(s.text());
-      sb.append("\"");
-      sb.append(System.lineSeparator());
+      sb.append('"');
+      sb.append(SEPARATOR);
 
       sb.append("  Expected: ");
       sb.append(options);
-      sb.append(System.lineSeparator());
+      sb.append(SEPARATOR);
 
       sb.append("  Received: A symbol '");
       sb.append(s.text());
-      sb.append("'");
-      sb.append(System.lineSeparator());
+      sb.append('\'');
+      sb.append(SEPARATOR);
 
       return Validation.invalid(List.of(
         JSXValidationError.of(s.lexical(), sb.toString())));
@@ -272,62 +274,7 @@ public final class JSXCombinators
   anySymbol(
     final SExpressionType e)
   {
-    return e.matchExpression(
-      new SExpressionMatcherType<
-        Validation<List<JSXValidationErrorType>,
-          SExpressionSymbolType>,
-        UnreachableCodeException>()
-      {
-        @Override
-        public Validation<List<JSXValidationErrorType>, SExpressionSymbolType>
-        list(final SExpressionListType ex)
-          throws UnreachableCodeException
-        {
-          final StringBuilder sb = new StringBuilder(128);
-          sb.append("Expected a symbol but got a list.");
-          sb.append(System.lineSeparator());
-
-          sb.append("  Expected: A symbol");
-          sb.append(System.lineSeparator());
-
-          sb.append("  Received: ");
-          sb.append(ex);
-          sb.append(System.lineSeparator());
-
-          return Validation.invalid(List.of(JSXValidationError.of(
-            ex.lexical(),
-            sb.toString())));
-        }
-
-        @Override
-        public Validation<List<JSXValidationErrorType>, SExpressionSymbolType>
-        quotedString(final SExpressionQuotedStringType ex)
-          throws UnreachableCodeException
-        {
-          final StringBuilder sb = new StringBuilder(128);
-          sb.append("Expected a symbol but got a quoted string.");
-          sb.append(System.lineSeparator());
-
-          sb.append("  Expected: A symbol");
-          sb.append(System.lineSeparator());
-
-          sb.append("  Received: A quoted string \"");
-          sb.append(ex);
-          sb.append("\"");
-          sb.append(System.lineSeparator());
-
-          return Validation.invalid(
-            List.of(JSXValidationError.of(ex.lexical(), sb.toString())));
-        }
-
-        @Override
-        public Validation<List<JSXValidationErrorType>, SExpressionSymbolType>
-        symbol(final SExpressionSymbolType ex)
-          throws UnreachableCodeException
-        {
-          return Validation.valid(ex);
-        }
-      });
+    return e.matchExpression(new ExpectSymbol());
   }
 
   /**
@@ -342,61 +289,7 @@ public final class JSXCombinators
   anyList(final SExpressionType e)
   {
     return e.matchExpression(
-      new SExpressionMatcherType<
-        Validation<List<JSXValidationErrorType>,
-          SExpressionListType>,
-        UnreachableCodeException>()
-      {
-        @Override
-        public Validation<List<JSXValidationErrorType>, SExpressionListType>
-        list(final SExpressionListType ex)
-          throws UnreachableCodeException
-        {
-          return Validation.valid(ex);
-        }
-
-        @Override
-        public Validation<List<JSXValidationErrorType>, SExpressionListType>
-        quotedString(final SExpressionQuotedStringType ex)
-          throws UnreachableCodeException
-        {
-          final StringBuilder sb = new StringBuilder(128);
-          sb.append("Expected a list but got a quoted string.");
-          sb.append(System.lineSeparator());
-
-          sb.append("  Expected: A list");
-          sb.append(System.lineSeparator());
-
-          sb.append("  Received: A quoted string \"");
-          sb.append(ex);
-          sb.append("\"");
-          sb.append(System.lineSeparator());
-
-          return Validation.invalid(List.of(
-            JSXValidationError.of(ex.lexical(), sb.toString())));
-        }
-
-        @Override
-        public Validation<List<JSXValidationErrorType>, SExpressionListType>
-        symbol(final SExpressionSymbolType ex)
-          throws UnreachableCodeException
-        {
-          final StringBuilder sb = new StringBuilder(128);
-          sb.append("Expected a list but got a symbol.");
-          sb.append(System.lineSeparator());
-
-          sb.append("  Expected: A list");
-          sb.append(System.lineSeparator());
-
-          sb.append("  Received: A symbol '");
-          sb.append(ex);
-          sb.append("'");
-          sb.append(System.lineSeparator());
-
-          return Validation.invalid(List.of(
-            JSXValidationError.of(ex.lexical(), sb.toString())));
-        }
-      });
+      new ExpectList());
   }
 
   /**
@@ -411,62 +304,7 @@ public final class JSXCombinators
   public static Validation<List<JSXValidationErrorType>, SExpressionQuotedStringType>
   anyQuotedString(final SExpressionType e)
   {
-    return e.matchExpression(
-      new SExpressionMatcherType<
-        Validation<List<JSXValidationErrorType>,
-          SExpressionQuotedStringType>,
-        UnreachableCodeException>()
-      {
-        @Override
-        public Validation<List<JSXValidationErrorType>, SExpressionQuotedStringType>
-        list(final SExpressionListType ex)
-          throws UnreachableCodeException
-        {
-          final StringBuilder sb = new StringBuilder(128);
-          sb.append("Expected a quoted string but got a list.");
-          sb.append(System.lineSeparator());
-
-          sb.append("  Expected: A quoted string");
-          sb.append(System.lineSeparator());
-
-          sb.append("  Received: A list '");
-          sb.append(ex);
-          sb.append("'");
-          sb.append(System.lineSeparator());
-
-          return Validation.invalid(List.of(
-            JSXValidationError.of(ex.lexical(), sb.toString())));
-        }
-
-        @Override
-        public Validation<List<JSXValidationErrorType>, SExpressionQuotedStringType>
-        quotedString(final SExpressionQuotedStringType ex)
-          throws UnreachableCodeException
-        {
-          return Validation.valid(ex);
-        }
-
-        @Override
-        public Validation<List<JSXValidationErrorType>, SExpressionQuotedStringType>
-        symbol(final SExpressionSymbolType ex)
-          throws UnreachableCodeException
-        {
-          final StringBuilder sb = new StringBuilder(128);
-          sb.append("Expected a quoted string but got a symbol.");
-          sb.append(System.lineSeparator());
-
-          sb.append("  Expected: A quoted string");
-          sb.append(System.lineSeparator());
-
-          sb.append("  Received: A symbol '");
-          sb.append(ex);
-          sb.append("'");
-          sb.append(System.lineSeparator());
-
-          return Validation.invalid(List.of(
-            JSXValidationError.of(ex.lexical(), sb.toString())));
-        }
-      });
+    return e.matchExpression(new ExpectQuotedString());
   }
 
   /**
@@ -500,5 +338,182 @@ public final class JSXCombinators
     }
 
     return Validation.invalid(errors);
+  }
+
+  private static final class ExpectQuotedString
+    implements SExpressionMatcherType<
+    Validation<List<JSXValidationErrorType>, SExpressionQuotedStringType>, UnreachableCodeException>
+  {
+    ExpectQuotedString()
+    {
+    }
+
+    @Override
+    public Validation<List<JSXValidationErrorType>, SExpressionQuotedStringType>
+    list(final SExpressionListType ex)
+      throws UnreachableCodeException
+    {
+      final StringBuilder sb = new StringBuilder(128);
+      sb.append("Expected a quoted string but got a list.");
+      sb.append(SEPARATOR);
+
+      sb.append("  Expected: A quoted string");
+      sb.append(SEPARATOR);
+
+      sb.append("  Received: A list '");
+      sb.append(ex);
+      sb.append('\'');
+      sb.append(SEPARATOR);
+
+      return Validation.invalid(List.of(
+        JSXValidationError.of(ex.lexical(), sb.toString())));
+    }
+
+    @Override
+    public Validation<List<JSXValidationErrorType>, SExpressionQuotedStringType>
+    quotedString(final SExpressionQuotedStringType ex)
+      throws UnreachableCodeException
+    {
+      return Validation.valid(ex);
+    }
+
+    @Override
+    public Validation<List<JSXValidationErrorType>, SExpressionQuotedStringType>
+    symbol(final SExpressionSymbolType ex)
+      throws UnreachableCodeException
+    {
+      final StringBuilder sb = new StringBuilder(128);
+      sb.append("Expected a quoted string but got a symbol.");
+      sb.append(SEPARATOR);
+
+      sb.append("  Expected: A quoted string");
+      sb.append(SEPARATOR);
+
+      sb.append("  Received: A symbol '");
+      sb.append(ex);
+      sb.append('\'');
+      sb.append(SEPARATOR);
+
+      return Validation.invalid(List.of(
+        JSXValidationError.of(ex.lexical(), sb.toString())));
+    }
+  }
+
+  private static final class ExpectList
+    implements SExpressionMatcherType<
+    Validation<List<JSXValidationErrorType>, SExpressionListType>, UnreachableCodeException>
+  {
+    ExpectList()
+    {
+    }
+
+    @Override
+    public Validation<List<JSXValidationErrorType>, SExpressionListType>
+    list(final SExpressionListType ex)
+      throws UnreachableCodeException
+    {
+      return Validation.valid(ex);
+    }
+
+    @Override
+    public Validation<List<JSXValidationErrorType>, SExpressionListType>
+    quotedString(final SExpressionQuotedStringType ex)
+      throws UnreachableCodeException
+    {
+      final StringBuilder sb = new StringBuilder(128);
+      sb.append("Expected a list but got a quoted string.");
+      sb.append(SEPARATOR);
+
+      sb.append("  Expected: A list");
+      sb.append(SEPARATOR);
+
+      sb.append("  Received: A quoted string \"");
+      sb.append(ex);
+      sb.append('"');
+      sb.append(SEPARATOR);
+
+      return Validation.invalid(List.of(
+        JSXValidationError.of(ex.lexical(), sb.toString())));
+    }
+
+    @Override
+    public Validation<List<JSXValidationErrorType>, SExpressionListType>
+    symbol(final SExpressionSymbolType ex)
+      throws UnreachableCodeException
+    {
+      final StringBuilder sb = new StringBuilder(128);
+      sb.append("Expected a list but got a symbol.");
+      sb.append(SEPARATOR);
+
+      sb.append("  Expected: A list");
+      sb.append(SEPARATOR);
+
+      sb.append("  Received: A symbol '");
+      sb.append(ex);
+      sb.append('\'');
+      sb.append(SEPARATOR);
+
+      return Validation.invalid(List.of(
+        JSXValidationError.of(ex.lexical(), sb.toString())));
+    }
+  }
+
+  private static final class ExpectSymbol
+    implements SExpressionMatcherType<
+    Validation<List<JSXValidationErrorType>, SExpressionSymbolType>, UnreachableCodeException>
+  {
+    ExpectSymbol()
+    {
+    }
+
+    @Override
+    public Validation<List<JSXValidationErrorType>, SExpressionSymbolType>
+    list(final SExpressionListType ex)
+      throws UnreachableCodeException
+    {
+      final StringBuilder sb = new StringBuilder(128);
+      sb.append("Expected a symbol but got a list.");
+      sb.append(SEPARATOR);
+
+      sb.append("  Expected: A symbol");
+      sb.append(SEPARATOR);
+
+      sb.append("  Received: ");
+      sb.append(ex);
+      sb.append(SEPARATOR);
+
+      return Validation.invalid(List.of(JSXValidationError.of(
+        ex.lexical(),
+        sb.toString())));
+    }
+
+    @Override
+    public Validation<List<JSXValidationErrorType>, SExpressionSymbolType>
+    quotedString(final SExpressionQuotedStringType ex)
+      throws UnreachableCodeException
+    {
+      final StringBuilder sb = new StringBuilder(128);
+      sb.append("Expected a symbol but got a quoted string.");
+      sb.append(SEPARATOR);
+
+      sb.append("  Expected: A symbol");
+      sb.append(SEPARATOR);
+
+      sb.append("  Received: A quoted string \"");
+      sb.append(ex);
+      sb.append('"');
+      sb.append(SEPARATOR);
+
+      return Validation.invalid(
+        List.of(JSXValidationError.of(ex.lexical(), sb.toString())));
+    }
+
+    @Override
+    public Validation<List<JSXValidationErrorType>, SExpressionSymbolType>
+    symbol(final SExpressionSymbolType ex)
+      throws UnreachableCodeException
+    {
+      return Validation.valid(ex);
+    }
   }
 }

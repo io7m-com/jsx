@@ -29,6 +29,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 /**
  * A trivial serializer with no features.
@@ -55,58 +56,7 @@ public final class JSXSerializerTrivial implements JSXSerializerType
     final PrintWriter w)
     throws IOException
   {
-    e.matchExpression(
-      new SExpressionMatcherType<Integer, IOException>()
-      {
-        @Override
-        public Integer list(
-          final SExpressionListType xs)
-          throws IOException
-        {
-          if (xs.isSquare()) {
-            w.print("[");
-          } else {
-            w.print("(");
-          }
-
-          final int max = xs.size();
-          for (int index = 0; index < max; ++index) {
-            final SExpressionType es = xs.get(index);
-            serializeWithWriter(es, w);
-            if ((index + 1) < max) {
-              w.print(" ");
-            }
-          }
-
-          if (xs.isSquare()) {
-            w.print("]");
-          } else {
-            w.print(")");
-          }
-
-          return Integer.valueOf(0);
-        }
-
-        @Override
-        public Integer quotedString(
-          final SExpressionQuotedStringType qs)
-          throws IOException
-        {
-          w.print('"');
-          w.print(qs.text());
-          w.print('"');
-          return Integer.valueOf(0);
-        }
-
-        @Override
-        public Integer symbol(
-          final SExpressionSymbolType ss)
-          throws IOException
-        {
-          w.print(ss.text());
-          return Integer.valueOf(0);
-        }
-      });
+    e.matchExpression(new SerializingMatcher(w));
   }
 
   @Override
@@ -122,5 +72,63 @@ public final class JSXSerializerTrivial implements JSXSerializerType
     final PrintWriter w = new PrintWriter(os);
     serializeWithWriter(e, w);
     w.flush();
+  }
+
+  private static final class SerializingMatcher
+    implements SExpressionMatcherType<Integer, IOException>
+  {
+    private final PrintWriter writer;
+
+    SerializingMatcher(final PrintWriter in_writer)
+    {
+      this.writer = Objects.requireNonNull(in_writer, "writer");
+    }
+
+    @Override
+    public Integer list(
+      final SExpressionListType xs)
+      throws IOException
+    {
+      if (xs.isSquare()) {
+        this.writer.print("[");
+      } else {
+        this.writer.print("(");
+      }
+
+      final int max = xs.size();
+      for (int index = 0; index < max; ++index) {
+        final SExpressionType es = xs.get(index);
+        serializeWithWriter(es, this.writer);
+        if ((index + 1) < max) {
+          this.writer.print(" ");
+        }
+      }
+
+      if (xs.isSquare()) {
+        this.writer.print("]");
+      } else {
+        this.writer.print(")");
+      }
+
+      return Integer.valueOf(0);
+    }
+
+    @Override
+    public Integer quotedString(
+      final SExpressionQuotedStringType qs)
+    {
+      this.writer.print('"');
+      this.writer.print(qs.text());
+      this.writer.print('"');
+      return Integer.valueOf(0);
+    }
+
+    @Override
+    public Integer symbol(
+      final SExpressionSymbolType ss)
+    {
+      this.writer.print(ss.text());
+      return Integer.valueOf(0);
+    }
   }
 }
