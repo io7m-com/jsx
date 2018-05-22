@@ -16,18 +16,20 @@
 
 package com.io7m.jsx.combinators;
 
+import com.io7m.immutables.styles.ImmutablesStyleType;
 import com.io7m.jlexing.core.LexicalPositionType;
-import com.io7m.jsx.JSXImmutableStyleType;
 import org.immutables.value.Value;
 
 import java.net.URI;
+
+import static org.immutables.value.Value.Immutable;
 
 /**
  * An error produced during validation of an S-expression.
  */
 
-@Value.Immutable
-@JSXImmutableStyleType
+@Immutable
+@ImmutablesStyleType
 public interface JSXValidationErrorType
 {
   /**

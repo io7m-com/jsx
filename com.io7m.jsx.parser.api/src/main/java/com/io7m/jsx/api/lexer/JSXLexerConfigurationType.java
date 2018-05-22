@@ -16,19 +16,21 @@
 
 package com.io7m.jsx.api.lexer;
 
-import com.io7m.jsx.JSXImmutableStyleType;
+import com.io7m.immutables.styles.ImmutablesStyleType;
 import org.immutables.value.Value;
 
 import java.net.URI;
 import java.util.EnumSet;
 import java.util.Optional;
 
+import static org.immutables.value.Value.Immutable;
+
 /**
  * The type of lexer configurations.
  */
 
-@JSXImmutableStyleType
-@Value.Immutable
+@ImmutablesStyleType
+@Immutable
 public interface JSXLexerConfigurationType
 {
   /**

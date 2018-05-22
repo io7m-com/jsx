@@ -21,10 +21,12 @@
 module com.io7m.jsx.parser.api
 {
   requires static org.immutables.value;
+  requires static com.io7m.immutables.style;
   requires static org.osgi.annotation;
 
-  requires com.io7m.jlexing.core;
-  requires com.io7m.jsx.core;
+  requires transitive com.io7m.jlexing.core;
+  requires transitive com.io7m.jsx.core;
+
   requires com.io7m.jeucreader.core;
 
   exports com.io7m.jsx.api.parser;

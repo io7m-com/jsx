@@ -21,11 +21,13 @@
 module com.io7m.jsx.combinators
 {
   requires static org.immutables.value;
+  requires static com.io7m.immutables.style;
 
-  requires io.vavr;
-  requires com.io7m.jsx.core;
+  requires transitive io.vavr;
+  requires transitive com.io7m.jsx.core;
+  requires transitive com.io7m.jlexing.core;
+
   requires com.io7m.junreachable.core;
-  requires com.io7m.jlexing.core;
 
   exports com.io7m.jsx.combinators;
 }

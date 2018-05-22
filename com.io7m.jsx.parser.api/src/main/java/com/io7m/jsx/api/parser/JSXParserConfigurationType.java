@@ -16,15 +16,17 @@
 
 package com.io7m.jsx.api.parser;
 
-import com.io7m.jsx.JSXImmutableStyleType;
+import com.io7m.immutables.styles.ImmutablesStyleType;
 import org.immutables.value.Value;
+
+import static org.immutables.value.Value.Immutable;
 
 /**
  * The type of lexer configurations.
  */
 
-@JSXImmutableStyleType
-@Value.Immutable
+@ImmutablesStyleType
+@Immutable
 public interface JSXParserConfigurationType
 {
   /**

@@ -20,6 +20,9 @@
 
 module com.io7m.jsx.documentation
 {
+  requires static org.immutables.value;
+  requires static com.io7m.immutables.style;
+
   requires com.io7m.jsx.combinators;
   requires com.io7m.jsx.parser.api;
   requires com.io7m.jsx.core;
