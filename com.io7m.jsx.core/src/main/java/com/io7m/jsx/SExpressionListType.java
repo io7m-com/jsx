@@ -41,7 +41,7 @@ public interface SExpressionListType
   int size();
 
   /**
-   * @return <tt>true</tt> if the original list used square brackets
+   * @return {@code true} if the original list used square brackets
    */
 
   boolean isSquare();

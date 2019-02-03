@@ -36,6 +36,7 @@
       <Bug pattern="OPM_OVERLY_PERMISSIVE_METHOD"/>
       <Bug pattern="OCP_OVERLY_CONCRETE_PARAMETER"/>
       <Bug pattern="DRE_DECLARED_RUNTIME_EXCEPTION"/>
+      <Bug pattern="UPM_UNCALLED_PRIVATE_METHOD"/>
     </Or>
   </Match>
 
