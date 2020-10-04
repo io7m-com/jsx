@@ -8,10 +8,6 @@
          <img src="https://img.shields.io/maven-central/v/com.io7m.jsx/com.io7m.jsx.png?style=flat-square"
               alt="Maven Central"/>
       </a>
-      <a href="https://www.codacy.com/app/github_79/jsx">
-         <img src="https://img.shields.io/codacy/grade/f1f96b15af7049eba148aeb6abf04995.png?style=flat-square"
-              alt="Codacy"/>
-      </a>
       <a href="https://codecov.io/gh/io7m/jsx">
          <img src="https://img.shields.io/codecov/c/github/io7m/jsx.png?style=flat-square"
               alt="Codecov"/>
@@ -21,9 +17,9 @@
   <p>
     The <var>jsx</var> package implements a configurable S-expression parser.
   </p>
-  
+
   <pre>(f (g (x y)))</pre>
-  
+
   <p>
     The parser can be configured to optionally accept/reject
     various syntactic features such as multi-line strings and
