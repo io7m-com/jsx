@@ -116,7 +116,7 @@ public final class Main implements Runnable
       final var cmd = this.commander.getParsedCommand();
       if (cmd == null) {
         final var sb = new StringBuilder(128);
-        this.commander.usage(sb);
+        this.commander.usage();
         LOG.info("Arguments required.\n{}", sb.toString());
         return;
       }
@@ -126,7 +126,7 @@ public final class Main implements Runnable
 
     } catch (final ParameterException e) {
       final var sb = new StringBuilder(128);
-      this.commander.usage(sb);
+      this.commander.usage();
       LOG.error("{}\n{}", e.getMessage(), sb.toString());
       this.exit_code = 1;
     } catch (final Exception e) {
