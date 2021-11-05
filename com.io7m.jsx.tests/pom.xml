@@ -17,15 +17,14 @@
   <url>http://io7m.github.io/jsx</url>
   <name>${project.artifactId}</name>
 
+  <properties>
+    <mdep.analyze.skip>true</mdep.analyze.skip>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>com.io7m.jsx.core</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>com.io7m.jsx.combinators</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
@@ -54,55 +53,24 @@
     </dependency>
 
     <dependency>
-      <groupId>io.vavr</groupId>
-      <artifactId>vavr</artifactId>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <scope>test</scope>
     </dependency>
-
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
 
   <build>
     <plugins>
-      <!-- Check style -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-      </plugin>
-
       <!-- Determine test coverage -->
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-      </plugin>
-
-      <!-- Ignore dependencies that bytecode analysis gets wrong. -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <configuration>
-          <failOnWarning>true</failOnWarning>
-          <ignoredUnusedDeclaredDependencies>
-            <ignoredUnusedDeclaredDependency>
-              junit:junit:*
-            </ignoredUnusedDeclaredDependency>
-            <ignoredUnusedDeclaredDependency>
-              ${project.groupId}:*:*
-            </ignoredUnusedDeclaredDependency>
-            <ignoredUnusedDeclaredDependency>
-              com.io7m.jeucreader:com.io7m.jeucreader.core:*
-            </ignoredUnusedDeclaredDependency>
-            <ignoredUnusedDeclaredDependency>
-              com.io7m.jlexing:com.io7m.jlexing.core:*
-            </ignoredUnusedDeclaredDependency>
-            <ignoredUnusedDeclaredDependency>
-              io.vavr:vavr:*
-            </ignoredUnusedDeclaredDependency>
-          </ignoredUnusedDeclaredDependencies>
-        </configuration>
+        <version>0.8.7</version>
       </plugin>
     </plugins>
   </build>

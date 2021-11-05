@@ -17,7 +17,7 @@
 package com.io7m.jsx.lexer;
 
 import com.io7m.jeucreader.UnicodeCharacterReaderPushBackType;
-import com.io7m.jsx.api.lexer.JSXLexerConfigurationType;
+import com.io7m.jsx.api.lexer.JSXLexerConfiguration;
 import com.io7m.jsx.api.lexer.JSXLexerSupplierType;
 import com.io7m.jsx.api.lexer.JSXLexerType;
 import org.osgi.service.component.annotations.Component;
@@ -42,7 +42,7 @@ public final class JSXLexerSupplier implements JSXLexerSupplierType
 
   @Override
   public JSXLexerType create(
-    final JSXLexerConfigurationType configuration,
+    final JSXLexerConfiguration configuration,
     final UnicodeCharacterReaderPushBackType reader)
   {
     return JSXLexer.newLexer(configuration, reader);

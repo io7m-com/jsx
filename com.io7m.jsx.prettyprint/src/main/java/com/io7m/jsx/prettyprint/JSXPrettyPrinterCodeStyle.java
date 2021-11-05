@@ -16,11 +16,10 @@
 
 package com.io7m.jsx.prettyprint;
 
-import com.io7m.jsx.SExpressionListType;
-import com.io7m.jsx.SExpressionMatcherType;
-import com.io7m.jsx.SExpressionQuotedStringType;
-import com.io7m.jsx.SExpressionSymbolType;
 import com.io7m.jsx.SExpressionType;
+import com.io7m.jsx.SExpressionType.SListType;
+import com.io7m.jsx.SExpressionType.SQuotedString;
+import com.io7m.jsx.SExpressionType.SSymbol;
 import de.uka.ilkd.pp.Layouter;
 import de.uka.ilkd.pp.WriterBackend;
 
@@ -36,7 +35,7 @@ import java.util.Objects;
 public final class JSXPrettyPrinterCodeStyle implements JSXPrettyPrinterType
 {
   private final WriterBackend backend;
-  private final SExpressionMatcherType<Void, IOException> matcher;
+  private final PrinterMatcher matcher;
 
   private JSXPrettyPrinterCodeStyle(
     final Writer in_out,
@@ -72,7 +71,7 @@ public final class JSXPrettyPrinterCodeStyle implements JSXPrettyPrinterType
   public void print(final SExpressionType e)
     throws IOException
   {
-    e.matchExpression(this.matcher);
+    this.matcher.match(e);
   }
 
   @Override
@@ -83,7 +82,6 @@ public final class JSXPrettyPrinterCodeStyle implements JSXPrettyPrinterType
   }
 
   private static final class PrinterMatcher
-    implements SExpressionMatcherType<Void, IOException>
   {
     private final int indent;
     private final Layouter<IOException> layout;
@@ -96,8 +94,22 @@ public final class JSXPrettyPrinterCodeStyle implements JSXPrettyPrinterType
       this.indent = in_indent;
     }
 
-    @Override
-    public Void list(final SExpressionListType e)
+    public Void match(
+      final SExpressionType e)
+      throws IOException
+    {
+      if (e instanceof SQuotedString quotedString) {
+        return this.quotedString(quotedString);
+      } else if (e instanceof SSymbol symbol) {
+        return this.symbol(symbol);
+      } else if (e instanceof SListType list) {
+        return this.list(list);
+      } else {
+        throw new IllegalStateException();
+      }
+    }
+
+    public Void list(final SListType e)
       throws IOException
     {
       final Layouter<IOException> x = this.layout;
@@ -117,7 +129,7 @@ public final class JSXPrettyPrinterCodeStyle implements JSXPrettyPrinterType
       if (size > 0) {
         for (int index = 0; index < size; ++index) {
           final SExpressionType current = e.get(index);
-          current.matchExpression(this);
+          this.match(current);
           if (index + 1 < size) {
             x.brk(1, this.indent);
           }
@@ -134,16 +146,14 @@ public final class JSXPrettyPrinterCodeStyle implements JSXPrettyPrinterType
       return null;
     }
 
-    @Override
-    public Void quotedString(final SExpressionQuotedStringType e)
+    public Void quotedString(final SQuotedString e)
       throws IOException
     {
       this.layout.print(String.format("\"%s\"", e.text()));
       return null;
     }
 
-    @Override
-    public Void symbol(final SExpressionSymbolType e)
+    public Void symbol(final SSymbol e)
       throws IOException
     {
       this.layout.print(e.text());

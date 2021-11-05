@@ -1,10 +1,10 @@
 /*
  * Copyright © 2016 <code@io7m.com> http://io7m.com
- * 
+ *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
  * copyright notice and this permission notice appear in all copies.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
  * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
@@ -21,7 +21,7 @@ import com.io7m.jlexing.core.LexicalPosition;
 import com.io7m.jlexing.core.LexicalPositionMutable;
 import com.io7m.jsx.api.lexer.JSXLexerBareCarriageReturnException;
 import com.io7m.jsx.api.lexer.JSXLexerComment;
-import com.io7m.jsx.api.lexer.JSXLexerConfigurationType;
+import com.io7m.jsx.api.lexer.JSXLexerConfiguration;
 import com.io7m.jsx.api.lexer.JSXLexerException;
 import com.io7m.jsx.api.lexer.JSXLexerInvalidCodePointException;
 import com.io7m.jsx.api.lexer.JSXLexerNewLinesInStringsException;
@@ -51,7 +51,7 @@ import java.util.Optional;
 public final class JSXLexer implements JSXLexerType
 {
   private final StringBuilder buffer;
-  private final JSXLexerConfigurationType config;
+  private final JSXLexerConfiguration config;
   private final UnicodeCharacterReaderPushBackType reader;
   private final LexicalPositionMutable<URI> position;
   private final LexicalPositionMutable<URI> buffer_position;
@@ -59,7 +59,7 @@ public final class JSXLexer implements JSXLexerType
   private JSXLexerComment buffer_comment;
 
   private JSXLexer(
-    final JSXLexerConfigurationType c,
+    final JSXLexerConfiguration c,
     final UnicodeCharacterReaderPushBackType r)
   {
     this.config = Objects.requireNonNull(c, "Configuration");
@@ -89,7 +89,7 @@ public final class JSXLexer implements JSXLexerType
    */
 
   public static JSXLexerType newLexer(
-    final JSXLexerConfigurationType c,
+    final JSXLexerConfiguration c,
     final UnicodeCharacterReaderPushBackType r)
   {
     return new JSXLexer(c, r);

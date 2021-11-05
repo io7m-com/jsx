@@ -21,15 +21,8 @@ import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
 import com.beust.jcommander.Parameters;
 import com.io7m.jeucreader.UnicodeCharacterReader;
-import com.io7m.jeucreader.UnicodeCharacterReaderPushBackType;
-import com.io7m.jlexing.core.LexicalPosition;
-
-import java.net.URI;
-import java.util.Objects;
-import com.io7m.jsx.SExpressionType;
+import com.io7m.jsx.api.lexer.JSXLexerComment;
 import com.io7m.jsx.api.lexer.JSXLexerConfiguration;
-import com.io7m.jsx.api.lexer.JSXLexerConfigurationType;
-import com.io7m.jsx.api.lexer.JSXLexerType;
 import com.io7m.jsx.api.parser.JSXParserConfiguration;
 import com.io7m.jsx.api.parser.JSXParserException;
 import com.io7m.jsx.api.parser.JSXParserType;
@@ -44,17 +37,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.Callable;
 import java.util.function.Supplier;
@@ -80,8 +74,8 @@ public final class Main implements Runnable
   {
     this.args = Objects.requireNonNull(in_args, "Command line arguments");
 
-    final CommandRoot r = new CommandRoot();
-    final CommandFormat format = new CommandFormat();
+    final var r = new CommandRoot();
+    final var format = new CommandFormat();
 
     this.commands = new HashMap<>(8);
     this.commands.put("format", format);
@@ -99,7 +93,7 @@ public final class Main implements Runnable
 
   public static void main(final String[] args)
   {
-    final Main cm = new Main(args);
+    final var cm = new Main(args);
     cm.run();
     System.exit(cm.exitCode());
   }
@@ -119,19 +113,19 @@ public final class Main implements Runnable
     try {
       this.commander.parse(this.args);
 
-      final String cmd = this.commander.getParsedCommand();
+      final var cmd = this.commander.getParsedCommand();
       if (cmd == null) {
-        final StringBuilder sb = new StringBuilder(128);
+        final var sb = new StringBuilder(128);
         this.commander.usage(sb);
         LOG.info("Arguments required.\n{}", sb.toString());
         return;
       }
 
-      final CommandType command = this.commands.get(cmd);
+      final var command = this.commands.get(cmd);
       command.call();
 
     } catch (final ParameterException e) {
-      final StringBuilder sb = new StringBuilder(128);
+      final var sb = new StringBuilder(128);
       this.commander.usage(sb);
       LOG.error("{}\n{}", e.getMessage(), sb.toString());
       this.exit_code = 1;
@@ -163,7 +157,7 @@ public final class Main implements Runnable
     public Void call()
       throws Exception
     {
-      final ch.qos.logback.classic.Logger root =
+      final var root =
         (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(
           Logger.ROOT_LOGGER_NAME);
       root.setLevel(this.verbose.toLevel());
@@ -217,34 +211,29 @@ public final class Main implements Runnable
     {
       super.call();
 
-      final Path path = Paths.get(this.file);
-      try (InputStream stream = Files.newInputStream(path)) {
-        try (InputStreamReader stream_reader =
+      final var path = Paths.get(this.file);
+      try (var stream = Files.newInputStream(path)) {
+        try (var stream_reader =
                new InputStreamReader(stream, StandardCharsets.UTF_8)) {
 
-          final UnicodeCharacterReaderPushBackType reader =
+          final var reader =
             UnicodeCharacterReader.newReader(stream_reader);
 
-          final JSXLexerConfiguration.Builder lexer_config_builder =
-            JSXLexerConfiguration.builder();
+          final var lexer_config =
+            new JSXLexerConfiguration(
+              this.lex_square_brackets,
+              this.lex_newlines_quoted,
+              Optional.of(path.toUri()),
+              EnumSet.noneOf(JSXLexerComment.class),
+              1
+            );
 
-          lexer_config_builder.setFile(path.toUri());
-          lexer_config_builder.setNewlinesInQuotedStrings(
-            this.lex_newlines_quoted);
-          lexer_config_builder.setSquareBrackets(
-            this.lex_square_brackets);
-
-          final JSXLexerConfigurationType lexer_config =
-            lexer_config_builder.build();
-          final JSXLexerType lexer =
+          final var lexer =
             JSXLexer.newLexer(lexer_config, reader);
-
-          final JSXParserConfiguration.Builder parser_config_builder =
-            JSXParserConfiguration.builder();
-          parser_config_builder.setPreserveLexical(true);
-
-          final JSXParserType parser =
-            JSXParser.newParser(parser_config_builder.build(), lexer);
+          final var parser_config =
+            new JSXParserConfiguration(true);
+          final var parser =
+            JSXParser.newParser(parser_config, lexer);
 
           switch (this.pretty_printer) {
             case NONE:
@@ -281,10 +270,10 @@ public final class Main implements Runnable
 
       while (true) {
         try {
-          final Optional<SExpressionType> expr_opt =
+          final var expr_opt =
             parser.parseExpressionOrEOF();
           if (expr_opt.isPresent()) {
-            final SExpressionType expr = expr_opt.get();
+            final var expr = expr_opt.get();
             serial.serialize(expr, System.out);
             System.out.println();
             System.out.println();
@@ -304,8 +293,8 @@ public final class Main implements Runnable
       final Collection<JSXParserException> errors)
     {
       if (!errors.isEmpty()) {
-        for (final JSXParserException e : errors) {
-          final LexicalPosition<URI> lex = e.lexical();
+        for (final var e : errors) {
+          final var lex = e.lexical();
           LOG.error(
             "parse error: {}:{}:{}: {}",
             lex.file().orElse(URI.create("urn:unknown")),
@@ -326,11 +315,11 @@ public final class Main implements Runnable
 
       while (true) {
         try {
-          final Optional<SExpressionType> expr_opt =
+          final var expr_opt =
             parser.parseExpressionOrEOF();
           if (expr_opt.isPresent()) {
-            try (JSXPrettyPrinterType printer = printers.get()) {
-              final SExpressionType expr = expr_opt.get();
+            try (var printer = printers.get()) {
+              final var expr = expr_opt.get();
               printer.print(expr);
             }
             System.out.println();

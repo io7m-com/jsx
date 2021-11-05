@@ -18,5 +18,9 @@
  * Lexer API.
  */
 
+@Export
+@Version("3.0.0")
 package com.io7m.jsx.api.lexer;
 
+import org.osgi.annotation.bundle.Export;
+import org.osgi.annotation.versioning.Version;

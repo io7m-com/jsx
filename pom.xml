@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
   <parent>
@@ -19,7 +22,6 @@
 
   <modules>
     <module>com.io7m.jsx.cmdline</module>
-    <module>com.io7m.jsx.combinators</module>
     <module>com.io7m.jsx.core</module>
     <module>com.io7m.jsx.documentation</module>
     <module>com.io7m.jsx.parser.api</module>
@@ -30,7 +32,7 @@
 
   <properties>
     <io7m.api.previousVersion>2.0.0</io7m.api.previousVersion>
-    <io7m.org.immutables.version>2.6.0</io7m.org.immutables.version>
+    <junit.version>5.8.1</junit.version>
   </properties>
 
   <licenses>
@@ -107,24 +109,9 @@
       </dependency>
 
       <dependency>
-        <groupId>io.vavr</groupId>
-        <artifactId>vavr</artifactId>
-        <version>0.9.2</version>
-      </dependency>
-      <dependency>
         <groupId>org.immutables</groupId>
         <artifactId>value</artifactId>
         <version>${io7m.org.immutables.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.io7m.immutables.style</groupId>
-        <artifactId>com.io7m.immutables.style</artifactId>
-        <version>0.0.1</version>
-      </dependency>
-      <dependency>
-        <groupId>org.immutables.vavr</groupId>
-        <artifactId>vavr-encodings</artifactId>
-        <version>0.5.0</version>
       </dependency>
 
       <dependency>
@@ -150,24 +137,29 @@
 
       <dependency>
         <groupId>org.osgi</groupId>
-        <artifactId>org.osgi.annotation</artifactId>
-        <version>6.0.0</version>
+        <artifactId>org.osgi.annotation.versioning</artifactId>
+        <version>1.1.2</version>
       </dependency>
       <dependency>
         <groupId>org.osgi</groupId>
-        <artifactId>org.osgi.core</artifactId>
-        <version>6.0.0</version>
+        <artifactId>org.osgi.annotation.bundle</artifactId>
+        <version>1.1.1</version>
       </dependency>
       <dependency>
         <groupId>org.osgi</groupId>
         <artifactId>org.osgi.service.component.annotations</artifactId>
-        <version>1.4.0</version>
+        <version>1.5.0</version>
       </dependency>
 
       <dependency>
-        <groupId>junit</groupId>
-        <artifactId>junit</artifactId>
-        <version>4.12</version>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-engine</artifactId>
+        <version>${junit.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-api</artifactId>
+        <version>${junit.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -175,24 +167,6 @@
   <build>
     <pluginManagement>
       <plugins>
-        <!-- Require JDK >= 11 -->
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <configuration>
-            <source>11</source>
-            <target>11</target>
-            <release>11</release>
-            <annotationProcessorPaths>
-              <dependency>
-                <groupId>org.immutables</groupId>
-                <artifactId>value</artifactId>
-                <version>${io7m.org.immutables.version}</version>
-              </dependency>
-            </annotationProcessorPaths>
-          </configuration>
-        </plugin>
-
         <!-- jstructural plugin for generating documentation. -->
         <plugin>
           <groupId>com.io7m.jstructural</groupId>

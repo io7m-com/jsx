@@ -24,7 +24,15 @@ import java.net.URI;
  * The type of tokens.
  */
 
-public interface TokenType
+public sealed interface TokenType permits
+  TokenComment,
+  TokenEOF,
+  TokenLeftParenthesis,
+  TokenLeftSquare,
+  TokenQuotedString,
+  TokenRightParenthesis,
+  TokenRightSquare,
+  TokenSymbol
 {
   /**
    * @return The lexical information for the token

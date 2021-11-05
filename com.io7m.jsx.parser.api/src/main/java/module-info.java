@@ -20,9 +20,8 @@
 
 module com.io7m.jsx.parser.api
 {
-  requires static org.immutables.value;
-  requires static com.io7m.immutables.style;
-  requires static org.osgi.annotation;
+  requires static org.osgi.annotation.bundle;
+  requires static org.osgi.annotation.versioning;
 
   requires transitive com.io7m.jlexing.core;
   requires transitive com.io7m.jsx.core;

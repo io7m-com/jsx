@@ -19,8 +19,8 @@ package com.io7m.jsx.tests;
 import com.io7m.jsx.api.lexer.JSXLexerSupplierType;
 import com.io7m.jsx.api.parser.JSXParserSupplierType;
 import com.io7m.jsx.api.serializer.JSXSerializerSupplierType;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.ServiceLoader;
 
@@ -29,21 +29,21 @@ public final class ServicesTest
   @Test
   public void testLexer()
   {
-    Assert.assertTrue(ServiceLoader.load(JSXLexerSupplierType.class)
-                        .findFirst().isPresent());
+    Assertions.assertTrue(ServiceLoader.load(JSXLexerSupplierType.class)
+                            .findFirst().isPresent());
   }
 
   @Test
   public void testParser()
   {
-    Assert.assertTrue(ServiceLoader.load(JSXParserSupplierType.class)
-                        .findFirst().isPresent());
+    Assertions.assertTrue(ServiceLoader.load(JSXParserSupplierType.class)
+                            .findFirst().isPresent());
   }
 
   @Test
   public void testSerializerTrivial()
   {
-    Assert.assertTrue(ServiceLoader.load(JSXSerializerSupplierType.class)
-                        .findFirst().isPresent());
+    Assertions.assertTrue(ServiceLoader.load(JSXSerializerSupplierType.class)
+                            .findFirst().isPresent());
   }
 }
