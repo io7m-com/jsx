@@ -17,59 +17,57 @@
 package com.io7m.jsx.tests.prettyprint;
 
 import com.io7m.jeucreader.UnicodeCharacterReader;
-import com.io7m.jeucreader.UnicodeCharacterReaderPushBackType;
-import com.io7m.jsx.SExpressionType;
+import com.io7m.jsx.api.lexer.JSXLexerComment;
 import com.io7m.jsx.api.lexer.JSXLexerConfiguration;
-import com.io7m.jsx.api.lexer.JSXLexerConfigurationType;
-import com.io7m.jsx.api.lexer.JSXLexerType;
 import com.io7m.jsx.api.parser.JSXParserConfiguration;
-import com.io7m.jsx.api.parser.JSXParserConfigurationType;
 import com.io7m.jsx.api.parser.JSXParserException;
 import com.io7m.jsx.api.parser.JSXParserType;
 import com.io7m.jsx.lexer.JSXLexer;
 import com.io7m.jsx.parser.JSXParser;
 import com.io7m.jsx.prettyprint.JSXPrettyPrinterType;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.EnumSet;
+import java.util.Optional;
 
 public abstract class JSXPrettyPrinterContract
 {
-  private final int SIZES[] = {10, 20, 40, 80, 120, 9999};
+  private final int[] SIZES = {10, 20, 40, 80, 120, 9999};
 
-  private static JSXLexerConfigurationType defaultLexerConfig()
+  private static JSXLexerConfiguration defaultLexerConfig()
   {
-    final JSXLexerConfiguration.Builder cb =
-      JSXLexerConfiguration.builder();
-    final JSXLexerConfiguration c = cb.build();
-    return c;
+    return new JSXLexerConfiguration(
+      false,
+      false,
+      Optional.empty(),
+      EnumSet.noneOf(JSXLexerComment.class),
+      1
+    );
   }
 
-  private static JSXParserConfigurationType defaultParserConfig()
+  private static JSXParserConfiguration defaultParserConfig()
   {
-    final JSXParserConfiguration.Builder cb =
-      JSXParserConfiguration.builder();
-    return cb.build();
+    return new JSXParserConfiguration(true);
   }
 
   private static JSXParserType parserForFile(final String s)
   {
-    final JSXLexerConfigurationType lc =
-      JSXPrettyPrinterContract.defaultLexerConfig();
-    final InputStream is =
+    final var lc =
+      defaultLexerConfig();
+    final var is =
       JSXPrettyPrinterContract.class.getResourceAsStream(s);
-    final InputStreamReader isr =
+    final var isr =
       new InputStreamReader(is);
-    final UnicodeCharacterReaderPushBackType usr =
+    final var usr =
       UnicodeCharacterReader.newReader(isr);
-    final JSXLexerType lex =
+    final var lex =
       JSXLexer.newLexer(lc, usr);
-    final JSXParserConfigurationType pc =
-      JSXPrettyPrinterContract.defaultParserConfig();
+    final var pc =
+      defaultParserConfig();
     return JSXParser.newParser(pc, lex);
   }
 
@@ -102,18 +100,18 @@ public abstract class JSXPrettyPrinterContract
   private void showFile(final String file)
     throws JSXParserException, IOException
   {
-    final JSXParserType p =
-      JSXPrettyPrinterContract.parserForFile(file);
-    final SExpressionType e =
+    final var p =
+      parserForFile(file);
+    final var e =
       p.parseExpression();
 
-    for (final int width : this.SIZES) {
+    for (final var width : this.SIZES) {
       System.out.println();
       System.out.println("--------");
       System.out.println("Width " + width);
       System.out.println("--------");
 
-      final JSXPrettyPrinterType pp =
+      final var pp =
         this.newPrettyPrinter(new OutputStreamWriter(System.out), width, 2);
 
       pp.print(e);

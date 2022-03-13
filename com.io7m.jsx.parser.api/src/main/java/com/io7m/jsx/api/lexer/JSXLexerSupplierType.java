@@ -45,7 +45,7 @@ public interface JSXLexerSupplierType
    */
 
   JSXLexerType create(
-    JSXLexerConfigurationType configuration,
+    JSXLexerConfiguration configuration,
     UnicodeCharacterReaderPushBackType reader);
 
   /**
@@ -58,7 +58,7 @@ public interface JSXLexerSupplierType
    */
 
   default JSXLexerType createFromReader(
-    final JSXLexerConfigurationType configuration,
+    final JSXLexerConfiguration configuration,
     final Reader reader)
   {
     Objects.requireNonNull(configuration, "Configuration");
@@ -77,7 +77,7 @@ public interface JSXLexerSupplierType
    */
 
   default JSXLexerType createFromStream(
-    final JSXLexerConfigurationType configuration,
+    final JSXLexerConfiguration configuration,
     final Charset charset,
     final InputStream stream)
   {
@@ -100,7 +100,7 @@ public interface JSXLexerSupplierType
    */
 
   default JSXLexerType createFromStreamUTF8(
-    final JSXLexerConfigurationType configuration,
+    final JSXLexerConfiguration configuration,
     final InputStream stream)
   {
     Objects.requireNonNull(configuration, "Configuration");

@@ -1,10 +1,10 @@
 /*
  * Copyright © 2016 <code@io7m.com> http://io7m.com
- * 
+ *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
  * copyright notice and this permission notice appear in all copies.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
  * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
@@ -16,11 +16,9 @@
 
 package com.io7m.jsx.serializer;
 
-import com.io7m.jsx.SExpressionListType;
-import com.io7m.jsx.SExpressionMatcherType;
-import com.io7m.jsx.SExpressionQuotedStringType;
-import com.io7m.jsx.SExpressionSymbolType;
 import com.io7m.jsx.SExpressionType;
+import com.io7m.jsx.SExpressionType.SQuotedString;
+import com.io7m.jsx.SExpressionType.SSymbol;
 import com.io7m.jsx.api.serializer.JSXSerializerType;
 
 import java.io.BufferedOutputStream;
@@ -56,7 +54,15 @@ public final class JSXSerializerTrivial implements JSXSerializerType
     final PrintWriter w)
     throws IOException
   {
-    e.matchExpression(new SerializingMatcher(w));
+    final var matcher = new SerializingMatcher(w);
+
+    if (e instanceof SExpressionType.SList list) {
+      matcher.list(list);
+    } else if (e instanceof SExpressionType.SSymbol symbol) {
+      matcher.symbol(symbol);
+    } else if (e instanceof SExpressionType.SQuotedString quotedString) {
+      matcher.quotedString(quotedString);
+    }
   }
 
   @Override
@@ -75,7 +81,6 @@ public final class JSXSerializerTrivial implements JSXSerializerType
   }
 
   private static final class SerializingMatcher
-    implements SExpressionMatcherType<Integer, IOException>
   {
     private final PrintWriter writer;
 
@@ -84,9 +89,8 @@ public final class JSXSerializerTrivial implements JSXSerializerType
       this.writer = Objects.requireNonNull(in_writer, "writer");
     }
 
-    @Override
-    public Integer list(
-      final SExpressionListType xs)
+    public void list(
+      final SExpressionType.SList xs)
       throws IOException
     {
       if (xs.isSquare()) {
@@ -110,25 +114,20 @@ public final class JSXSerializerTrivial implements JSXSerializerType
         this.writer.print(")");
       }
 
-      return Integer.valueOf(0);
     }
 
-    @Override
-    public Integer quotedString(
-      final SExpressionQuotedStringType qs)
+    public void quotedString(
+      final SQuotedString qs)
     {
       this.writer.print('"');
       this.writer.print(qs.text());
       this.writer.print('"');
-      return Integer.valueOf(0);
     }
 
-    @Override
-    public Integer symbol(
-      final SExpressionSymbolType ss)
+    public void symbol(
+      final SSymbol ss)
     {
       this.writer.print(ss.text());
-      return Integer.valueOf(0);
     }
   }
 }

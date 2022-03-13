@@ -68,15 +68,14 @@
 
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-      </plugin>
-
       <!-- Produce command-line onejar -->
+      <!--
+      https://issues.apache.org/jira/projects/MSHADE/issues/MSHADE-407
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
+        <version>3.2.4</version>
         <executions>
           <execution>
             <phase>package</phase>
@@ -99,6 +98,7 @@
           </execution>
         </executions>
       </plugin>
+    -->
     </plugins>
   </build>
 

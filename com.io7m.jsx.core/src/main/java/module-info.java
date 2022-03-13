@@ -20,6 +20,9 @@
 
 module com.io7m.jsx.core
 {
+  requires static org.osgi.annotation.bundle;
+  requires static org.osgi.annotation.versioning;
+
   requires transitive com.io7m.jlexing.core;
 
   exports com.io7m.jsx;

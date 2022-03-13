@@ -17,7 +17,7 @@
 package com.io7m.jsx.parser;
 
 import com.io7m.jsx.api.lexer.JSXLexerType;
-import com.io7m.jsx.api.parser.JSXParserConfigurationType;
+import com.io7m.jsx.api.parser.JSXParserConfiguration;
 import com.io7m.jsx.api.parser.JSXParserSupplierType;
 import com.io7m.jsx.api.parser.JSXParserType;
 import org.osgi.service.component.annotations.Component;
@@ -42,7 +42,7 @@ public final class JSXParserSupplier implements JSXParserSupplierType
 
   @Override
   public JSXParserType create(
-    final JSXParserConfigurationType configuration,
+    final JSXParserConfiguration configuration,
     final JSXLexerType lexer)
   {
     return JSXParser.newParser(configuration, lexer);
