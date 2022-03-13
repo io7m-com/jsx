@@ -1,21 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?><c:changelog xmlns:c="urn:com.io7m.changelog:4.0" project="com.io7m.jsx">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<c:changelog project="com.io7m.jsx" xmlns:c="urn:com.io7m.changelog:4.0">
   <c:releases>
-    <c:release date="2015-03-28T00:00:00+00:00" ticket-system="com.github.io7m.jsx" version="0.2.0">
+    <c:release date="2015-03-28T00:00:00+00:00" is-open="false" ticket-system="com.github.io7m.jsx" version="0.2.0">
       <c:changes>
         <c:change date="2015-03-28T00:00:00+00:00" summary="Initial release."/>
       </c:changes>
     </c:release>
-    <c:release date="2015-10-20T00:00:00+00:00" ticket-system="com.github.io7m.jsx" version="0.4.0">
+    <c:release date="2015-10-20T00:00:00+00:00" is-open="false" ticket-system="com.github.io7m.jsx" version="0.4.0">
       <c:changes>
         <c:change compatible="false" date="2015-10-20T00:00:00+00:00" summary="Rewrite to use Java 8 and rename all types."/>
       </c:changes>
     </c:release>
-    <c:release date="2015-11-12T00:00:00+00:00" ticket-system="com.github.io7m.jsx" version="0.4.1">
+    <c:release date="2015-11-12T00:00:00+00:00" is-open="false" ticket-system="com.github.io7m.jsx" version="0.4.1">
       <c:changes>
         <c:change compatible="false" date="2015-11-12T00:00:00+00:00" summary="Make filenames part of the lexer configuration."/>
       </c:changes>
     </c:release>
-    <c:release date="2016-05-29T00:00:00+00:00" ticket-system="com.github.io7m.jsx" version="0.5.0">
+    <c:release date="2016-05-29T00:00:00+00:00" is-open="false" ticket-system="com.github.io7m.jsx" version="0.5.0">
       <c:changes>
         <c:change compatible="false" date="2016-05-11T00:00:00+00:00" summary="Remove list extension from the SExpressionListType">
           <c:tickets>
@@ -25,7 +26,7 @@
         <c:change date="2016-05-11T00:00:00+00:00" summary="Add pretty printers based on JPPLib"/>
       </c:changes>
     </c:release>
-    <c:release date="2016-05-31T00:00:00+00:00" ticket-system="com.github.io7m.jsx" version="0.5.1">
+    <c:release date="2016-05-31T00:00:00+00:00" is-open="false" ticket-system="com.github.io7m.jsx" version="0.5.1">
       <c:changes>
         <c:change date="2016-05-31T00:00:00+00:00" summary="Switch to an iterative implementation of the lexer that uses constant stack space">
           <c:tickets>
@@ -34,7 +35,7 @@
         </c:change>
       </c:changes>
     </c:release>
-    <c:release date="2016-08-05T00:00:00+00:00" ticket-system="com.github.io7m.jsx" version="0.6.0">
+    <c:release date="2016-08-05T00:00:00+00:00" is-open="false" ticket-system="com.github.io7m.jsx" version="0.6.0">
       <c:changes>
         <c:change date="2016-08-05T00:00:00+00:00" summary="Update plugins and dependencies."/>
         <c:change date="2016-08-05T00:00:00+00:00" summary="The produced jars are now OSGi bundles."/>
@@ -42,12 +43,12 @@
         <c:change compatible="false" date="2016-08-05T00:00:00+00:00" summary="Use immutables.org to generate configuration types."/>
       </c:changes>
     </c:release>
-    <c:release date="2016-10-04T00:00:00+00:00" ticket-system="com.github.io7m.jsx" version="0.7.0">
+    <c:release date="2016-10-04T00:00:00+00:00" is-open="false" ticket-system="com.github.io7m.jsx" version="0.7.0">
       <c:changes>
         <c:change date="2016-10-04T00:00:00+00:00" summary="Add command line tool for formatting s-expressions."/>
       </c:changes>
     </c:release>
-    <c:release date="2017-11-24T00:00:00+00:00" ticket-system="com.github.io7m.jsx" version="0.8.0">
+    <c:release date="2017-11-24T00:00:00+00:00" is-open="false" ticket-system="com.github.io7m.jsx" version="0.8.0">
       <c:changes>
         <c:change date="2016-11-10T00:00:00+00:00" summary="Add combinators for validating S-expressions."/>
         <c:change date="2017-04-06T00:00:00+00:00" summary="Rename project. Use the new primogenitor POM and 2017 project conventions."/>
@@ -56,7 +57,7 @@
         <c:change compatible="false" date="2017-11-16T00:00:00+00:00" summary="Removed dependency on com.io7m.jnull."/>
       </c:changes>
     </c:release>
-    <c:release date="2017-11-24T00:00:00+00:00" ticket-system="com.github.io7m.jsx" version="0.9.0">
+    <c:release date="2017-11-24T00:00:00+00:00" is-open="false" ticket-system="com.github.io7m.jsx" version="0.9.0">
       <c:changes>
         <c:change date="2017-11-24T00:00:00+00:00" summary="Add configurable comment tokens">
           <c:tickets>
@@ -70,7 +71,7 @@
         </c:change>
       </c:changes>
     </c:release>
-    <c:release date="2017-11-28T00:00:00+00:00" ticket-system="com.github.io7m.jsx" version="1.0.0">
+    <c:release date="2017-11-28T00:00:00+00:00" is-open="false" ticket-system="com.github.io7m.jsx" version="1.0.0">
       <c:changes>
         <c:change compatible="false" date="2017-11-26T00:00:00+00:00" summary="Use URIs instead of Paths in lexical information"/>
         <c:change compatible="false" date="2017-11-26T00:00:00+00:00" summary="Use immutable value types in the definitions of SExpressionType"/>
@@ -78,18 +79,23 @@
         <c:change compatible="false" date="2017-11-28T00:00:00+00:00" summary="Lexical information for SExpressionType is no longer Optional"/>
       </c:changes>
     </c:release>
-    <c:release date="2017-12-07T21:17:41+00:00" ticket-system="com.github.io7m.jsx" version="2.0.0">
+    <c:release date="2017-12-07T00:00:00+00:00" is-open="false" ticket-system="com.github.io7m.jsx" version="2.0.0">
       <c:changes>
         <c:change compatible="false" date="2017-12-07T00:00:00+00:00" summary="Make exceptions implement LexicalType">
           <c:tickets>
             <c:ticket id="7"/>
           </c:tickets>
         </c:change>
-        <c:change date="2017-12-07T21:17:41+00:00" summary="Publish services">
+        <c:change date="2017-12-07T00:00:00+00:00" summary="Publish services">
           <c:tickets>
             <c:ticket id="5"/>
           </c:tickets>
         </c:change>
+      </c:changes>
+    </c:release>
+    <c:release date="2022-03-13T11:07:49+00:00" is-open="true" ticket-system="com.github.io7m.jsx" version="3.0.0">
+      <c:changes>
+        <c:change compatible="false" date="2022-03-13T11:07:49+00:00" summary="Require JDK 17. Implement structures as records."/>
       </c:changes>
     </c:release>
   </c:releases>
