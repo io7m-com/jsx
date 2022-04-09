@@ -8,7 +8,7 @@
   <parent>
     <groupId>com.io7m.jsx</groupId>
     <artifactId>com.io7m.jsx</artifactId>
-    <version>3.0.0</version>
+    <version>3.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>com.io7m.jsx.tests</artifactId>
 
