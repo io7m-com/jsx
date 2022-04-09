@@ -1,5 +1,5 @@
 /*
- * Copyright © 2016 <code@io7m.com> http://io7m.com
+ * Copyright © 2016 Mark Raynsford <code@io7m.com> https://www.io7m.com
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -17,7 +17,7 @@
 package com.io7m.jsx.api.parser;
 
 import com.io7m.jeucreader.UnicodeCharacterReaderPushBackType;
-import com.io7m.jsx.api.lexer.JSXLexerConfigurationType;
+import com.io7m.jsx.api.lexer.JSXLexerConfiguration;
 import com.io7m.jsx.api.lexer.JSXLexerSupplierType;
 import com.io7m.jsx.api.lexer.JSXLexerType;
 import org.osgi.annotation.versioning.ProviderType;
@@ -44,7 +44,7 @@ public interface JSXParserSupplierType
    */
 
   JSXParserType create(
-    JSXParserConfigurationType configuration,
+    JSXParserConfiguration configuration,
     JSXLexerType lexer);
 
   /**
@@ -59,8 +59,8 @@ public interface JSXParserSupplierType
    */
 
   default JSXParserType createFromReader(
-    final JSXParserConfigurationType parser_configuration,
-    final JSXLexerConfigurationType lexer_configuration,
+    final JSXParserConfiguration parser_configuration,
+    final JSXLexerConfiguration lexer_configuration,
     final JSXLexerSupplierType lexer_supplier,
     final UnicodeCharacterReaderPushBackType reader)
   {
@@ -86,8 +86,8 @@ public interface JSXParserSupplierType
    */
 
   default JSXParserType createFromStream(
-    final JSXParserConfigurationType parser_configuration,
-    final JSXLexerConfigurationType lexer_configuration,
+    final JSXParserConfiguration parser_configuration,
+    final JSXLexerConfiguration lexer_configuration,
     final JSXLexerSupplierType lexer_supplier,
     final Charset charset,
     final InputStream stream)
@@ -116,8 +116,8 @@ public interface JSXParserSupplierType
    */
 
   default JSXParserType createFromStreamUTF8(
-    final JSXParserConfigurationType parser_configuration,
-    final JSXLexerConfigurationType lexer_configuration,
+    final JSXParserConfiguration parser_configuration,
+    final JSXLexerConfiguration lexer_configuration,
     final JSXLexerSupplierType lexer_supplier,
     final InputStream stream)
   {

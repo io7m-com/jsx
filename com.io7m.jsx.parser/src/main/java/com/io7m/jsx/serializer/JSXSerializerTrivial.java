@@ -1,10 +1,10 @@
 /*
- * Copyright © 2016 <code@io7m.com> http://io7m.com
- * 
+ * Copyright © 2016 Mark Raynsford <code@io7m.com> https://www.io7m.com
+ *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
  * copyright notice and this permission notice appear in all copies.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
  * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
@@ -16,11 +16,9 @@
 
 package com.io7m.jsx.serializer;
 
-import com.io7m.jsx.SExpressionListType;
-import com.io7m.jsx.SExpressionMatcherType;
-import com.io7m.jsx.SExpressionQuotedStringType;
-import com.io7m.jsx.SExpressionSymbolType;
 import com.io7m.jsx.SExpressionType;
+import com.io7m.jsx.SExpressionType.SQuotedString;
+import com.io7m.jsx.SExpressionType.SSymbol;
 import com.io7m.jsx.api.serializer.JSXSerializerType;
 
 import java.io.BufferedOutputStream;
@@ -29,6 +27,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 /**
  * A trivial serializer with no features.
@@ -55,58 +54,15 @@ public final class JSXSerializerTrivial implements JSXSerializerType
     final PrintWriter w)
     throws IOException
   {
-    e.matchExpression(
-      new SExpressionMatcherType<Integer, IOException>()
-      {
-        @Override
-        public Integer list(
-          final SExpressionListType xs)
-          throws IOException
-        {
-          if (xs.isSquare()) {
-            w.print("[");
-          } else {
-            w.print("(");
-          }
+    final var matcher = new SerializingMatcher(w);
 
-          final int max = xs.size();
-          for (int index = 0; index < max; ++index) {
-            final SExpressionType es = xs.get(index);
-            serializeWithWriter(es, w);
-            if ((index + 1) < max) {
-              w.print(" ");
-            }
-          }
-
-          if (xs.isSquare()) {
-            w.print("]");
-          } else {
-            w.print(")");
-          }
-
-          return Integer.valueOf(0);
-        }
-
-        @Override
-        public Integer quotedString(
-          final SExpressionQuotedStringType qs)
-          throws IOException
-        {
-          w.print('"');
-          w.print(qs.text());
-          w.print('"');
-          return Integer.valueOf(0);
-        }
-
-        @Override
-        public Integer symbol(
-          final SExpressionSymbolType ss)
-          throws IOException
-        {
-          w.print(ss.text());
-          return Integer.valueOf(0);
-        }
-      });
+    if (e instanceof SExpressionType.SList list) {
+      matcher.list(list);
+    } else if (e instanceof SExpressionType.SSymbol symbol) {
+      matcher.symbol(symbol);
+    } else if (e instanceof SExpressionType.SQuotedString quotedString) {
+      matcher.quotedString(quotedString);
+    }
   }
 
   @Override
@@ -122,5 +78,56 @@ public final class JSXSerializerTrivial implements JSXSerializerType
     final PrintWriter w = new PrintWriter(os);
     serializeWithWriter(e, w);
     w.flush();
+  }
+
+  private static final class SerializingMatcher
+  {
+    private final PrintWriter writer;
+
+    SerializingMatcher(final PrintWriter in_writer)
+    {
+      this.writer = Objects.requireNonNull(in_writer, "writer");
+    }
+
+    public void list(
+      final SExpressionType.SList xs)
+      throws IOException
+    {
+      if (xs.isSquare()) {
+        this.writer.print("[");
+      } else {
+        this.writer.print("(");
+      }
+
+      final int max = xs.size();
+      for (int index = 0; index < max; ++index) {
+        final SExpressionType es = xs.get(index);
+        serializeWithWriter(es, this.writer);
+        if ((index + 1) < max) {
+          this.writer.print(" ");
+        }
+      }
+
+      if (xs.isSquare()) {
+        this.writer.print("]");
+      } else {
+        this.writer.print(")");
+      }
+
+    }
+
+    public void quotedString(
+      final SQuotedString qs)
+    {
+      this.writer.print('"');
+      this.writer.print(qs.text());
+      this.writer.print('"');
+    }
+
+    public void symbol(
+      final SSymbol ss)
+    {
+      this.writer.print(ss.text());
+    }
   }
 }

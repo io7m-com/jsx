@@ -1,5 +1,5 @@
 /*
- * Copyright © 2016 <code@io7m.com> http://io7m.com
+ * Copyright © 2016 Mark Raynsford <code@io7m.com> https://www.io7m.com
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -16,15 +16,12 @@
 
 package com.io7m.jsx.parser;
 
-import com.io7m.jsx.SExpressionType;
 import com.io7m.jsx.api.lexer.JSXLexerComment;
 import com.io7m.jsx.api.lexer.JSXLexerConfiguration;
 import com.io7m.jsx.api.lexer.JSXLexerSupplierType;
 import com.io7m.jsx.api.parser.JSXParserConfiguration;
 import com.io7m.jsx.api.parser.JSXParserException;
 import com.io7m.jsx.api.parser.JSXParserSupplierType;
-import com.io7m.jsx.api.parser.JSXParserType;
-import com.io7m.jsx.api.serializer.JSXSerializerType;
 import com.io7m.jsx.lexer.JSXLexerSupplier;
 import com.io7m.jsx.serializer.JSXSerializerTrivial;
 import com.io7m.junreachable.UnreachableCodeException;
@@ -56,35 +53,36 @@ public final class JSXParserDemoMain
     final String[] args)
     throws IOException
   {
-    final JSXLexerConfiguration.Builder lexer_config_builder =
-      JSXLexerConfiguration.builder();
-    lexer_config_builder.setNewlinesInQuotedStrings(true);
-    lexer_config_builder.setComments(EnumSet.allOf(JSXLexerComment.class));
-    lexer_config_builder.setSquareBrackets(true);
+    final var lexer_config =
+      new JSXLexerConfiguration(
+        true,
+        true,
+        Optional.empty(),
+        EnumSet.allOf(JSXLexerComment.class),
+        1
+      );
 
-    final JSXLexerConfiguration lexer_config =
-      lexer_config_builder.build();
-
-    final JSXParserConfiguration.Builder pcb = JSXParserConfiguration.builder();
-    pcb.setPreserveLexical(true);
-    final JSXParserConfiguration parser_config = pcb.build();
-
+    final var parser_config =
+      new JSXParserConfiguration(true);
     final JSXLexerSupplierType lexer_supplier =
       new JSXLexerSupplier();
     final JSXParserSupplierType parser_supplier =
       new JSXParserSupplier();
 
-    final JSXParserType parser =
+    final var parser =
       parser_supplier.createFromStreamUTF8(
-        parser_config, lexer_config, lexer_supplier, System.in);
+        parser_config,
+        lexer_config,
+        lexer_supplier,
+        System.in);
 
-    final JSXSerializerType serializer = JSXSerializerTrivial.newSerializer();
+    final var serializer = JSXSerializerTrivial.newSerializer();
 
     while (true) {
       try {
-        final Optional<SExpressionType> e_opt = parser.parseExpressionOrEOF();
+        final var e_opt = parser.parseExpressionOrEOF();
         if (e_opt.isPresent()) {
-          final SExpressionType e = e_opt.get();
+          final var e = e_opt.get();
           serializer.serialize(e, System.out);
           System.out.println();
         } else {

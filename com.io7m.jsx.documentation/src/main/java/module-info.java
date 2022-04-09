@@ -1,5 +1,5 @@
 /*
- * Copyright © 2016 <code@io7m.com> http://io7m.com
+ * Copyright © 2016 Mark Raynsford <code@io7m.com> https://www.io7m.com
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -20,7 +20,10 @@
 
 module com.io7m.jsx.documentation
 {
-  requires com.io7m.jsx.combinators;
+  requires static org.osgi.annotation.bundle;
+  requires static org.osgi.annotation.versioning;
+  requires static org.osgi.service.component.annotations;
+
   requires com.io7m.jsx.parser.api;
   requires com.io7m.jsx.core;
   requires com.io7m.jsx.parser;

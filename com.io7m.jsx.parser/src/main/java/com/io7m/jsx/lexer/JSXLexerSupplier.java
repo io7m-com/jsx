@@ -1,5 +1,5 @@
 /*
- * Copyright © 2016 <code@io7m.com> http://io7m.com
+ * Copyright © 2016 Mark Raynsford <code@io7m.com> https://www.io7m.com
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -17,7 +17,7 @@
 package com.io7m.jsx.lexer;
 
 import com.io7m.jeucreader.UnicodeCharacterReaderPushBackType;
-import com.io7m.jsx.api.lexer.JSXLexerConfigurationType;
+import com.io7m.jsx.api.lexer.JSXLexerConfiguration;
 import com.io7m.jsx.api.lexer.JSXLexerSupplierType;
 import com.io7m.jsx.api.lexer.JSXLexerType;
 import org.osgi.service.component.annotations.Component;
@@ -42,7 +42,7 @@ public final class JSXLexerSupplier implements JSXLexerSupplierType
 
   @Override
   public JSXLexerType create(
-    final JSXLexerConfigurationType configuration,
+    final JSXLexerConfiguration configuration,
     final UnicodeCharacterReaderPushBackType reader)
   {
     return JSXLexer.newLexer(configuration, reader);

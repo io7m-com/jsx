@@ -1,10 +1,10 @@
 /*
- * Copyright © 2016 <code@io7m.com> http://io7m.com
- * 
+ * Copyright © 2016 Mark Raynsford <code@io7m.com> https://www.io7m.com
+ *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
  * copyright notice and this permission notice appear in all copies.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
  * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
@@ -17,11 +17,13 @@
 package com.io7m.jsx.parser;
 
 import com.io7m.jlexing.core.LexicalPosition;
-import com.io7m.jsx.SExpressionQuotedStringType;
 import com.io7m.jsx.SExpressionType;
+import com.io7m.jsx.SExpressionType.SList;
+import com.io7m.jsx.SExpressionType.SQuotedString;
+import com.io7m.jsx.SExpressionType.SSymbol;
 import com.io7m.jsx.api.lexer.JSXLexerException;
 import com.io7m.jsx.api.lexer.JSXLexerType;
-import com.io7m.jsx.api.parser.JSXParserConfigurationType;
+import com.io7m.jsx.api.parser.JSXParserConfiguration;
 import com.io7m.jsx.api.parser.JSXParserException;
 import com.io7m.jsx.api.parser.JSXParserGrammarException;
 import com.io7m.jsx.api.parser.JSXParserLexicalException;
@@ -53,33 +55,33 @@ public final class JSXParser implements JSXParserType
   private static final LexicalPosition<URI> LEX_DEFAULT =
     LexicalPosition.of(1, 0, Optional.empty());
 
-  private final JSXParserConfigurationType config;
+  private final JSXParserConfiguration config;
   private final JSXLexerType lexer;
 
   private JSXParser(
-    final JSXParserConfigurationType in_config,
+    final JSXParserConfiguration in_config,
     final JSXLexerType in_lexer)
   {
     this.config = Objects.requireNonNull(in_config, "Configuration");
     this.lexer = Objects.requireNonNull(in_lexer, "Lexer");
   }
 
-  private static SExpressionQuotedStringType completeQuotedString(
-    final JSXParserConfigurationType c,
+  private static SQuotedString completeQuotedString(
+    final JSXParserConfiguration c,
     final TokenQuotedString t)
   {
-    return new PQuotedString(t.text(), getTokenLexical(c, t));
+    return new SQuotedString(getTokenLexical(c, t), t.text());
   }
 
   private static SExpressionType completeSymbol(
-    final JSXParserConfigurationType c,
+    final JSXParserConfiguration c,
     final TokenSymbol t)
   {
-    return new PSymbol(t.text(), getTokenLexical(c, t));
+    return new SSymbol(getTokenLexical(c, t), t.text());
   }
 
   private static LexicalPosition<URI> getTokenLexical(
-    final JSXParserConfigurationType c,
+    final JSXParserConfiguration c,
     final TokenType t)
   {
     final LexicalPosition<URI> lex;
@@ -140,14 +142,14 @@ public final class JSXParser implements JSXParserType
    */
 
   public static JSXParserType newParser(
-    final JSXParserConfigurationType pc,
+    final JSXParserConfiguration pc,
     final JSXLexerType lex)
   {
     return new JSXParser(pc, lex);
   }
 
   private static SExpressionType parseExpressionPeeked(
-    final JSXParserConfigurationType c,
+    final JSXParserConfiguration c,
     final JSXLexerType lexer,
     final TokenType peek)
     throws JSXLexerException, IOException, JSXParserGrammarException
@@ -178,13 +180,15 @@ public final class JSXParser implements JSXParserType
   }
 
   private static SExpressionType parseListParens(
-    final JSXParserConfigurationType c,
+    final JSXParserConfiguration c,
     final JSXLexerType lexer,
     final TokenLeftParenthesis peek)
     throws JSXLexerException, IOException, JSXParserGrammarException
   {
-    final PList xs = new PList(
-      new ArrayList<>(16), getTokenLexical(c, peek), false);
+    final var subExpressions =
+      new ArrayList<SExpressionType>(16);
+    final var initialLocation =
+      getTokenLexical(c, peek);
 
     while (true) {
       final TokenType t = lexer.token();
@@ -195,24 +199,26 @@ public final class JSXParser implements JSXParserType
         continue;
       }
       if (t instanceof TokenRightParenthesis) {
-        return xs;
+        return new SList(initialLocation, false, subExpressions);
       }
       if (t instanceof TokenRightSquare) {
         throw errorUnexpectedRightSquareWantedParens(
           (TokenRightSquare) t);
       }
-      xs.add(parseExpressionPeeked(c, lexer, t));
+      subExpressions.add(parseExpressionPeeked(c, lexer, t));
     }
   }
 
   private static SExpressionType parseListSquares(
-    final JSXParserConfigurationType c,
+    final JSXParserConfiguration c,
     final JSXLexerType lexer,
     final TokenLeftSquare peek)
     throws JSXLexerException, IOException, JSXParserGrammarException
   {
-    final PList xs = new PList(
-      new ArrayList<>(16), getTokenLexical(c, peek), true);
+    final var subExpressions =
+      new ArrayList<SExpressionType>(16);
+    final var initialLocation =
+      getTokenLexical(c, peek);
 
     while (true) {
       final TokenType t = lexer.token();
@@ -227,9 +233,9 @@ public final class JSXParser implements JSXParserType
           (TokenRightParenthesis) t);
       }
       if (t instanceof TokenRightSquare) {
-        return xs;
+        return new SList(initialLocation, true, subExpressions);
       }
-      xs.add(parseExpressionPeeked(c, lexer, t));
+      subExpressions.add(parseExpressionPeeked(c, lexer, t));
     }
   }
 

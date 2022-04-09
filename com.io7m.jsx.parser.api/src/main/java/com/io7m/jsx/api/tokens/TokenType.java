@@ -1,5 +1,5 @@
 /*
- * Copyright © 2016 <code@io7m.com> http://io7m.com
+ * Copyright © 2016 Mark Raynsford <code@io7m.com> https://www.io7m.com
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -24,7 +24,15 @@ import java.net.URI;
  * The type of tokens.
  */
 
-public interface TokenType
+public sealed interface TokenType permits
+  TokenComment,
+  TokenEOF,
+  TokenLeftParenthesis,
+  TokenLeftSquare,
+  TokenQuotedString,
+  TokenRightParenthesis,
+  TokenRightSquare,
+  TokenSymbol
 {
   /**
    * @return The lexical information for the token

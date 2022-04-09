@@ -1,5 +1,5 @@
 /*
- * Copyright © 2016 <code@io7m.com> http://io7m.com
+ * Copyright © 2016 Mark Raynsford <code@io7m.com> https://www.io7m.com
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -45,7 +45,7 @@ public interface JSXLexerSupplierType
    */
 
   JSXLexerType create(
-    JSXLexerConfigurationType configuration,
+    JSXLexerConfiguration configuration,
     UnicodeCharacterReaderPushBackType reader);
 
   /**
@@ -58,7 +58,7 @@ public interface JSXLexerSupplierType
    */
 
   default JSXLexerType createFromReader(
-    final JSXLexerConfigurationType configuration,
+    final JSXLexerConfiguration configuration,
     final Reader reader)
   {
     Objects.requireNonNull(configuration, "Configuration");
@@ -77,7 +77,7 @@ public interface JSXLexerSupplierType
    */
 
   default JSXLexerType createFromStream(
-    final JSXLexerConfigurationType configuration,
+    final JSXLexerConfiguration configuration,
     final Charset charset,
     final InputStream stream)
   {
@@ -100,7 +100,7 @@ public interface JSXLexerSupplierType
    */
 
   default JSXLexerType createFromStreamUTF8(
-    final JSXLexerConfigurationType configuration,
+    final JSXLexerConfiguration configuration,
     final InputStream stream)
   {
     Objects.requireNonNull(configuration, "Configuration");

@@ -8,13 +8,13 @@
   <parent>
     <groupId>com.io7m.jsx</groupId>
     <artifactId>com.io7m.jsx</artifactId>
-    <version>2.0.0</version>
+    <version>3.0.0</version>
   </parent>
   <artifactId>com.io7m.jsx.prettyprint</artifactId>
 
-  <packaging>bundle</packaging>
+  <packaging>jar</packaging>
   <description>S-expression parsing (Pretty printer)</description>
-  <url>http://io7m.github.io/jsx</url>
+  <url>https://www.io7m.com/software/jsx/</url>
   <name>${project.artifactId}</name>
 
   <dependencies>
@@ -29,28 +29,5 @@
       <artifactId>com.io7m.jpplib.core</artifactId>
     </dependency>
   </dependencies>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-      </plugin>
-
-      <!-- Produce OSGi bundle -->
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <extensions>true</extensions>
-        <configuration>
-          <instructions>
-            <Export-Package>
-              com.io7m.jsx.prettyprint
-            </Export-Package>
-          </instructions>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
 
 </project>
