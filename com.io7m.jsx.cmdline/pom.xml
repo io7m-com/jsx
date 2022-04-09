@@ -14,7 +14,7 @@
 
   <packaging>jar</packaging>
   <description>S-expression parsing (Command-line tool)</description>
-  <url>http://io7m.github.io/jsx</url>
+  <url>https://www.io7m.com/software/jsx/</url>
   <name>${project.artifactId}</name>
 
   <dependencies>
