@@ -93,9 +93,9 @@
         </c:change>
       </c:changes>
     </c:release>
-    <c:release date="2022-03-13T11:07:49+00:00" is-open="true" ticket-system="com.github.io7m.jsx" version="3.0.0">
+    <c:release date="2022-04-09T18:56:35+00:00" is-open="false" ticket-system="com.github.io7m.jsx" version="3.0.0">
       <c:changes>
-        <c:change compatible="false" date="2022-03-13T11:07:49+00:00" summary="Require JDK 17. Implement structures as records."/>
+        <c:change compatible="false" date="2022-03-13T00:00:00+00:00" summary="Require JDK 17. Implement structures as records."/>
       </c:changes>
     </c:release>
   </c:releases>
