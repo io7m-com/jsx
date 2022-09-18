@@ -287,33 +287,32 @@ public final class JSXLexer implements JSXLexerType
     throws JSXLexerException, IOException
   {
     final int c = this.readCharNotEOF();
-    switch (c) {
-      case '0':
-      case '1':
-      case '2':
-      case '3':
-      case '4':
-      case '5':
-      case '6':
-      case '7':
-      case '8':
-      case '9':
-      case 'a':
-      case 'A':
-      case 'b':
-      case 'B':
-      case 'c':
-      case 'C':
-      case 'd':
-      case 'D':
-      case 'e':
-      case 'E':
-      case 'f':
-      case 'F':
-        return c;
-      default:
-        throw this.errorNotHexChar(c);
-    }
+    return switch (c) {
+      case '0',
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9',
+        'a',
+        'A',
+        'b',
+        'B',
+        'c',
+        'C',
+        'd',
+        'D',
+        'e',
+        'E',
+        'f',
+        'F' ->
+        c;
+      default -> throw this.errorNotHexChar(c);
+    };
   }
   // CHECKSTYLE:ON
 
@@ -367,8 +366,7 @@ public final class JSXLexer implements JSXLexerType
   {
     while (true) {
       switch (this.state) {
-
-        case STATE_IN_COMMENT: {
+        case STATE_IN_COMMENT -> {
           final int c = this.readChar();
           if (c == -1) {
             return this.completeComment();
@@ -383,10 +381,8 @@ public final class JSXLexer implements JSXLexerType
           }
 
           this.buffer.appendCodePoint(c);
-          continue;
         }
-
-        case STATE_INITIAL: {
+        case STATE_INITIAL -> {
           final int c = this.readChar();
           if (c == -1) {
             return new TokenEOF(this.snapshotPosition());
@@ -431,10 +427,8 @@ public final class JSXLexer implements JSXLexerType
           }
 
           this.startSymbol(c);
-          continue;
         }
-
-        case STATE_IN_CRLF: {
+        case STATE_IN_CRLF -> {
           final int c = this.readCharNotEOF();
 
           if (c == (int) '\n') {
@@ -444,8 +438,7 @@ public final class JSXLexer implements JSXLexerType
 
           throw this.errorBareCarriageReturn();
         }
-
-        case STATE_IN_STRING_QUOTED: {
+        case STATE_IN_STRING_QUOTED -> {
           final int c = this.readCharNotEOF();
           if (c == (int) '\\') {
             this.parseEscape();
@@ -461,10 +454,8 @@ public final class JSXLexer implements JSXLexerType
           }
 
           this.buffer.appendCodePoint(c);
-          continue;
         }
-
-        case STATE_IN_SYMBOL: {
+        case STATE_IN_SYMBOL -> {
           final int c = this.readChar();
           if (c == -1) {
             return this.completeSymbol();

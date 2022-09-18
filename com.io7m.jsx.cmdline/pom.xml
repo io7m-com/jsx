@@ -44,10 +44,6 @@
       <artifactId>com.io7m.jlexing.core</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.io7m.junreachable</groupId>
-      <artifactId>com.io7m.junreachable.core</artifactId>
-    </dependency>
-    <dependency>
       <groupId>com.io7m.jeucreader</groupId>
       <artifactId>com.io7m.jeucreader.core</artifactId>
     </dependency>
