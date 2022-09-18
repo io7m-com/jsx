@@ -1,0 +1,219 @@
+[language cedarbridge 1 0]
+
+[package com.io7m.idstore.protocol.admin.cb1]
+
+[import com.io7m.cedarbridge cb]
+
+[documentation IdA1UUID "A 128-bit UUID value."]
+[record IdA1UUID
+  [documentation msb "The most significant bits of the UUID."]
+  [field msb cb:IntegerUnsigned64]
+  [documentation lsb "The least significant bits of the UUID."]
+  [field lsb cb:IntegerUnsigned64]]
+
+[documentation IdA1Password "Information for a hashed password."]
+[record IdA1Password
+  [documentation algorithm "The password algorithm."]
+  [field algorithm cb:String]
+  [documentation hash "The password hash."]
+  [field hash cb:String]
+  [documentation salt "The password salt."]
+  [field salt cb:String]]
+
+[documentation IdA1TimestampUTC "A UTC timestamp value."]
+[record IdA1TimestampUTC
+  [documentation year "The year."]
+  [field year cb:IntegerUnsigned16]
+  [documentation month "The month in the range [1, 12]."]
+  [field month cb:IntegerUnsigned8]
+  [documentation day "The day of the month in the range [1, 31]."]
+  [field day cb:IntegerUnsigned8]
+  [documentation hour "The hour in the range [0, 23]."]
+  [field hour cb:IntegerUnsigned8]
+  [documentation minute "The minute in the range [0, 59]."]
+  [field minute cb:IntegerUnsigned8]
+  [documentation second "The second in the range [0, 59]."]
+  [field second cb:IntegerUnsigned8]
+  [documentation millisecond "The millisecond in the range [0, 999]."]
+  [field millisecond cb:IntegerUnsigned16]]
+
+[documentation IdA1Ban "An account ban."]
+[record IdA1Ban
+  [documentation user "The user (or admin) ID."]
+  [field user IdA1UUID]
+  [documentation reason "The ban reason."]
+  [field reason cb:String]
+  [documentation expires "The expiration date, if any."]
+  [field expires [cb:Option IdA1TimestampUTC]]]
+
+[documentation IdA1TimeRange "A UTC time range."]
+[record IdA1TimeRange
+  [documentation lower "The lower bound."]
+  [field lower IdA1TimestampUTC]
+  [documentation upper "The upper bound."]
+  [field upper IdA1TimestampUTC]]
+
+[variant IdA1AdminPermission
+  [documentation AdminBan "A permission that allows for banning admins."]
+  [case AdminBan]
+  [documentation AdminCreate "A permission that allows for creating admins."]
+  [case AdminCreate]
+  [documentation AdminDelete "A permission that allows for deleting admins."]
+  [case AdminDelete]
+  [documentation AdminWrite "A permission that allows updating admins."]
+  [case AdminWrite]
+  [documentation AdminWriteSelf "A permission that allows an admin to update itself."]
+  [case AdminWriteSelf]
+  [documentation AdminRead "A permission that allows reading admins."]
+  [case AdminRead]
+  [documentation AuditRead "A permission that allows reading the audit log."]
+  [case AuditRead]
+  [documentation UserDelete "A permission that allows deleting users."]
+  [case UserDelete]
+  [documentation UserCreate "A permission that allows creating users."]
+  [case UserCreate]
+  [documentation UserWrite "A permission that allows updating users."]
+  [case UserWrite]
+  [documentation UserRead "A permission that allows reading users."]
+  [case UserRead]
+  [documentation UserBan "A permission that allows for banning users."]
+  [case UserBan]]
+
+[variant IdA1AdminColumn
+  [documentation ByID "Order by admin ID."]
+  [case ByID]
+  [documentation ByIDName "Order by admin id name."]
+  [case ByIDName]
+  [documentation ByRealName "Order by admin realname."]
+  [case ByRealName]
+  [documentation ByTimeCreated "Order by admin creation time."]
+  [case ByTimeCreated]
+  [documentation ByTimeUpdated "Order by admin update time."]
+  [case ByTimeUpdated]]
+
+[record IdA1AdminSearchParameters
+  [field timeCreatedRange IdA1TimeRange]
+  [field timeUpdatedRange IdA1TimeRange]
+  [field search [cb:Option cb:String]]
+
+;
+; Commands
+;
+
+[documentation IdA1CommandAdminBanCreate "Ban an admin."]
+[record IdA1CommandAdminBanCreate
+  [documentation ban "The ban."]
+  [field ban IdA1Ban]]
+
+[documentation IdA1CommandAdminBanDelete "Remove a ban on an admin."]
+[record IdA1CommandAdminBanDelete
+  [documentation ban "The ban."]
+  [field ban IdA1Ban]]
+
+[documentation IdA1CommandAdminBanGet "Get a ban on an admin."]
+[record IdA1CommandAdminBanGet
+  [documentation adminId "The admin."]
+  [field adminId IdA1UUID]]
+
+[documentation IdA1CommandAdminCreate "Create an admin."]
+[record IdA1CommandAdminCreate
+  [documentation adminId "The admin."]
+  [field adminId [cb:Option IdA1UUID]]
+  [documentation idName "The admin ID name."]
+  [field idName cb:String]
+  [documentation realName "The admin real name."]
+  [field realName cb:String]
+  [documentation email "The admin email."]
+  [field email cb:String]
+  [documentation password "The admin password."]
+  [field password IdA1Password]
+  [documentation permissions "The set of permissions."]
+  [field permissions [cb:List IdA1AdminPermission]]]
+
+[documentation IdA1CommandAdminDelete "Delete an admin."]
+[record IdA1CommandAdminDelete
+  [documentation adminId "The admin."]
+  [field adminId IdA1UUID]]
+
+[documentation IdA1CommandAdminEmailAdd "Add an email address to the given admin."]
+[record IdA1CommandAdminEmailAdd
+  [documentation adminId "The admin."]
+  [field adminId IdA1UUID]
+  [documentation email "The email address."]
+  [field email cb:String]]
+
+[documentation IdA1CommandAdminEmailRemove "Remove an email address from the given admin."]
+[record IdA1CommandAdminEmailRemove
+  [documentation adminId "The admin."]
+  [field adminId IdA1UUID]
+  [documentation email "The email address."]
+  [field email cb:String]]
+
+[documentation IdA1CommandAdminGet "Get the given admin."]
+[record IdA1CommandAdminGet
+  [documentation adminId "The admin."]
+  [field adminId IdA1UUID]]
+
+[documentation IdA1CommandAdminGetByEmail "Get the admin with the given email address."]
+[record IdA1CommandAdminGetByEmail
+  [documentation email "The email address."]
+  [field email cb:String]]
+
+[documentation IdA1CommandAdminPermissionGrant "Grant a permission to the given admin."]
+[record IdA1CommandAdminPermissionGrant
+  [documentation adminId "The admin."]
+  [field adminId IdA1UUID]
+  [documentation permission "The permission."]
+  [field permission IdA1AdminPermission]]
+
+[documentation IdA1CommandAdminPermissionRevoke "Revoke a permission from the given admin."]
+[record IdA1CommandAdminPermissionRevoke
+  [documentation adminId "The admin."]
+  [field adminId IdA1UUID]
+  [documentation permission "The permission."]
+  [field permission IdA1AdminPermission]]
+
+[documentation IdA1CommandLogin "A request to log in."]
+[record IdA1CommandLogin
+  [documentation userName "The username."]
+  [field userName cb:String]
+  [documentation password "The password."]
+  [field password cb:String]]
+
+;
+; Responses
+;
+
+[documentation IdA1ResponseError "An error response."]
+[record IdA1ResponseError
+  [documentation requestId "The ID of the request that yielded this response."]
+  [field requestId IdA1UUID]
+  [documentation errorCode "The error code."]
+  [field errorCode cb:String]
+  [documentation message "The error message."]
+  [field message cb:String]]
+
+[documentation IdA1ResponseLogin "A response to IdA1CommandLogin."]
+[record IdA1ResponseLogin
+  [documentation requestId "The ID of the request that yielded this response."]
+  [field requestId IdA1UUID]]
+
+[documentation IdA1 "The Admin v1 protocol."]
+[protocol IdA1
+  [version 1
+    IdA1CommandAdminBanCreate
+    IdA1CommandAdminBanDelete
+    IdA1CommandAdminBanGet
+    IdA1CommandAdminCreate
+    IdA1CommandAdminDelete
+    IdA1CommandAdminEmailAdd
+    IdA1CommandAdminEmailRemove
+    IdA1CommandAdminGet
+    IdA1CommandAdminGetByEmail
+    IdA1CommandAdminPermissionGrant
+    IdA1CommandAdminPermissionRevoke
+    IdA1CommandLogin
+    IdA1ResponseError
+    IdA1ResponseLogin
+  ]
+]
