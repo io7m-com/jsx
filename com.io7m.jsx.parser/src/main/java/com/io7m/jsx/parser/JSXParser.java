@@ -94,10 +94,10 @@ public final class JSXParser implements JSXParserType
   }
 
   private static JSXParserGrammarException errorUnexpectedEOF(
-    final TokenEOF t)
+    final LexicalPosition<URI> lexical)
   {
     return new JSXParserGrammarException(
-      t.lexical(), "Unexpected EOF during list parsing");
+      lexical, "Unexpected EOF during list parsing");
   }
 
   private static JSXParserGrammarException errorUnexpectedRightParen(
@@ -173,7 +173,7 @@ public final class JSXParser implements JSXParserType
       return completeSymbol(c, (TokenSymbol) peek);
     }
     if (peek instanceof TokenEOF) {
-      throw errorUnexpectedEOF((TokenEOF) peek);
+      throw errorUnexpectedEOF(peek.lexical());
     }
 
     throw new UnreachableCodeException();
@@ -193,7 +193,7 @@ public final class JSXParser implements JSXParserType
     while (true) {
       final TokenType t = lexer.token();
       if (t instanceof TokenEOF) {
-        throw errorUnexpectedEOF((TokenEOF) t);
+        throw errorUnexpectedEOF(initialLocation);
       }
       if (t instanceof TokenComment) {
         continue;
@@ -223,7 +223,7 @@ public final class JSXParser implements JSXParserType
     while (true) {
       final TokenType t = lexer.token();
       if (t instanceof TokenEOF) {
-        throw errorUnexpectedEOF((TokenEOF) t);
+        throw errorUnexpectedEOF(initialLocation);
       }
       if (t instanceof TokenComment) {
         continue;

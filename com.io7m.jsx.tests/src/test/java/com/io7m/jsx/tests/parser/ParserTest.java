@@ -27,6 +27,7 @@ import com.io7m.jsx.api.lexer.JSXLexerComment;
 import com.io7m.jsx.api.lexer.JSXLexerConfiguration;
 import com.io7m.jsx.api.lexer.JSXLexerType;
 import com.io7m.jsx.api.parser.JSXParserConfiguration;
+import com.io7m.jsx.api.parser.JSXParserException;
 import com.io7m.jsx.api.parser.JSXParserGrammarException;
 import com.io7m.jsx.api.parser.JSXParserLexicalException;
 import com.io7m.jsx.lexer.JSXLexer;
@@ -41,6 +42,9 @@ import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.EnumSet;
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class ParserTest
 {
@@ -80,7 +84,7 @@ public final class ParserTest
     final var pc = defaultParserConfig();
     final var p = JSXParser.newParser(pc, lex);
 
-    Assertions.assertThrows(JSXParserGrammarException.class, () -> {
+    assertThrows(JSXParserGrammarException.class, () -> {
       p.parseExpression();
     });
   }
@@ -95,7 +99,7 @@ public final class ParserTest
     final var pc = defaultParserConfig();
     final var p = JSXParser.newParser(pc, lex);
 
-    Assertions.assertThrows(JSXParserGrammarException.class, () -> {
+    assertThrows(JSXParserGrammarException.class, () -> {
       p.parseExpression();
     });
   }
@@ -134,7 +138,7 @@ public final class ParserTest
     final var pc = defaultParserConfig();
     final var p = JSXParser.newParser(pc, lex);
 
-    Assertions.assertThrows(JSXParserGrammarException.class, () -> {
+    assertThrows(JSXParserGrammarException.class, () -> {
       p.parseExpression();
     });
   }
@@ -150,7 +154,7 @@ public final class ParserTest
     final var pc = defaultParserConfig();
     final var p = JSXParser.newParser(pc, lex);
 
-    Assertions.assertThrows(JSXParserLexicalException.class, () -> {
+    assertThrows(JSXParserLexicalException.class, () -> {
       p.parseExpression();
     });
   }
@@ -166,7 +170,7 @@ public final class ParserTest
     final var pc = defaultParserConfig();
     final var p = JSXParser.newParser(pc, lex);
 
-    Assertions.assertThrows(JSXParserLexicalException.class, () -> {
+    assertThrows(JSXParserLexicalException.class, () -> {
       p.parseExpressionOrEOF();
     });
   }
@@ -182,7 +186,7 @@ public final class ParserTest
     final var pc = defaultParserConfig();
     final var p = JSXParser.newParser(pc, lex);
 
-    Assertions.assertThrows(JSXParserLexicalException.class, () -> {
+    assertThrows(JSXParserLexicalException.class, () -> {
       p.parseExpressions();
     });
   }
@@ -199,30 +203,30 @@ public final class ParserTest
 
     final var s = (SListType) p.parseExpression();
     final var sl0 = s.lexical();
-    Assertions.assertEquals(1L, sl0.line());
-    Assertions.assertEquals(1L, sl0.column());
-    Assertions.assertEquals(3L, s.size());
-    Assertions.assertEquals(Optional.empty(), sl0.file());
+    assertEquals(1L, sl0.line());
+    assertEquals(1L, sl0.column());
+    assertEquals(3L, s.size());
+    assertEquals(Optional.empty(), sl0.file());
 
     {
       final var ss = (SSymbol) s.get(0);
-      Assertions.assertEquals("a", ss.text());
+      assertEquals("a", ss.text());
       final var sl = ss.lexical();
-      Assertions.assertEquals(Optional.empty(), sl.file());
+      assertEquals(Optional.empty(), sl.file());
     }
 
     {
       final var ss = (SSymbol) s.get(1);
-      Assertions.assertEquals("b", ss.text());
+      assertEquals("b", ss.text());
       final var sl = ss.lexical();
-      Assertions.assertEquals(Optional.empty(), sl.file());
+      assertEquals(Optional.empty(), sl.file());
     }
 
     {
       final var ss = (SSymbol) s.get(2);
-      Assertions.assertEquals("c", ss.text());
+      assertEquals("c", ss.text());
       final var sl = ss.lexical();
-      Assertions.assertEquals(Optional.empty(), sl.file());
+      assertEquals(Optional.empty(), sl.file());
     }
   }
 
@@ -238,25 +242,25 @@ public final class ParserTest
     final var p = JSXParser.newParser(pc, lex);
 
     final var s = (SListType) p.parseExpression();
-    Assertions.assertEquals(DEFAULT_LEX, s.lexical());
-    Assertions.assertEquals(3L, s.size());
+    assertEquals(DEFAULT_LEX, s.lexical());
+    assertEquals(3L, s.size());
 
     {
       final var ss = (SSymbol) s.get(0);
-      Assertions.assertEquals("a", ss.text());
-      Assertions.assertEquals(DEFAULT_LEX, ss.lexical());
+      assertEquals("a", ss.text());
+      assertEquals(DEFAULT_LEX, ss.lexical());
     }
 
     {
       final var ss = (SSymbol) s.get(1);
-      Assertions.assertEquals("b", ss.text());
-      Assertions.assertEquals(DEFAULT_LEX, ss.lexical());
+      assertEquals("b", ss.text());
+      assertEquals(DEFAULT_LEX, ss.lexical());
     }
 
     {
       final var ss = (SSymbol) s.get(2);
-      Assertions.assertEquals("c", ss.text());
-      Assertions.assertEquals(DEFAULT_LEX, ss.lexical());
+      assertEquals("c", ss.text());
+      assertEquals(DEFAULT_LEX, ss.lexical());
     }
   }
 
@@ -279,25 +283,25 @@ public final class ParserTest
     final var p = JSXParser.newParser(pc, lex);
 
     final var s = (SListType) p.parseExpression();
-    Assertions.assertEquals(DEFAULT_LEX, s.lexical());
-    Assertions.assertEquals(3L, s.size());
+    assertEquals(DEFAULT_LEX, s.lexical());
+    assertEquals(3L, s.size());
 
     {
       final var ss = (SSymbol) s.get(0);
-      Assertions.assertEquals("a", ss.text());
-      Assertions.assertEquals(DEFAULT_LEX, ss.lexical());
+      assertEquals("a", ss.text());
+      assertEquals(DEFAULT_LEX, ss.lexical());
     }
 
     {
       final var ss = (SSymbol) s.get(1);
-      Assertions.assertEquals("b", ss.text());
-      Assertions.assertEquals(DEFAULT_LEX, ss.lexical());
+      assertEquals("b", ss.text());
+      assertEquals(DEFAULT_LEX, ss.lexical());
     }
 
     {
       final var ss = (SSymbol) s.get(2);
-      Assertions.assertEquals("c", ss.text());
-      Assertions.assertEquals(DEFAULT_LEX, ss.lexical());
+      assertEquals("c", ss.text());
+      assertEquals(DEFAULT_LEX, ss.lexical());
     }
   }
 
@@ -321,30 +325,30 @@ public final class ParserTest
 
     final var s = (SListType) p.parseExpression();
     final var sl0 = s.lexical();
-    Assertions.assertEquals(1L, sl0.line());
-    Assertions.assertEquals(1L, sl0.column());
-    Assertions.assertEquals(3L, s.size());
-    Assertions.assertEquals(Optional.empty(), sl0.file());
+    assertEquals(1L, sl0.line());
+    assertEquals(1L, sl0.column());
+    assertEquals(3L, s.size());
+    assertEquals(Optional.empty(), sl0.file());
 
     {
       final var ss = (SSymbol) s.get(0);
-      Assertions.assertEquals("a", ss.text());
+      assertEquals("a", ss.text());
       final var sl = ss.lexical();
-      Assertions.assertEquals(Optional.empty(), sl.file());
+      assertEquals(Optional.empty(), sl.file());
     }
 
     {
       final var ss = (SSymbol) s.get(1);
-      Assertions.assertEquals("b", ss.text());
+      assertEquals("b", ss.text());
       final var sl = ss.lexical();
-      Assertions.assertEquals(Optional.empty(), sl.file());
+      assertEquals(Optional.empty(), sl.file());
     }
 
     {
       final var ss = (SSymbol) s.get(2);
-      Assertions.assertEquals("c", ss.text());
+      assertEquals("c", ss.text());
       final var sl = ss.lexical();
-      Assertions.assertEquals(Optional.empty(), sl.file());
+      assertEquals(Optional.empty(), sl.file());
     }
   }
 
@@ -360,10 +364,10 @@ public final class ParserTest
 
     final var s = (SSymbol) p.parseExpression();
     final var sl = s.lexical();
-    Assertions.assertEquals(1L, sl.line());
-    Assertions.assertEquals(1L, sl.column());
-    Assertions.assertEquals("a", s.text());
-    Assertions.assertEquals(Optional.empty(), sl.file());
+    assertEquals(1L, sl.line());
+    assertEquals(1L, sl.column());
+    assertEquals("a", s.text());
+    assertEquals(Optional.empty(), sl.file());
   }
 
   @Test
@@ -379,8 +383,8 @@ public final class ParserTest
       JSXParser.newParser(pc, lex);
 
     final var s = (SSymbol) p.parseExpression();
-    Assertions.assertEquals(DEFAULT_LEX, s.lexical());
-    Assertions.assertEquals("a", s.text());
+    assertEquals(DEFAULT_LEX, s.lexical());
+    assertEquals("a", s.text());
   }
 
   @Test
@@ -400,10 +404,10 @@ public final class ParserTest
 
     final var s = (SQuotedString) p.parseExpression();
     final var sl = s.lexical();
-    Assertions.assertEquals(1L, sl.line());
-    Assertions.assertEquals(1L, sl.column());
-    Assertions.assertEquals("a", s.text());
-    Assertions.assertEquals(Optional.empty(), sl.file());
+    assertEquals(1L, sl.line());
+    assertEquals(1L, sl.column());
+    assertEquals("a", s.text());
+    assertEquals(Optional.empty(), sl.file());
   }
 
   @Test
@@ -426,8 +430,8 @@ public final class ParserTest
 
     final var s =
       (SQuotedString) p.parseExpression();
-    Assertions.assertEquals(DEFAULT_LEX, s.lexical());
-    Assertions.assertEquals("a", s.text());
+    assertEquals(DEFAULT_LEX, s.lexical());
+    assertEquals("a", s.text());
   }
 
   @Test
@@ -446,7 +450,7 @@ public final class ParserTest
     final var pc = defaultParserConfig();
     final var p = JSXParser.newParser(pc, lex);
 
-    Assertions.assertThrows(JSXParserGrammarException.class, () -> {
+    assertThrows(JSXParserGrammarException.class, () -> {
       p.parseExpression();
     });
   }
@@ -468,7 +472,7 @@ public final class ParserTest
     final var pc = defaultParserConfig();
     final var p = JSXParser.newParser(pc, lex);
 
-    Assertions.assertThrows(JSXParserGrammarException.class, () -> {
+    assertThrows(JSXParserGrammarException.class, () -> {
       p.parseExpression();
     });
   }
@@ -483,7 +487,7 @@ public final class ParserTest
     final var pc = defaultParserConfig();
     final var p = JSXParser.newParser(pc, lex);
 
-    Assertions.assertThrows(JSXParserGrammarException.class, () -> {
+    assertThrows(JSXParserGrammarException.class, () -> {
       p.parseExpression();
     });
   }
@@ -505,7 +509,7 @@ public final class ParserTest
     final var pc = defaultParserConfig();
     final var p = JSXParser.newParser(pc, lex);
 
-    Assertions.assertThrows(JSXParserGrammarException.class, () -> {
+    assertThrows(JSXParserGrammarException.class, () -> {
       p.parseExpression();
     });
   }
@@ -523,24 +527,24 @@ public final class ParserTest
       JSXParser.newParser(pc, lex);
 
     final var s = p.parseExpressions();
-    Assertions.assertEquals(3L, s.size());
+    assertEquals(3L, s.size());
 
     {
       final var ss = (SSymbol) s.get(0);
-      Assertions.assertEquals("a", ss.text());
-      Assertions.assertEquals(DEFAULT_LEX, ss.lexical());
+      assertEquals("a", ss.text());
+      assertEquals(DEFAULT_LEX, ss.lexical());
     }
 
     {
       final var ss = (SSymbol) s.get(1);
-      Assertions.assertEquals("b", ss.text());
-      Assertions.assertEquals(DEFAULT_LEX, ss.lexical());
+      assertEquals("b", ss.text());
+      assertEquals(DEFAULT_LEX, ss.lexical());
     }
 
     {
       final var ss = (SSymbol) s.get(2);
-      Assertions.assertEquals("c", ss.text());
-      Assertions.assertEquals(DEFAULT_LEX, ss.lexical());
+      assertEquals("c", ss.text());
+      assertEquals(DEFAULT_LEX, ss.lexical());
     }
   }
 
@@ -571,7 +575,7 @@ public final class ParserTest
       final var p = JSXParser.newParser(pc, lex);
 
       final var s = p.parseExpressions();
-      Assertions.assertEquals(23L, s.size());
+      assertEquals(23L, s.size());
     }
   }
 
@@ -612,7 +616,40 @@ public final class ParserTest
         }
       }
 
-      Assertions.assertEquals(23L, count);
+      assertEquals(23L, count);
+    }
+  }
+
+  @Test
+  public void testBug12()
+    throws Exception
+  {
+    final var lc =
+      new JSXLexerConfiguration(
+        true,
+        true,
+        Optional.empty(),
+        EnumSet.allOf(JSXLexerComment.class),
+        1
+      );
+
+    try (Reader reader =
+           new InputStreamReader(
+             ParserTest.class.getResourceAsStream(
+               "/com/io7m/jsx/tests/bug12.cbs"),
+             StandardCharsets.UTF_8)) {
+
+      final var lex =
+        JSXLexer.newLexer(lc, UnicodeCharacterReader.newReader(reader));
+
+      final var pc =
+        new JSXParserConfiguration(true);
+      final var p =
+        JSXParser.newParser(pc, lex);
+      final var ex =
+        assertThrows(JSXParserException.class, p::parseExpressions);
+
+      assertEquals(94, ex.lexical().line());
     }
   }
 }

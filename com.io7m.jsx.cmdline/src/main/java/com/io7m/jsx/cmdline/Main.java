@@ -235,30 +235,31 @@ public final class Main implements Runnable
           final var parser =
             JSXParser.newParser(parser_config, lexer);
 
-          switch (this.pretty_printer) {
-            case NONE:
-              return this.writeSerializing(
+          return switch (this.pretty_printer) {
+            case NONE -> {
+              yield this.writeSerializing(
                 parser,
                 JSXSerializerTrivial.newSerializer());
-            case MARKUP:
-              return this.writePrettyPrinting(
-                parser,
-                () -> JSXPrettyPrinterMarkupStyle.newPrinterWithWidthIndent(
+            }
+            case MARKUP -> this.writePrettyPrinting(
+              parser,
+              () -> {
+                return JSXPrettyPrinterMarkupStyle.newPrinterWithWidthIndent(
                   new OutputStreamWriter(System.out, StandardCharsets.UTF_8),
                   this.pretty_print_width,
-                  this.pretty_print_indent));
-            case CODE:
-              return this.writePrettyPrinting(
-                parser,
-                () -> JSXPrettyPrinterCodeStyle.newPrinterWithWidthIndent(
+                  this.pretty_print_indent);
+              });
+            case CODE -> this.writePrettyPrinting(
+              parser,
+              () -> {
+                return JSXPrettyPrinterCodeStyle.newPrinterWithWidthIndent(
                   new OutputStreamWriter(System.out, StandardCharsets.UTF_8),
                   this.pretty_print_width,
-                  this.pretty_print_indent));
-          }
+                  this.pretty_print_indent);
+              });
+          };
         }
       }
-
-      return null;
     }
 
     private Void writeSerializing(

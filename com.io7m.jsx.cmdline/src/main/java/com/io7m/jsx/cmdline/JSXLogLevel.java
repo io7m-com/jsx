@@ -17,8 +17,8 @@
 package com.io7m.jsx.cmdline;
 
 import ch.qos.logback.classic.Level;
+
 import java.util.Objects;
-import com.io7m.junreachable.UnreachableCodeException;
 
 /**
  * Log level.
@@ -81,19 +81,12 @@ public enum JSXLogLevel
 
   Level toLevel()
   {
-    switch (this) {
-      case LOG_TRACE:
-        return Level.TRACE;
-      case LOG_DEBUG:
-        return Level.DEBUG;
-      case LOG_INFO:
-        return Level.INFO;
-      case LOG_WARN:
-        return Level.WARN;
-      case LOG_ERROR:
-        return Level.ERROR;
-    }
-
-    throw new UnreachableCodeException();
+    return switch (this) {
+      case LOG_TRACE -> Level.TRACE;
+      case LOG_DEBUG -> Level.DEBUG;
+      case LOG_INFO -> Level.INFO;
+      case LOG_WARN -> Level.WARN;
+      case LOG_ERROR -> Level.ERROR;
+    };
   }
 }
