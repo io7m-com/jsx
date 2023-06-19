@@ -146,10 +146,15 @@ public final class JSXPrettyPrinterCodeStyle implements JSXPrettyPrinterType
       return null;
     }
 
-    public Void quotedString(final SQuotedString e)
+    public Void quotedString(
+      final SQuotedString e)
       throws IOException
     {
-      this.layout.print(String.format("\"%s\"", e.text()));
+      this.layout.print(
+        String.format(
+          "\"%s\"",
+          e.text().replace("\"", "\\\""))
+      );
       return null;
     }
 
