@@ -119,17 +119,11 @@ public abstract class JSXPrettyPrinterContract
   public final void testEscapeQuotesCorrect()
     throws Exception
   {
-    this.showFile("quotes.s");
+    this.showFile("escapes.s");
   }
 
-  @Test
-  public final void testEscapeSlashesCorrect()
-    throws Exception
-  {
-    this.showFile("slashes.s");
-  }
-
-  private void showFile(final String file)
+  private void showFile(
+    final String file)
     throws Exception
   {
     final var p =

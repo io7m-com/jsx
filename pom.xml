@@ -13,7 +13,7 @@
 
   <groupId>com.io7m.jsx</groupId>
   <artifactId>com.io7m.jsx</artifactId>
-  <version>3.0.4-SNAPSHOT</version>
+  <version>3.1.0-SNAPSHOT</version>
 
   <packaging>pom</packaging>
   <name>com.io7m.jsx</name>
@@ -106,11 +106,6 @@
         <groupId>com.io7m.jpplib</groupId>
         <artifactId>com.io7m.jpplib.core</artifactId>
         <version>0.8.0</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.commons</groupId>
-        <artifactId>commons-text</artifactId>
-        <version>1.10.0</version>
       </dependency>
 
       <dependency>

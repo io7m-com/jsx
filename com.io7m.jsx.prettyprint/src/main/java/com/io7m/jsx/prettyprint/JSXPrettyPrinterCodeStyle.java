@@ -20,9 +20,9 @@ import com.io7m.jsx.SExpressionType;
 import com.io7m.jsx.SExpressionType.SListType;
 import com.io7m.jsx.SExpressionType.SQuotedString;
 import com.io7m.jsx.SExpressionType.SSymbol;
+import com.io7m.jsx.api.lexer.JSXLexerEscapes;
 import de.uka.ilkd.pp.Layouter;
 import de.uka.ilkd.pp.WriterBackend;
-import org.apache.commons.text.StringEscapeUtils;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -99,11 +99,11 @@ public final class JSXPrettyPrinterCodeStyle implements JSXPrettyPrinterType
       final SExpressionType e)
       throws IOException
     {
-      if (e instanceof SQuotedString quotedString) {
+      if (e instanceof final SQuotedString quotedString) {
         return this.quotedString(quotedString);
-      } else if (e instanceof SSymbol symbol) {
+      } else if (e instanceof final SSymbol symbol) {
         return this.symbol(symbol);
-      } else if (e instanceof SListType list) {
+      } else if (e instanceof final SListType list) {
         return this.list(list);
       } else {
         throw new IllegalStateException();
@@ -152,7 +152,7 @@ public final class JSXPrettyPrinterCodeStyle implements JSXPrettyPrinterType
       throws IOException
     {
       this.layout.print(
-        String.format("\"%s\"", StringEscapeUtils.escapeJava(e.text()))
+        "\"%s\"".formatted(JSXLexerEscapes.escapeString(e.text()))
       );
       return null;
     }
