@@ -9,7 +9,7 @@
   <parent>
     <groupId>com.io7m.jsx</groupId>
     <artifactId>com.io7m.jsx</artifactId>
-    <version>3.0.3</version>
+    <version>3.1.0</version>
   </parent>
   <artifactId>com.io7m.jsx.parser.api</artifactId>
 

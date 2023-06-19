@@ -23,7 +23,7 @@ module com.io7m.jsx.prettyprint
   requires com.io7m.jpplib.core;
 
   requires transitive com.io7m.jsx.core;
-  requires org.apache.commons.text;
+  requires com.io7m.jsx.parser.api;
 
   exports com.io7m.jsx.prettyprint;
 }

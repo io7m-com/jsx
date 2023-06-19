@@ -19,7 +19,7 @@
  */
 
 @Export
-@Version("3.0.0")
+@Version("3.1.0")
 package com.io7m.jsx.api.lexer;
 
 import org.osgi.annotation.bundle.Export;
