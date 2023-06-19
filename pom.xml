@@ -13,7 +13,7 @@
 
   <groupId>com.io7m.jsx</groupId>
   <artifactId>com.io7m.jsx</artifactId>
-  <version>3.0.4-SNAPSHOT</version>
+  <version>3.0.3-SNAPSHOT</version>
 
   <packaging>pom</packaging>
   <name>com.io7m.jsx</name>
@@ -31,7 +31,7 @@
   </modules>
 
   <properties>
-    <io7m.api.previousVersion>3.0.3</io7m.api.previousVersion>
+    <io7m.api.previousVersion>3.0.2</io7m.api.previousVersion>
     <junit.version>5.9.3</junit.version>
   </properties>
 
