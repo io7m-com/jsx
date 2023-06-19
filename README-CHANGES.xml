@@ -107,14 +107,14 @@
         <c:change date="2022-09-18T00:00:00+00:00" summary="org.slf4j:slf4j-api -&gt; 2.0.0-alpha7 -&gt; 2.0.1"/>
       </c:changes>
     </c:release>
-    <c:release date="2023-06-19T18:53:08+00:00" is-open="true" ticket-system="com.github.io7m.jsx" version="3.0.2">
+    <c:release date="2023-06-19T18:57:04+00:00" is-open="false" ticket-system="com.github.io7m.jsx" version="3.0.2">
       <c:changes>
         <c:change date="2023-06-19T00:00:00+00:00" summary="Ensure pretty printers escape quotes.">
           <c:tickets>
             <c:ticket id="13"/>
           </c:tickets>
         </c:change>
-        <c:change date="2023-06-19T18:53:08+00:00" summary="Update ch.qos.logback:logback-classic 1.4.7 → 1.4.8."/>
+        <c:change date="2023-06-19T00:00:00+00:00" summary="Update ch.qos.logback:logback-classic 1.4.7 → 1.4.8."/>
       </c:changes>
     </c:release>
   </c:releases>
