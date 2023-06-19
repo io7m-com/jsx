@@ -30,7 +30,7 @@ public final class JSXPrettyPrinterMarkupStyleTest extends
     final int width,
     final int indent)
   {
-    return JSXPrettyPrinterMarkupStyle.newPrinterWithWidthIndent(
-      out, width, indent);
+    return JSXPrettyPrinterMarkupStyle
+      .newPrinterWithWidthIndent(out, width, indent);
   }
 }

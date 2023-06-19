@@ -8,12 +8,12 @@
   <parent>
     <groupId>com.io7m.primogenitor</groupId>
     <artifactId>com.io7m.primogenitor.full</artifactId>
-    <version>7.1.0</version>
+    <version>7.5.0</version>
   </parent>
 
   <groupId>com.io7m.jsx</groupId>
   <artifactId>com.io7m.jsx</artifactId>
-  <version>3.0.1</version>
+  <version>3.0.2</version>
 
   <packaging>pom</packaging>
   <name>com.io7m.jsx</name>
@@ -31,13 +31,13 @@
   </modules>
 
   <properties>
-    <io7m.api.previousVersion>3.0.0</io7m.api.previousVersion>
-    <junit.version>5.8.1</junit.version>
+    <io7m.api.previousVersion>3.0.1</io7m.api.previousVersion>
+    <junit.version>5.9.3</junit.version>
   </properties>
 
   <licenses>
     <license>
-      <name>ISC License</name>
+      <name>ISC</name>
       <url>https://io7m.com/license/isc.txt</url>
     </license>
   </licenses>
@@ -72,7 +72,7 @@
     </site>
     <repository>
       <id>sonatype-nexus-staging</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+      <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
     </repository>
   </distributionManagement>
 
@@ -100,7 +100,7 @@
       <dependency>
         <groupId>com.io7m.jlexing</groupId>
         <artifactId>com.io7m.jlexing.core</artifactId>
-        <version>3.0.0</version>
+        <version>3.1.0</version>
       </dependency>
       <dependency>
         <groupId>com.io7m.jpplib</groupId>
@@ -111,7 +111,7 @@
       <dependency>
         <groupId>com.io7m.primogenitor</groupId>
         <artifactId>com.io7m.primogenitor.support</artifactId>
-        <version>7.1.0</version>
+        <version>7.7.0</version>
       </dependency>
       <dependency>
         <groupId>com.beust</groupId>
@@ -121,12 +121,12 @@
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-api</artifactId>
-        <version>2.0.1</version>
+        <version>2.0.7</version>
       </dependency>
       <dependency>
         <groupId>ch.qos.logback</groupId>
         <artifactId>logback-classic</artifactId>
-        <version>1.4.1</version>
+        <version>1.4.8</version>
       </dependency>
 
       <dependency>
@@ -142,7 +142,7 @@
       <dependency>
         <groupId>org.osgi</groupId>
         <artifactId>org.osgi.service.component.annotations</artifactId>
-        <version>1.5.0</version>
+        <version>1.5.1</version>
       </dependency>
 
       <dependency>
