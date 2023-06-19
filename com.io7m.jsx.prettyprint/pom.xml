@@ -25,6 +25,10 @@
     </dependency>
 
     <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-text</artifactId>
+    </dependency>
+    <dependency>
       <groupId>com.io7m.jpplib</groupId>
       <artifactId>com.io7m.jpplib.core</artifactId>
     </dependency>

@@ -107,6 +107,11 @@
         <artifactId>com.io7m.jpplib.core</artifactId>
         <version>0.8.0</version>
       </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-text</artifactId>
+        <version>1.10.0</version>
+      </dependency>
 
       <dependency>
         <groupId>com.io7m.primogenitor</groupId>

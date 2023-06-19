@@ -22,6 +22,7 @@ import com.io7m.jsx.SExpressionType.SQuotedString;
 import com.io7m.jsx.SExpressionType.SSymbol;
 import de.uka.ilkd.pp.Layouter;
 import de.uka.ilkd.pp.WriterBackend;
+import org.apache.commons.text.StringEscapeUtils;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -151,9 +152,7 @@ public final class JSXPrettyPrinterCodeStyle implements JSXPrettyPrinterType
       throws IOException
     {
       this.layout.print(
-        String.format(
-          "\"%s\"",
-          e.text().replace("\"", "\\\""))
+        String.format("\"%s\"", StringEscapeUtils.escapeJava(e.text()))
       );
       return null;
     }
