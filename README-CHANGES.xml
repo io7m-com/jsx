@@ -117,9 +117,9 @@
         <c:change date="2023-06-19T00:00:00+00:00" summary="Update ch.qos.logback:logback-classic 1.4.7 → 1.4.8."/>
       </c:changes>
     </c:release>
-    <c:release date="2023-06-19T19:37:10+00:00" is-open="true" ticket-system="com.github.io7m.jsx" version="3.0.3">
+    <c:release date="2023-06-19T19:37:43+00:00" is-open="false" ticket-system="com.github.io7m.jsx" version="3.0.3">
       <c:changes>
-        <c:change date="2023-06-19T19:37:10+00:00" summary="Ensure slashes are escaped in quoted string printers."/>
+        <c:change date="2023-06-19T00:00:00+00:00" summary="Ensure slashes are escaped in quoted string printers."/>
       </c:changes>
     </c:release>
   </c:releases>
