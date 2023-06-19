@@ -8,7 +8,7 @@
   <parent>
     <groupId>com.io7m.jsx</groupId>
     <artifactId>com.io7m.jsx</artifactId>
-    <version>3.0.2</version>
+    <version>3.0.3</version>
   </parent>
   <artifactId>com.io7m.jsx.prettyprint</artifactId>
 
@@ -24,6 +24,10 @@
       <version>${project.version}</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-text</artifactId>
+    </dependency>
     <dependency>
       <groupId>com.io7m.jpplib</groupId>
       <artifactId>com.io7m.jpplib.core</artifactId>

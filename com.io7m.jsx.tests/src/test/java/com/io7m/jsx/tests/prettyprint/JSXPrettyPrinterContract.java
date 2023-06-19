@@ -20,16 +20,13 @@ import com.io7m.jeucreader.UnicodeCharacterReader;
 import com.io7m.jsx.api.lexer.JSXLexerComment;
 import com.io7m.jsx.api.lexer.JSXLexerConfiguration;
 import com.io7m.jsx.api.parser.JSXParserConfiguration;
-import com.io7m.jsx.api.parser.JSXParserException;
 import com.io7m.jsx.api.parser.JSXParserType;
 import com.io7m.jsx.lexer.JSXLexer;
 import com.io7m.jsx.parser.JSXParser;
 import com.io7m.jsx.prettyprint.JSXPrettyPrinterType;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -119,10 +116,17 @@ public abstract class JSXPrettyPrinterContract
   }
 
   @Test
-  public final void testEscapeCorrect()
+  public final void testEscapeQuotesCorrect()
     throws Exception
   {
     this.showFile("quotes.s");
+  }
+
+  @Test
+  public final void testEscapeSlashesCorrect()
+    throws Exception
+  {
+    this.showFile("slashes.s");
   }
 
   private void showFile(final String file)
