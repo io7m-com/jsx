@@ -8,12 +8,12 @@
   <parent>
     <groupId>com.io7m.primogenitor</groupId>
     <artifactId>com.io7m.primogenitor.full</artifactId>
-    <version>7.7.0</version>
+    <version>8.0.0-beta0001</version>
   </parent>
 
   <groupId>com.io7m.jsx</groupId>
   <artifactId>com.io7m.jsx</artifactId>
-  <version>3.1.0</version>
+  <version>3.1.1</version>
 
   <packaging>pom</packaging>
   <name>com.io7m.jsx</name>
@@ -31,7 +31,7 @@
   </modules>
 
   <properties>
-    <io7m.api.previousVersion>3.0.3</io7m.api.previousVersion>
+    <io7m.api.previousVersion>3.1.0</io7m.api.previousVersion>
     <junit.version>5.9.3</junit.version>
   </properties>
 
@@ -111,7 +111,7 @@
       <dependency>
         <groupId>com.io7m.primogenitor</groupId>
         <artifactId>com.io7m.primogenitor.support</artifactId>
-        <version>7.7.0</version>
+        <version>8.0.0-beta0001</version>
       </dependency>
       <dependency>
         <groupId>com.beust</groupId>

@@ -122,9 +122,14 @@
         <c:change date="2023-06-19T00:00:00+00:00" summary="Ensure slashes are escaped in quoted string printers."/>
       </c:changes>
     </c:release>
-    <c:release date="2023-06-19T21:02:53+00:00" is-open="false" ticket-system="com.github.io7m.jsx" version="3.1.0">
+    <c:release date="2023-06-19T00:00:00+00:00" is-open="false" ticket-system="com.github.io7m.jsx" version="3.1.0">
       <c:changes>
         <c:change date="2023-06-19T00:00:00+00:00" summary="Provide a more complete solution to escape characters in printers."/>
+      </c:changes>
+    </c:release>
+    <c:release date="2023-07-24T12:18:03+00:00" is-open="false" ticket-system="com.github.io7m.jsx" version="3.1.1">
+      <c:changes>
+        <c:change date="2023-07-24T00:00:00+00:00" summary="Add missing escapes from the trivial serializer."/>
       </c:changes>
     </c:release>
   </c:releases>
