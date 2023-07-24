@@ -19,6 +19,7 @@ package com.io7m.jsx.serializer;
 import com.io7m.jsx.SExpressionType;
 import com.io7m.jsx.SExpressionType.SQuotedString;
 import com.io7m.jsx.SExpressionType.SSymbol;
+import com.io7m.jsx.api.lexer.JSXLexerEscapes;
 import com.io7m.jsx.api.serializer.JSXSerializerType;
 
 import java.io.BufferedOutputStream;
@@ -119,9 +120,9 @@ public final class JSXSerializerTrivial implements JSXSerializerType
     public void quotedString(
       final SQuotedString qs)
     {
-      this.writer.print('"');
-      this.writer.print(qs.text());
-      this.writer.print('"');
+      this.writer.print(
+        "\"%s\"".formatted(JSXLexerEscapes.escapeString(qs.text()))
+      );
     }
 
     public void symbol(

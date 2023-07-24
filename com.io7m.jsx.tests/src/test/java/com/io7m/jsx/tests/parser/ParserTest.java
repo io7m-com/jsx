@@ -32,9 +32,12 @@ import com.io7m.jsx.api.parser.JSXParserGrammarException;
 import com.io7m.jsx.api.parser.JSXParserLexicalException;
 import com.io7m.jsx.lexer.JSXLexer;
 import com.io7m.jsx.parser.JSXParser;
+import com.io7m.jsx.serializer.JSXSerializerTrivial;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
@@ -43,6 +46,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.EnumSet;
 import java.util.Optional;
 
+import static com.io7m.jlexing.core.LexicalPositions.zero;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -651,5 +655,37 @@ public final class ParserTest
 
       assertEquals(94, ex.lexical().line());
     }
+  }
+
+  @Test
+  public void testEmptyQuoted()
+    throws Exception
+  {
+    final var bao =
+      new ByteArrayOutputStream();
+
+    final var expr =
+      new SQuotedString(LexicalPosition.of(1, 0, Optional.empty()), "");
+    JSXSerializerTrivial.newSerializer()
+      .serialize(expr, bao);
+
+    final var lc =
+      new JSXLexerConfiguration(
+        true,
+        true,
+        Optional.empty(),
+        EnumSet.allOf(JSXLexerComment.class),
+        0
+      );
+    final var lex =
+      JSXLexer.newLexer(lc, UnicodeCharacterReader.newReader(
+        new StringReader(bao.toString(StandardCharsets.UTF_8))))
+      ;
+    final var pc =
+      new JSXParserConfiguration(false);
+    final var p =
+      JSXParser.newParser(pc, lex);
+
+    assertEquals(expr, p.parseExpression());
   }
 }
