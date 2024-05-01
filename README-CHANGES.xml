@@ -134,6 +134,6 @@
     </c:release>
   </c:releases>
   <c:ticket-systems>
-    <c:ticket-system default="true" id="com.github.io7m.jsx" url="http://github.com/io7m/jsx/issues/"/>
+    <c:ticket-system default="true" id="com.github.io7m.jsx" url="http://www.github.com/io7m-com/jsx/issues/"/>
   </c:ticket-systems>
 </c:changelog>

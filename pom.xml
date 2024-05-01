@@ -44,9 +44,9 @@
   </licenses>
 
   <scm>
-    <url>https://github.com/io7m/jsx</url>
-    <connection>scm:git:https://github.com/io7m/jsx</connection>
-    <developerConnection>scm:git:https://github.com/io7m/jsx</developerConnection>
+    <url>https://www.github.com/io7m-com/jsx</url>
+    <connection>scm:git:https://www.github.com/io7m-com/jsx</connection>
+    <developerConnection>scm:git:https://www.github.com/io7m-com/jsx</developerConnection>
   </scm>
 
   <inceptionYear>2016</inceptionYear>
@@ -61,7 +61,7 @@
   </developers>
 
   <issueManagement>
-    <url>https://github.com/io7m/jsx/issues</url>
+    <url>https://www.github.com/io7m-com/jsx/issues</url>
     <system>GitHub Issues</system>
   </issueManagement>
 
