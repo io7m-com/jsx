@@ -18,7 +18,9 @@
   <name>${project.artifactId}</name>
 
   <properties>
+    <spotbugs.skip>true</spotbugs.skip>
     <mdep.analyze.skip>true</mdep.analyze.skip>
+    <checkstyle.skip>true</checkstyle.skip>
   </properties>
 
   <dependencies>
@@ -70,6 +72,13 @@
   </dependencies>
 
   <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+
     <plugins>
       <!-- Copy documentation resources into build directory -->
       <plugin>
@@ -84,9 +93,6 @@
             <phase>generate-resources</phase>
             <configuration>
               <outputDirectory>${project.build.directory}/documentation/</outputDirectory>
-              <nonFilteredFileExtensions>
-                <nonFilteredFileExtension>xcf</nonFilteredFileExtension>
-              </nonFilteredFileExtensions>
               <resources>
                 <resource>
                   <directory>src/main/resources/com/io7m/jsx/documentation/</directory>
@@ -95,14 +101,84 @@
               </resources>
             </configuration>
           </execution>
+
+          <execution>
+            <id>copy-documentation-xml</id>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <phase>generate-resources</phase>
+            <configuration>
+              <outputDirectory>${project.build.directory}/documentation/</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>src/main/xhtml/com/io7m/jsx/documentation/</directory>
+                  <filtering>false</filtering>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+
+          <execution>
+            <id>copy-documentation-resources-epub</id>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <phase>generate-resources</phase>
+            <configuration>
+              <outputDirectory>${project.build.directory}/epub/</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>src/main/resources/com/io7m/jsx/documentation/</directory>
+                  <filtering>true</filtering>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+
+          <execution>
+            <id>copy-documentation-xml-epub</id>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <phase>generate-resources</phase>
+            <configuration>
+              <outputDirectory>${project.build.directory}/epub/</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>src/main/epub/com/io7m/jsx/documentation/</directory>
+                  <filtering>false</filtering>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+
+          <execution>
+            <id>copy-generated-epub</id>
+            <phase>site</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.parent.build.directory}/minisite/documentation/</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${project.build.directory}/epub/</directory>
+                  <includes>
+                    <include>documentation.epub</include>
+                  </includes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
         </executions>
       </plugin>
 
-      <!-- Unpack sources of dependencies -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
         <executions>
+          <!-- Unpack sources of dependencies -->
           <execution>
             <id>unpack-sources</id>
             <phase>package</phase>
@@ -117,6 +193,39 @@
               <outputDirectory>${project.build.directory}/javadoc-sources</outputDirectory>
             </configuration>
           </execution>
+
+          <execution>
+            <id>unpack-config-schemas</id>
+            <phase>package</phase>
+            <goals>
+              <goal>unpack-dependencies</goal>
+            </goals>
+            <configuration>
+              <excludes>module-info.java</excludes>
+              <includeGroupIds>${project.groupId}</includeGroupIds>
+              <includes>**/*.xsd</includes>
+              <classifier>sources</classifier>
+              <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
+              <outputDirectory>${project.build.directory}/documentation</outputDirectory>
+            </configuration>
+          </execution>
+
+          <execution>
+            <id>unpack-config-schemas-epub</id>
+            <phase>package</phase>
+            <goals>
+              <goal>unpack-dependencies</goal>
+            </goals>
+            <configuration>
+              <excludes>module-info.java</excludes>
+              <includeGroupIds>${project.groupId}</includeGroupIds>
+              <includes>**/*.xsd</includes>
+              <classifier>sources</classifier>
+              <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
+              <outputDirectory>${project.build.directory}/epub</outputDirectory>
+            </configuration>
+          </execution>
+
           <execution>
             <id>make-classpath</id>
             <phase>package</phase>
@@ -125,40 +234,6 @@
             </goals>
             <configuration>
               <outputFile>${project.build.directory}/javadoc-classpath</outputFile>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-
-      <!-- Produce documentation -->
-      <plugin>
-        <groupId>com.io7m.jstructural</groupId>
-        <artifactId>io7m-jstructural-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>make-documentation-single</id>
-            <phase>prepare-package</phase>
-            <goals>
-              <goal>transform</goal>
-            </goals>
-            <configuration>
-              <documentFile>${project.build.directory}/documentation/documentation.xml</documentFile>
-              <outputDirectory>${project.build.directory}/documentation/</outputDirectory>
-              <brandFile>${project.build.directory}/documentation/brand.xml</brandFile>
-              <pagination>XHTML_SINGLE</pagination>
-            </configuration>
-          </execution>
-          <execution>
-            <id>make-documentation-multi</id>
-            <phase>prepare-package</phase>
-            <goals>
-              <goal>transform</goal>
-            </goals>
-            <configuration>
-              <documentFile>${project.build.directory}/documentation/documentation.xml</documentFile>
-              <outputDirectory>${project.build.directory}/documentation/</outputDirectory>
-              <brandFile>${project.build.directory}/documentation/brand.xml</brandFile>
-              <pagination>XHTML_MULTI</pagination>
             </configuration>
           </execution>
         </executions>
@@ -184,6 +259,52 @@
                 <argument>${project.build.directory}/javadoc-log.txt</argument>
                 <argument>${project.build.directory}/javadoc-options</argument>
               </arguments>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Generate documentation in various formats. -->
+      <plugin>
+        <groupId>com.io7m.xstructural</groupId>
+        <artifactId>com.io7m.xstructural.maven_plugin</artifactId>
+        <version>${com.io7m.xstructural.version}</version>
+        <executions>
+          <execution>
+            <id>xhtml-single</id>
+            <phase>package</phase>
+            <goals>
+              <goal>xhtml-single</goal>
+            </goals>
+            <configuration>
+              <brandingFile>${project.build.directory}/documentation/brand.xml</brandingFile>
+              <sourceFile>${project.build.directory}/documentation/main.xml</sourceFile>
+              <outputDirectory>${project.build.directory}/documentation</outputDirectory>
+            </configuration>
+          </execution>
+          <execution>
+            <id>xhtml-multi</id>
+            <phase>package</phase>
+            <goals>
+              <goal>xhtml-multi</goal>
+            </goals>
+            <configuration>
+              <brandingFile>${project.build.directory}/documentation/brand.xml</brandingFile>
+              <sourceFile>${project.build.directory}/documentation/main.xml</sourceFile>
+              <outputDirectory>${project.build.directory}/documentation</outputDirectory>
+            </configuration>
+          </execution>
+          <execution>
+            <id>epub</id>
+            <phase>package</phase>
+            <goals>
+              <goal>epub</goal>
+            </goals>
+            <configuration>
+              <brandingFile>${project.build.directory}/epub/brand.xml</brandingFile>
+              <sourceFile>${project.build.directory}/epub/main.xml</sourceFile>
+              <outputDirectory>${project.build.directory}/epub</outputDirectory>
+              <outputFileName>documentation.epub</outputFileName>
             </configuration>
           </execution>
         </executions>
