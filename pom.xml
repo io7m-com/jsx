@@ -8,12 +8,12 @@
   <parent>
     <groupId>com.io7m.primogenitor</groupId>
     <artifactId>com.io7m.primogenitor.full</artifactId>
-    <version>8.0.0-beta0001</version>
+    <version>8.2.0</version>
   </parent>
 
   <groupId>com.io7m.jsx</groupId>
   <artifactId>com.io7m.jsx</artifactId>
-  <version>3.1.1</version>
+  <version>4.0.0</version>
 
   <packaging>pom</packaging>
   <name>com.io7m.jsx</name>
@@ -31,21 +31,28 @@
   </modules>
 
   <properties>
-    <io7m.api.previousVersion>3.1.0</io7m.api.previousVersion>
-    <junit.version>5.9.3</junit.version>
+    <!-- Configuration. -->
+    <io7m.api.previousVersion>3.1.1</io7m.api.previousVersion>
+    <io7m.java.targetJavaVersion>21</io7m.java.targetJavaVersion>
+
+    <!-- io7m dependencies. -->
+    <com.io7m.xstructural.version>1.8.1</com.io7m.xstructural.version>
+
+    <!-- Third-party dependencies. -->
+    <junit.version>5.10.2</junit.version>
   </properties>
 
   <licenses>
     <license>
       <name>ISC</name>
-      <url>https://io7m.com/license/isc.txt</url>
+      <url>https://www.io7m.com/license/isc.txt</url>
     </license>
   </licenses>
 
   <scm>
-    <url>https://github.com/io7m/jsx</url>
-    <connection>scm:git:https://github.com/io7m/jsx</connection>
-    <developerConnection>scm:git:https://github.com/io7m/jsx</developerConnection>
+    <url>https://www.github.com/io7m-com/jsx</url>
+    <connection>scm:git:https://www.github.com/io7m-com/jsx</connection>
+    <developerConnection>scm:git:https://www.github.com/io7m-com/jsx</developerConnection>
   </scm>
 
   <inceptionYear>2016</inceptionYear>
@@ -55,12 +62,12 @@
       <id>io7m</id>
       <name>io7m</name>
       <email>code@io7m.com</email>
-      <url>https://io7m.com</url>
+      <url>https://www.io7m.com</url>
     </developer>
   </developers>
 
   <issueManagement>
-    <url>https://github.com/io7m/jsx/issues</url>
+    <url>https://www.github.com/io7m-com/jsx/issues</url>
     <system>GitHub Issues</system>
   </issueManagement>
 
@@ -78,7 +85,7 @@
 
   <ciManagement>
     <system>GitHub Actions</system>
-    <url>https://github.com/jsx/actions</url>
+    <url>https://www.github.com/io7m-com/jsx/actions</url>
   </ciManagement>
 
   <prerequisites>
@@ -90,28 +97,28 @@
       <dependency>
         <groupId>com.io7m.junreachable</groupId>
         <artifactId>com.io7m.junreachable.core</artifactId>
-        <version>4.0.0</version>
+        <version>4.0.2</version>
       </dependency>
       <dependency>
         <groupId>com.io7m.jeucreader</groupId>
         <artifactId>com.io7m.jeucreader.core</artifactId>
-        <version>3.0.0</version>
+        <version>3.0.1</version>
       </dependency>
       <dependency>
         <groupId>com.io7m.jlexing</groupId>
         <artifactId>com.io7m.jlexing.core</artifactId>
-        <version>3.1.0</version>
+        <version>3.2.0</version>
       </dependency>
       <dependency>
         <groupId>com.io7m.jpplib</groupId>
         <artifactId>com.io7m.jpplib.core</artifactId>
-        <version>0.8.0</version>
+        <version>1.0.0</version>
       </dependency>
 
       <dependency>
         <groupId>com.io7m.primogenitor</groupId>
         <artifactId>com.io7m.primogenitor.support</artifactId>
-        <version>8.0.0-beta0001</version>
+        <version>8.2.0</version>
       </dependency>
       <dependency>
         <groupId>com.beust</groupId>
@@ -121,12 +128,12 @@
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-api</artifactId>
-        <version>2.0.7</version>
+        <version>2.0.13</version>
       </dependency>
       <dependency>
         <groupId>ch.qos.logback</groupId>
         <artifactId>logback-classic</artifactId>
-        <version>1.4.8</version>
+        <version>1.5.6</version>
       </dependency>
 
       <dependency>
@@ -161,13 +168,6 @@
   <build>
     <pluginManagement>
       <plugins>
-        <!-- jstructural plugin for generating documentation. -->
-        <plugin>
-          <groupId>com.io7m.jstructural</groupId>
-          <artifactId>io7m-jstructural-maven-plugin</artifactId>
-          <version>5.0.0</version>
-        </plugin>
-
         <!-- Spot bugs -->
         <plugin>
           <groupId>com.github.spotbugs</groupId>

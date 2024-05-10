@@ -16,74 +16,59 @@
   OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
   -->
 
-<s:part xmlns:s="http://schemas.io7m.com/structural/2.1.0">
-  <s:part-title>Package Information</s:part-title>
-  <s:part-contents />
-  <s:section>
-    <s:section-title>Orientation</s:section-title>
-    <s:subsection>
-      <s:subsection-title>Overview</s:subsection-title>
-      <s:paragraph>
-        The <s:term s:type="package">${project.parent.name}</s:term> package
-        implements an S-expression parser.
-      </s:paragraph>
-    </s:subsection>
-  </s:section>
+<Section xmlns="urn:com.io7m.structural:8:0"
+         title="Package Information">
 
-  <s:section>
-    <s:section-title>Installation</s:section-title>
-    <s:subsection>
-      <s:subsection-title>Source compilation</s:subsection-title>
-      <s:paragraph>
+  <Subsection title="Orientation">
+    <Paragraph>
+      The <Term type="package">${project.parent.name}</Term> package implements an S-expression parser.
+    </Paragraph>
+  </Subsection>
+
+  <Subsection title="Installation">
+    <Subsection title="Source Compilation">
+      <Paragraph>
         The project can be compiled and installed with
-        <s:link-external s:target="http://maven.apache.org">Maven</s:link-external>:
-      </s:paragraph>
-      <s:paragraph>
-        <s:verbatim s:type="example"><![CDATA[$ mvn -C clean install]]></s:verbatim>
-      </s:paragraph>
-    </s:subsection>
+        <LinkExternal target="http://maven.apache.org">Maven</LinkExternal>:
+      </Paragraph>
+      <FormalItem title="Compile">
+        <Verbatim type="example"><![CDATA[$ mvn -C clean install]]></Verbatim>
+      </FormalItem>
+    </Subsection>
 
-    <s:subsection>
-      <s:subsection-title>Maven</s:subsection-title>
-      <s:paragraph>
+    <Subsection title="Maven">
+      <Paragraph>
         Regular releases are made to the
-        <s:link-external s:target="http://search.maven.org/#search%7Cga%7C1%7C${project.parent.name}">Central Repository</s:link-external>,
-        so it's possible to use the <s:term s:type="package">${project.parent.name}</s:term>
+        <LinkExternal target="http://search.maven.org/#search%7Cga%7C1%7C${project.parent.name}">Central
+          Repository</LinkExternal>, so it's possible to use the
+        <Term type="package">${project.parent.name}</Term>
         package in your projects with the following Maven dependency:
-      </s:paragraph>
-      <s:paragraph>
-        <s:verbatim s:type="example"><![CDATA[<dependency>
+      </Paragraph>
+      <FormalItem title="Example">
+        <Verbatim type="example"><![CDATA[<dependency>
   <groupId>${project.groupId}</groupId>
   <artifactId>${project.parent.artifactId}-core</artifactId>
   <version>${project.version}</version>
-</dependency>]]></s:verbatim>
-      </s:paragraph>
-      <s:paragraph>
-        All <s:link-external s:target="https://www.io7m.com">io7m.com</s:link-external>
-        packages use Semantic Versioning
-        <s:footnote>
-          <s:link-external s:target="http://semver.org">http://semver.org</s:link-external>
-        </s:footnote>, which implies that it is always safe to use version ranges
-        with an exclusive upper bound equal to the next major version - the API of
-        the package will not change in a backwards-incompatible manner before the
-        next major version.
-      </s:paragraph>
-    </s:subsection>
-  </s:section>
+</dependency>]]></Verbatim>
+      </FormalItem>
+      <Paragraph>
+        All
+        <LinkExternal target="https://www.io7m.com">io7m.com</LinkExternal>
+        packages use Semantic Versioning <LinkFootnote target="d0ac54ed-67de-4b0e-9c30-171b5416c009"/>, which implies
+        that it is always safe to use version ranges with an exclusive upper bound equal to the next major version - the
+        API of the package will not change in a backwards-incompatible manner before the next major version.
+      </Paragraph>
+    </Subsection>
+  </Subsection>
 
-  <s:section>
-    <s:section-title>Platform Specific Issues</s:section-title>
-    <s:paragraph>
-      There are currently no known platform-specific issues.
-    </s:paragraph>
-  </s:section>
-
-  <s:section>
-    <s:section-title>License</s:section-title>
-    <s:paragraph>
-      All files distributed with the <s:term s:type="package">${project.parent.name}</s:term>
+  <Subsection title="License">
+    <Paragraph>
+      All files distributed with the
+      <Term type="package">${project.parent.name}</Term>
       package are placed under the following license:
-      <s:verbatim s:type="license"><![CDATA[Copyright © 2015 Mark Raynsford <code@io7m.com> https://www.io7m.com
+    </Paragraph>
+    <FormalItem title="License">
+      <Verbatim type="license"><![CDATA[Copyright © 2015 Mark Raynsford <code@io7m.com> https://www.io7m.com
 
 Permission to use, copy, modify, and/or distribute this software for any
 purpose with or without fee is hereby granted, provided that the above
@@ -96,7 +81,11 @@ ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
 WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
 ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.]]>
-      </s:verbatim>
-    </s:paragraph>
-  </s:section>
-</s:part>
+      </Verbatim>
+    </FormalItem>
+  </Subsection>
+
+  <Footnote id="d0ac54ed-67de-4b0e-9c30-171b5416c009">
+    <LinkExternal target="http://semver.org">http://semver.org</LinkExternal>
+  </Footnote>
+</Section>

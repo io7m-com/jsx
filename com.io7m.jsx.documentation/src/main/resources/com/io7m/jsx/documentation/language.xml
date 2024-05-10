@@ -16,168 +16,154 @@
   OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
   -->
 
-<s:part
-  xml:id="com.io7m.jsx.lang"
-  xmlns:s="http://schemas.io7m.com/structural/2.1.0"
+<Section
+  id="6f79f2f0-7419-451b-b21c-2fd2c591a087"
+  title="Expression Language"
+  xmlns="urn:com.io7m.structural:8:0"
   xmlns:xi="http://www.w3.org/2001/XInclude">
-  <s:part-title>Expression Language</s:part-title>
-  <s:part-contents/>
   
-  <s:section xml:id="com.io7m.jsx.lang.notation">
-    <s:section-title>Notational Conventions</s:section-title>
-    <s:section-contents/>
-
-    <s:subsection>
-      <s:subsection-title>Unicode</s:subsection-title>
-      <s:paragraph>
+  <Subsection id="8ac240fa-b331-4377-89c7-06f643dfe6d3" title="Notational Conventions">
+    <Subsection title="Unicode">
+      <Paragraph>
         The specification makes reference to the
-        <s:link-external s:target="http://unicode.org">Unicode</s:link-external>
+        <LinkExternal target="http://unicode.org">Unicode</LinkExternal>
         character set which, at the time of writing, is at version
-        <s:term s:type="constant">6.2.0</s:term>. The specification
+        <Term type="constant">6.2.0</Term>. The specification
         often references specific Unicode characters, and does so using
-        the standard notation <s:term s:type="expression">U+NNNN</s:term>,
-        where <s:term s:type="variable">N</s:term> represents a hexadecimal
-        digit. For example, <s:term s:type="constant">U+03BB</s:term>
-        corresponds to the lowercase lambda symbol <s:term s:type="constant">λ</s:term>.
-      </s:paragraph>
-    </s:subsection>
+        the standard notation <Term type="expression">U+NNNN</Term>,
+        where <Term type="variable">N</Term> represents a hexadecimal
+        digit. For example, <Term type="constant">U+03BB</Term>
+        corresponds to the lowercase lambda symbol <Term type="constant">λ</Term>.
+      </Paragraph>
+    </Subsection>
 
-    <s:subsection>
-      <s:subsection-title>EBNF</s:subsection-title>
-      <s:paragraph>
+    <Subsection title="EBNF">
+      <Paragraph>
         The specification gives grammar definitions in
-        <s:term s:type="package">ISO/IEC 14977:1996</s:term> Extended Backus-Naur
+        <Term type="package">ISO/IEC 14977:1996</Term> Extended Backus-Naur
         form.
-      </s:paragraph>
-    </s:subsection>
-  </s:section>
+      </Paragraph>
+    </Subsection>
+  </Subsection>
   
-  <s:section xml:id="com.io7m.jsx.lang.language">
-    <s:section-title>Language</s:section-title>
-    <s:paragraph>
-      The language understood by the <s:term s:type="package">${project.parent.name}</s:term>
+  <Subsection id="9136a4c5-51c2-4714-942c-968b4f007b68" title="Language">
+    <Paragraph>
+      The language understood by the <Term type="package">${project.parent.name}</Term>
       package can be defined by the following grammar:
-    </s:paragraph>
-    <s:formal-item s:kind="specification">
-      <s:formal-item-title>Grammar (non-terminals)</s:formal-item-title>
-      <s:verbatim><xi:include href="expressions.txt" parse="text"/></s:verbatim>
-    </s:formal-item>
-    <s:paragraph>
-      The <s:term s:type="package">${project.parent.name}</s:term> lexer
-      recognizes the sequences <s:term s:type="constant">U+000D U+000A</s:term>
-      and <s:term s:type="constant">U+000A</s:term> as line terminators for the
+    </Paragraph>
+    <FormalItem type="specification" title="Grammar (non-terminals)">
+      <Verbatim><xi:include href="expressions.txt" parse="text"/></Verbatim>
+    </FormalItem>
+    <Paragraph>
+      The <Term type="package">${project.parent.name}</Term> lexer
+      recognizes the sequences <Term type="constant">U+000D U+000A</Term>
+      and <Term type="constant">U+000A</Term> as line terminators for the
       purposes of tracking line and column numbers for diagnostic messages. The
-      lexer does not permit bare <s:term s:type="constant">U+000D</s:term>
+      lexer does not permit bare <Term type="constant">U+000D</Term>
       characters to appear outside of 
-      <s:link s:target="com.io7m.jsx.lang.quote">quoted strings</s:link>.
-    </s:paragraph>
-    <s:paragraph xml:id="com.io7m.jsx.lang.language.square">
+      <Link target="9d159b32-b6e0-41f6-88a7-01533e3bea1e">quoted strings</Link>.
+    </Paragraph>
+    <Paragraph id="d9d8f3a3-4b87-45e5-8da8-0b3028e51d15">
       Many systems that parse S-expressions allow for the use of square
       brackets to increase readability. For example:
-    </s:paragraph>
-    <s:formal-item s:kind="specification">
-      <s:formal-item-title>Square brackets</s:formal-item-title>
-      <s:verbatim><xi:include href="squares.txt" parse="text"/></s:verbatim>
-    </s:formal-item>
-    <s:paragraph>
+    </Paragraph>
+    <FormalItem type="specification" title="Square brackets">
+      <Verbatim><xi:include href="squares.txt" parse="text"/></Verbatim>
+    </FormalItem>
+    <Paragraph>
       Note that the second version that uses square brackets is slightly
       easier to understand due to the square brackets more clearly indicating
       which of the nested lists are being terminated. The 
-      <s:term s:type="package">${project.parent.name}</s:term> lexer can 
-      optionally treat <s:term s:type="constant">U+005B [</s:term> and
-      <s:term s:type="constant">U+005D ]</s:term> as tokens, and the parser
+      <Term type="package">${project.parent.name}</Term> lexer can
+      optionally treat <Term type="constant">U+005B [</Term> and
+      <Term type="constant">U+005D ]</Term> as tokens, and the parser
       ensures that the use of the brackets is balanced with respect to
       ordinary parentheses as part of the grammar above. If square brackets
       are enabled, the language understood by the 
-      <s:term s:type="package">${project.parent.name}</s:term> package is
-      defined by <s:term s:type="constant">expression_squares</s:term>.
+      <Term type="package">${project.parent.name}</Term> package is
+      defined by <Term type="constant">expression_squares</Term>.
       Otherwise, the language is defined by
-      <s:term s:type="constant">expression</s:term>.
-    </s:paragraph>
-    <s:paragraph>
+      <Term type="constant">expression</Term>.
+    </Paragraph>
+    <Paragraph>
       The terminals of the language are given by:
-    </s:paragraph>
-    <s:formal-item s:kind="specification">
-      <s:formal-item-title>Grammar (terminals)</s:formal-item-title>
-      <s:verbatim><xi:include href="terminals.txt" parse="text"/></s:verbatim>
-    </s:formal-item>
-    <s:paragraph>
+    </Paragraph>
+    <FormalItem type="specification" title="Grammar (terminals)">
+      <Verbatim><xi:include href="terminals.txt" parse="text"/></Verbatim>
+    </FormalItem>
+    <Paragraph>
       Due to limitations in the
-      <s:link-external s:target="https://en.wikipedia.org/wiki/Extended_Backus–Naur_Form">EBNF</s:link-external>
-      format, the definitions for <s:term s:type="symbol">symbol_character</s:term>
-      and <s:term s:type="symbol">quoted_character</s:term> cannot be expressed
+      <LinkExternal target="https://en.wikipedia.org/wiki/Extended_Backus–Naur_Form">EBNF</LinkExternal>
+      format, the definitions for <Term type="symbol">symbol_character</Term>
+      and <Term type="symbol">quoted_character</Term> cannot be expressed
       directly.
-    </s:paragraph>
-    <s:paragraph>
-      Informally, the <s:term s:type="symbol">symbol_character</s:term>
+    </Paragraph>
+    <Paragraph>
+      Informally, the <Term type="symbol">symbol_character</Term>
       rule should be understood to specify any Unicode character that is not
-      <s:link-external s:target="https://en.wikipedia.org/wiki/Whitespace_character">whitespace</s:link-external>,
-      is not <s:term s:type="constant">U+0028 (</s:term>,  
-      is not <s:term s:type="constant">U+0029 )</s:term>,
-      and is not <s:term s:type="constant">U+0022 "</s:term>.
-    </s:paragraph>
-    <s:paragraph>
-      If <s:link s:target="com.io7m.jsx.lang.language.square">square brackets</s:link> are enabled, 
-      the <s:term s:type="symbol">symbol_character_squares</s:term>
-      rule should be understood to replace the <s:term s:type="symbol">symbol_character</s:term>
+      <LinkExternal target="https://en.wikipedia.org/wiki/Whitespace_character">whitespace</LinkExternal>,
+      is not <Term type="constant">U+0028 (</Term>,
+      is not <Term type="constant">U+0029 )</Term>,
+      and is not <Term type="constant">U+0022 "</Term>.
+    </Paragraph>
+    <Paragraph>
+      If <Link target="d9d8f3a3-4b87-45e5-8da8-0b3028e51d15">square brackets</Link> are enabled,
+      the <Term type="symbol">symbol_character_squares</Term>
+      rule should be understood to replace the <Term type="symbol">symbol_character</Term>
       rule.
-    </s:paragraph>
-    <s:paragraph>
-      The <s:term s:type="symbol">quoted_character</s:term> rule should
+    </Paragraph>
+    <Paragraph>
+      The <Term type="symbol">quoted_character</Term> rule should
       be understood to specify any character that is not
-      not <s:term s:type="constant">U+0022 "</s:term>.
-    </s:paragraph>
-    <s:paragraph xml:id="com.io7m.jsx.lang.quote">
-      Quoted strings may contain <s:term s:type="term">escape codes</s:term>
+      not <Term type="constant">U+0022 "</Term>.
+    </Paragraph>
+    <Paragraph id="9d159b32-b6e0-41f6-88a7-01533e3bea1e">
+      Quoted strings may contain <Term type="Term">escape codes</Term>
       that are transformed to specific characters during lexing.
-    </s:paragraph>
-    <s:formal-item s:kind="specification">
-      <s:formal-item-title>Escape Codes</s:formal-item-title>
-      <s:table>
-        <s:table-summary>Escape codes</s:table-summary>
-        <s:table-head>
-          <s:table-column-name>Code</s:table-column-name>
-          <s:table-column-name>Resulting Character</s:table-column-name>
-          <s:table-column-name>Comment</s:table-column-name>
-        </s:table-head>
-        <s:table-body>
-          <s:table-row>
-            <s:table-cell><s:term s:type="constant">\"</s:term></s:table-cell>
-            <s:table-cell><s:term s:type="constant">U+0022</s:term></s:table-cell>
-            <s:table-cell>Double quote</s:table-cell>
-          </s:table-row>
-          <s:table-row>
-            <s:table-cell><s:term s:type="constant">\\</s:term></s:table-cell>
-            <s:table-cell><s:term s:type="constant">U+005C</s:term></s:table-cell>
-            <s:table-cell>Backslash</s:table-cell>
-          </s:table-row>
-          <s:table-row>
-            <s:table-cell><s:term s:type="constant">\r</s:term></s:table-cell>
-            <s:table-cell><s:term s:type="constant">U+000D</s:term></s:table-cell>
-            <s:table-cell>Carriage return</s:table-cell>
-          </s:table-row>
-          <s:table-row>
-            <s:table-cell><s:term s:type="constant">\n</s:term></s:table-cell>
-            <s:table-cell><s:term s:type="constant">U+000A</s:term></s:table-cell>
-            <s:table-cell>Line feed</s:table-cell>
-          </s:table-row>
-          <s:table-row>
-            <s:table-cell><s:term s:type="constant">\t</s:term></s:table-cell>
-            <s:table-cell><s:term s:type="constant">U+0009</s:term></s:table-cell>
-            <s:table-cell>Horizontal tab</s:table-cell>
-          </s:table-row>
-          <s:table-row>
-            <s:table-cell><s:term s:type="constant">\uNNNN</s:term></s:table-cell>
-            <s:table-cell><s:term s:type="constant">U+NNNN</s:term></s:table-cell>
-            <s:table-cell>Unicode character NNNN (where N is a hexadecimal digit)</s:table-cell>
-          </s:table-row>
-          <s:table-row>
-            <s:table-cell><s:term s:type="constant">\UNNNNNNNN</s:term></s:table-cell>
-            <s:table-cell><s:term s:type="constant">U+NNNNNNNN</s:term></s:table-cell>
-            <s:table-cell>Unicode character NNNNNNNN (where N is a hexadecimal digit)</s:table-cell>
-          </s:table-row>
-        </s:table-body>
-      </s:table>
-    </s:formal-item>
-  </s:section>
-</s:part>
+    </Paragraph>
+    <FormalItem type="specification" title="Escape Codes">
+      <Table type="genericTable">
+        <Columns>
+          <Column>Code</Column>
+          <Column>Resulting Character</Column>
+          <Column>Comment</Column>
+        </Columns>
+        <Row>
+          <Cell><Term type="constant">\"</Term></Cell>
+          <Cell><Term type="constant">U+0022</Term></Cell>
+          <Cell>Double quote</Cell>
+        </Row>
+        <Row>
+          <Cell><Term type="constant">\\</Term></Cell>
+          <Cell><Term type="constant">U+005C</Term></Cell>
+          <Cell>Backslash</Cell>
+        </Row>
+        <Row>
+          <Cell><Term type="constant">\r</Term></Cell>
+          <Cell><Term type="constant">U+000D</Term></Cell>
+          <Cell>Carriage return</Cell>
+        </Row>
+        <Row>
+          <Cell><Term type="constant">\n</Term></Cell>
+          <Cell><Term type="constant">U+000A</Term></Cell>
+          <Cell>Line feed</Cell>
+        </Row>
+        <Row>
+          <Cell><Term type="constant">\t</Term></Cell>
+          <Cell><Term type="constant">U+0009</Term></Cell>
+          <Cell>Horizontal tab</Cell>
+        </Row>
+        <Row>
+          <Cell><Term type="constant">\uNNNN</Term></Cell>
+          <Cell><Term type="constant">U+NNNN</Term></Cell>
+          <Cell>Unicode character NNNN (where N is a hexadecimal digit)</Cell>
+        </Row>
+        <Row>
+          <Cell><Term type="constant">\UNNNNNNNN</Term></Cell>
+          <Cell><Term type="constant">U+NNNNNNNN</Term></Cell>
+          <Cell>Unicode character NNNNNNNN (where N is a hexadecimal digit)</Cell>
+        </Row>
+      </Table>
+    </FormalItem>
+  </Subsection>
+</Section>

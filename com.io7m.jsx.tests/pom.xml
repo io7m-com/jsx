@@ -8,7 +8,7 @@
   <parent>
     <groupId>com.io7m.jsx</groupId>
     <artifactId>com.io7m.jsx</artifactId>
-    <version>3.1.1</version>
+    <version>4.0.0</version>
   </parent>
   <artifactId>com.io7m.jsx.tests</artifactId>
 
@@ -18,7 +18,9 @@
   <name>${project.artifactId}</name>
 
   <properties>
+    <spotbugs.skip>true</spotbugs.skip>
     <mdep.analyze.skip>true</mdep.analyze.skip>
+    <checkstyle.skip>true</checkstyle.skip>
   </properties>
 
   <dependencies>
@@ -55,12 +57,10 @@
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
-      <scope>test</scope>
     </dependency>
   </dependencies>
 
@@ -70,7 +70,6 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.7</version>
       </plugin>
     </plugins>
   </build>
