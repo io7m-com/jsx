@@ -127,9 +127,15 @@
         <c:change date="2023-06-19T00:00:00+00:00" summary="Provide a more complete solution to escape characters in printers."/>
       </c:changes>
     </c:release>
-    <c:release date="2023-07-24T12:18:03+00:00" is-open="false" ticket-system="com.github.io7m.jsx" version="3.1.1">
+    <c:release date="2023-07-24T00:00:00+00:00" is-open="false" ticket-system="com.github.io7m.jsx" version="3.1.1">
       <c:changes>
         <c:change date="2023-07-24T00:00:00+00:00" summary="Add missing escapes from the trivial serializer."/>
+      </c:changes>
+    </c:release>
+    <c:release date="2024-05-10T16:57:54+00:00" is-open="true" ticket-system="com.github.io7m.jsx" version="4.0.0">
+      <c:changes>
+        <c:change date="2024-05-10T00:00:00+00:00" summary="Move to new organization."/>
+        <c:change compatible="false" date="2024-05-10T16:57:54+00:00" summary="Require JDK 21."/>
       </c:changes>
     </c:release>
   </c:releases>

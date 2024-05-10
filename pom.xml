@@ -13,7 +13,7 @@
 
   <groupId>com.io7m.jsx</groupId>
   <artifactId>com.io7m.jsx</artifactId>
-  <version>3.1.2-SNAPSHOT</version>
+  <version>4.0.0-SNAPSHOT</version>
 
   <packaging>pom</packaging>
   <name>com.io7m.jsx</name>
@@ -45,7 +45,7 @@
   <licenses>
     <license>
       <name>ISC</name>
-      <url>https://io7m.com/license/isc.txt</url>
+      <url>https://www.io7m.com/license/isc.txt</url>
     </license>
   </licenses>
 
@@ -62,7 +62,7 @@
       <id>io7m</id>
       <name>io7m</name>
       <email>code@io7m.com</email>
-      <url>https://io7m.com</url>
+      <url>https://www.io7m.com</url>
     </developer>
   </developers>
 
@@ -85,7 +85,7 @@
 
   <ciManagement>
     <system>GitHub Actions</system>
-    <url>https://github.com/jsx/actions</url>
+    <url>https://www.github.com/io7m-com/jsx/actions</url>
   </ciManagement>
 
   <prerequisites>
@@ -112,7 +112,7 @@
       <dependency>
         <groupId>com.io7m.jpplib</groupId>
         <artifactId>com.io7m.jpplib.core</artifactId>
-        <version>0.8.0</version>
+        <version>1.0.0</version>
       </dependency>
 
       <dependency>
@@ -168,13 +168,6 @@
   <build>
     <pluginManagement>
       <plugins>
-        <!-- jstructural plugin for generating documentation. -->
-        <plugin>
-          <groupId>com.io7m.jstructural</groupId>
-          <artifactId>io7m-jstructural-maven-plugin</artifactId>
-          <version>5.0.0</version>
-        </plugin>
-
         <!-- Spot bugs -->
         <plugin>
           <groupId>com.github.spotbugs</groupId>
