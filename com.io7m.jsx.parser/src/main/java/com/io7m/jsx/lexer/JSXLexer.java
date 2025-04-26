@@ -524,10 +524,12 @@ public final class JSXLexer implements JSXLexerType
 
   private enum State
   {
+    // CHECKSTYLE:OFF
     STATE_IN_CRLF,
     STATE_IN_STRING_QUOTED,
     STATE_IN_SYMBOL,
     STATE_IN_COMMENT,
     STATE_INITIAL
+    // CHECKSTYLE:ON
   }
 }

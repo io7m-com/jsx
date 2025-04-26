@@ -58,6 +58,9 @@ public sealed interface SExpressionType
   {
     /**
      * A symbol.
+     *
+     * @param lexical The lexical position of the symbol
+     * @param text    The symbol text
      */
 
     public SSymbol
@@ -81,6 +84,9 @@ public sealed interface SExpressionType
   {
     /**
      * A quoted string.
+     *
+     * @param lexical The lexical position of the symbol
+     * @param text    The symbol text
      */
 
     public SQuotedString
@@ -137,6 +143,10 @@ public sealed interface SExpressionType
   {
     /**
      * A list of expressions.
+     *
+     * @param lexical     The lexical position of the symbol
+     * @param isSquare    {@code true} if the list uses square brackets
+     * @param expressions The list of subexpressions
      */
 
     public SList
