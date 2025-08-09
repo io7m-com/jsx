@@ -15,9 +15,9 @@ A general-purpose, configurable S-expression parser.
 * [JPMS-ready](https://en.wikipedia.org/wiki/Java_Platform_Module_System)
 * ISC license.
 
-## Documentation
+## User Manual
 
-See the [user manual](https://www.io7m.com/software/jsx).
+See the [user manual](https://www.io7m.com/software/jsx#documentation).
 
 ## Usage
 
